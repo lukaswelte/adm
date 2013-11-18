@@ -1,7 +1,5 @@
-Meetup App
+Meetup App [![Build Status](https://magnum.travis-ci.com/logicreative/adm.png?token=tVUbNj6NR4avxNovm8ML&branch=master)](https://magnum.travis-ci.com/logicreative/adm)
 ===
-
-[![Build Status](https://magnum.travis-ci.com/logicreative/adm.png?token=tVUbNj6NR4avxNovm8ML&branch=master)](https://magnum.travis-ci.com/logicreative/adm)
 
 
 ### Organization
