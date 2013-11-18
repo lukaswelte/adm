@@ -45,5 +45,5 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - cd android
-  - gradle connectedInstrumentTest
+  - cd android/Projects
+  - gradle clean connectedInstrumentTest
