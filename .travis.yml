@@ -4,9 +4,9 @@ env:
   matrix:
     - ANDROID_SDKS=android-19,sysimg-19  ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 #whitelist
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 before_install:
   # Install base Android SDK
   - sudo apt-get update -qq
