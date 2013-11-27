@@ -2,29 +2,34 @@ package com.adm.meetup;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.os.Build;
+import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
-import java.util.HashMap;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
-import com.adm.meetup.MainActivity;
+import com.adm.meetup.DatabaseHandler;
 import com.adm.meetup.UserFunctions;
 
-public class ProfileActivity extends ActionBarActivity {
-    EditText emailText,passwordText;
-    Button loginButton,registerButton;
-    TextView loginErrorMsg;
+public class RegisterActivity extends ActionBarActivity {
+
+    Button registerButton;
+    Button loginButton;
+    EditText fullNameText;
+    EditText emailText;
+    EditText passwordText;
+    TextView registerErrorMsg;
 
     // JSON Response node names
     private static String KEY_SUCCESS = "success";
@@ -35,34 +40,39 @@ public class ProfileActivity extends ActionBarActivity {
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_register);
 /*
+        TextView loginScreen = (TextView) findViewById(R.id.register_linkToLogin_button);
+*/
+
         // Importing all assets like buttons, text fields
-        emailText = (EditText) findViewById(R.id.profile_email_field);
-        passwordText = (EditText) findViewById(R.id.profile_password_field);
-        loginButton = (Button) findViewById(R.id.profile_login_button);
-        registerButton = (Button) findViewById(R.id.profile_signup_button);
-        loginErrorMsg = (TextView) findViewById(R.id.profile_error_field);
+        fullNameText = (EditText) findViewById(R.id.register_fullName_field);
+        emailText = (EditText) findViewById(R.id.register_email_field);
+        passwordText = (EditText) findViewById(R.id.register_password_field);
+        registerButton = (Button) findViewById(R.id.register_registerNewAccount_button);
+        loginButton = (Button) findViewById(R.id.register_linkToLogin_button);
+        registerErrorMsg = (TextView) findViewById(R.id.register_error_field);
 
-        // Login button Click Event
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
+        // Register Button Click event
+        registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                String name = fullNameText.getText().toString();
                 String email = emailText.getText().toString();
                 String password = passwordText.getText().toString();
                 UserFunctions userFunction = new UserFunctions();
-                JSONObject json = userFunction.loginUser(email, password);
+                JSONObject json = userFunction.registerUser(name, email, password);
 
                 // check for login response
                 try {
                     if (json.getString(KEY_SUCCESS) != null) {
-                        loginErrorMsg.setText("");
+                        registerErrorMsg.setText("");
                         String res = json.getString(KEY_SUCCESS);
                         if(Integer.parseInt(res) == 1){
-                            // user successfully logged in
+                            // user successfully registred
                             // Store user details in SQLite Database
                             DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                             JSONObject json_user = json.getJSONObject("user");
@@ -70,19 +80,16 @@ public class ProfileActivity extends ActionBarActivity {
                             // Clear all previous data in database
                             userFunction.logoutUser(getApplicationContext());
                             db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
-
                             // Launch Dashboard Screen
                             Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
-
                             // Close all views before launching Dashboard
                             dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(dashboard);
-
-                            // Close Login Screen
+                            // Close Registration Screen
                             finish();
                         }else{
-                            // Error in login
-                            loginErrorMsg.setText("Incorrect username/password");
+                            // Error in registration
+                            registerErrorMsg.setText("Error occured in registration");
                         }
                     }
                 } catch (JSONException e) {
@@ -91,60 +98,41 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
-        // Link to Register Screen
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        // Link to Login Screen
+        loginButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
+                        ProfileActivity.class);
                 startActivity(i);
+                // Close Registration View
+                finish();
+            }
+        });
+
+/*        // Listening to login screen link
+        loginScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+*//*                // Switching to Login screen
+                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(i);*//*
                 finish();
             }
         });*/
 
-
-        TextView registerScreen = (TextView) findViewById(R.id.profile_signup_button);
-
-        // Listening to register new account link
-        registerScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
-        emailText=(EditText)findViewById(R.id.profile_email_field);
-        passwordText=(EditText)findViewById(R.id.profile_password_field);
-       loginButton=(Button)findViewById(R.id.profile_login_button);
-
-        loginButton.setOnClickListener(loginListener);
-
 /*        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
         }*/
     }
-    private OnClickListener loginListener = new OnClickListener() {
-        public void onClick(View v) {
 
-            //getting inputs from user and performing data operations
-            if(emailText.getText().toString().equals("swineas") &&
-                    passwordText.getText().toString().equals("abc")){
-                //responding to the User inputs
-                Toast.makeText(getApplicationContext(), "Connexion réussie !!!", Toast.LENGTH_LONG).show();
-                Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(mainIntent);
-            }else
-                Toast.makeText(getApplicationContext(), "Connexion échouée !!!", Toast.LENGTH_LONG).show();
-        }
-    };
-
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.profile, menu);
+        getMenuInflater().inflate(R.menu.register, menu);
         return true;
     }
 
@@ -153,16 +141,16 @@ public class ProfileActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-/*    *//**
+    /**
      * A placeholder fragment containing a simple view.
-     *//*
+     */
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -171,9 +159,9 @@ public class ProfileActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
             return rootView;
         }
-    }*/
+    }
 
 }
