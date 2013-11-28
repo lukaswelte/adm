@@ -1,7 +1,6 @@
 package com.adm.meetup;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,14 +8,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.TextView;
 
-public class CalendarActivity extends ActionBarActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
+    private TextView mTextDate;
+    private SimpleDateFormat mFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        mTextDate=(TextView)findViewById(R.id.display_date);
+
+        mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
+
+        CalendarView cal = (CalendarView) findViewById(R.id.calendar);
+        //cal.setOnDispatchDateSelectListener(this);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -25,6 +36,10 @@ public class CalendarActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onDispatchDateSelect(Date date) {
+        mTextDate.setText(mFormat.format(date));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
