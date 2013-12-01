@@ -1,1 +1,2 @@
 include ':Meetup'
+include ':libraries:facebook'
