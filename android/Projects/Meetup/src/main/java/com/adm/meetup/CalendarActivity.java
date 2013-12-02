@@ -22,18 +22,19 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+
         mTextDate=(TextView)findViewById(R.id.display_date);
 
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
 
         CalendarView cal = (CalendarView) findViewById(R.id.calendar);
-        //cal.setOnDispatchDateSelectListener(this);
+        cal.setOnDispatchDateSelectListener(this);
 
-        if (savedInstanceState == null) {
+        /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
-        }
+        }*/
     }
 
     @Override
@@ -73,6 +74,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
+
             return rootView;
         }
     }

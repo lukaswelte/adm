@@ -41,7 +41,8 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mFormatDay			= new SimpleDateFormat("d");
         mFormatYear			= new SimpleDateFormat("yyyy");
 
-        mConvertView = LayoutInflater.from(context).inflate(R.layout.fragment_calendar_view, this);
+        mConvertView = LayoutInflater.from(context).inflate(R.layout.view_calendar, this);
+        //May produce NullPointerExc !
         mGrid=(GridView)mConvertView.findViewById(R.id.calendar_days);
 
         mGrid.setOnItemClickListener(this);
@@ -111,6 +112,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     {
         for(int i=0;i<mGrid.getCount();i++)
         {
+            //May produce NullPointerExc !
             mGrid.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
         }
     }

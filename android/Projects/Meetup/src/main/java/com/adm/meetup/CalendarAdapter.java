@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-/**
- * Created by Momae on 27/11/13.
- */
 public class CalendarAdapter extends BaseAdapter {
 
     private Context 			mContext;
@@ -55,8 +51,9 @@ public class CalendarAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView		= mInflater.inflate(R.layout.fragment_calendar_day, null);
+            convertView		= mInflater.inflate(R.layout.view_calendar_day, null);
             holder			= new ViewHolder();
+            //Method invocation may produce nullpointerExc !
             holder.tvDay 	= (TextView)  convertView.findViewById(R.id.tv_day);
             holder.tvNumber	= (TextView)  convertView.findViewById(R.id.tv_number);
             convertView.setTag(holder);
