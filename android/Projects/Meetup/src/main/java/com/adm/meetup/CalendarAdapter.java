@@ -12,14 +12,14 @@ import android.widget.TextView;
 public class CalendarAdapter extends BaseAdapter {
 
     private Context 			mContext;
-    private Date[]  			mWeek;
+    private Date[]              mMonth;
     private SimpleDateFormat 	mFormatNumber;
     private SimpleDateFormat 	mFormatDay;
     private LayoutInflater		mInflater;
 
-    public CalendarAdapter(Context _context, Date[] _week) {
+    public CalendarAdapter(Context _context, Date[] _month) {
         mContext 		= _context;
-        mWeek			= _week;
+        mMonth          = _month;
         mFormatNumber	= new SimpleDateFormat("d");
         mFormatDay  	= new SimpleDateFormat("EEE");
         mInflater 		= LayoutInflater.from(mContext);
@@ -32,7 +32,7 @@ public class CalendarAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mWeek.length;
+        return mMonth.length;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class CalendarAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tvDay.setText(mFormatDay.format(mWeek[position]));
-        holder.tvNumber.setText(mFormatNumber.format(mWeek[position]));
+        holder.tvDay.setText(mFormatDay.format(mMonth[position]));
+        holder.tvNumber.setText(mFormatNumber.format(mMonth[position]));
         return convertView;
     }
 

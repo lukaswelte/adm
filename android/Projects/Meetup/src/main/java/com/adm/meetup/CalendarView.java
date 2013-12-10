@@ -18,10 +18,11 @@ import java.util.GregorianCalendar;
 
 public class CalendarView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemClickListener{
 
+    public static final int iDaysMonthMax = 31;
     private GridView mGrid;
     private View 							mConvertView;
     private GregorianCalendar mCalendar;
-    private Date[] 							mWeek;
+    private Date[] mMonth;
     private Context mContext;
     private TextView mMonthText;
     private SimpleDateFormat mFormatMonth;
@@ -56,27 +57,35 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
         mCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
         mCalendar.setTime(new Date());
-        mCalendar.add(Calendar.DAY_OF_YEAR, -7);
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
 
-        mWeek=new Date[7];
-        for(int i=0;i<7;i++)
-        {
-            mWeek[i]=mCalendar.getTime();
-
-            mCalendar.add(Calendar.DAY_OF_YEAR, 1);
-        }
+        mMonth =new Date[iDaysMonthMax];
+        implementMonth();
         setSelectedMonthText();
 
-        mAdapter=new CalendarAdapter(mContext, mWeek);
+        mAdapter=new CalendarAdapter(mContext, mMonth);
 
         mGrid.setAdapter(mAdapter);
+    }
+
+    private void implementMonth() {
+        int dateMonth = mCalendar.get(Calendar.MONTH),
+                currentMonth = mCalendar.get(Calendar.MONTH),
+                i=0;
+        while (dateMonth == currentMonth) {
+            mMonth[i]=mCalendar.getTime();
+            mCalendar.add(Calendar.DAY_OF_YEAR, 1);
+
+            currentMonth = mCalendar.get(Calendar.MONTH);
+            i++;
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
         clearBackground();
         v.setBackgroundColor(Color.parseColor("#3A9CE9"));
-        mListenerDateSelect.onDispatchDateSelect(mWeek[arg2]);
+        mListenerDateSelect.onDispatchDateSelect(mMonth[arg2]);
     }
 
 
@@ -89,19 +98,14 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
                 subWeek();
                 break;
             case R.id.calendar_arrow_right:
-                addWeek();
+                addMonth();
                 break;
         }
     }
 
-    private void addWeek()
+    private void addMonth()
     {
-        for(int i=0;i<7;i++)
-        {
-            mWeek[i]=mCalendar.getTime();
-            mCalendar.add(Calendar.DAY_OF_YEAR, 1);
-        }
-
+        implementMonth();
         mAdapter.notifyDataSetChanged();
 
         setSelectedMonthText();
@@ -119,12 +123,10 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     private void subWeek()
     {
-        mCalendar.add(Calendar.DAY_OF_YEAR, -14);
-        for(int i=0;i<7;i++)
-        {
-            mWeek[i]=mCalendar.getTime();
-            mCalendar.add(Calendar.DAY_OF_YEAR, 1);
-        }
+        mCalendar.add(Calendar.DAY_OF_YEAR, -32);
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
+        implementMonth();
+
         setSelectedMonthText();
         mAdapter.notifyDataSetChanged();
 
@@ -133,13 +135,10 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     private void setSelectedMonthText()
     {
-        String monthText;
-        if(Integer.parseInt(mFormatDay.format(mWeek[0]))>Integer.parseInt(mFormatDay.format(mWeek[6])))
-            monthText=mFormatMonth.format(mWeek[0])+" / "+mFormatMonth.format(mWeek[6]);
-        else
-            monthText=mFormatMonth.format(mWeek[0]);
+        //TODO change constants
+        String monthText=mFormatMonth.format(mMonth[10]);
+        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[iDaysMonthMax - 10]));
 
-        mMonthText.setText(monthText+" "+mFormatYear.format(mWeek[6]));
     }
 
     public void setOnDispatchDateSelectListener(OnDispatchDateSelectListener v) {
