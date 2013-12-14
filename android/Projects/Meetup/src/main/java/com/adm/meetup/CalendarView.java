@@ -10,26 +10,26 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class CalendarView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-    public static final int iDaysMonthMax = 31;
-    private GridView mGrid;
+    public static final int iDaysMonthMax = 39; //TODO How to do it dynamically?
+    private GridView                        mGrid;
     private View 							mConvertView;
-    private GregorianCalendar mCalendar;
-    private Date[] mMonth;
-    private Context mContext;
-    private TextView mMonthText;
-    private SimpleDateFormat mFormatMonth;
+    private GregorianCalendar               mCalendar;
+    private Date[]                          mMonth;
+    private Context                         mContext;
+    private TextView                        mMonthText;
+    private SimpleDateFormat                mFormatMonth;
     private SimpleDateFormat 				mFormatDay;
     private SimpleDateFormat 				mFormatYear;
     private OnDispatchDateSelectListener 	mListenerDateSelect;
-    private Button mArrowRight;
+    private Button                          mArrowRight;
     private Button							mArrowLeft;
     private CalendarAdapter					mAdapter;
     public interface OnDispatchDateSelectListener {
@@ -69,14 +69,18 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     }
 
     private void implementMonth() {
+
+        Arrays.fill(mMonth, null);
         int dateMonth = mCalendar.get(Calendar.MONTH),
                 currentMonth = mCalendar.get(Calendar.MONTH),
                 i=0;
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_WEEK) -1));
         while (dateMonth == currentMonth) {
             mMonth[i]=mCalendar.getTime();
             mCalendar.add(Calendar.DAY_OF_YEAR, 1);
 
-            currentMonth = mCalendar.get(Calendar.MONTH);
+            if(i>8){
+            currentMonth = mCalendar.get(Calendar.MONTH);}
             i++;
         }
     }
@@ -88,14 +92,12 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mListenerDateSelect.onDispatchDateSelect(mMonth[arg2]);
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch(v.getId())
         {
             case R.id.calendar_arrow_left:
-                subWeek();
+                subMonth();
                 break;
             case R.id.calendar_arrow_right:
                 addMonth();
@@ -105,6 +107,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     private void addMonth()
     {
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
         implementMonth();
         mAdapter.notifyDataSetChanged();
 
@@ -121,9 +124,9 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         }
     }
 
-    private void subWeek()
+    private void subMonth()
     {
-        mCalendar.add(Calendar.DAY_OF_YEAR, -32);
+        mCalendar.add(Calendar.DAY_OF_YEAR, -37);
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
         implementMonth();
 
@@ -137,13 +140,11 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     {
         //TODO change constants
         String monthText=mFormatMonth.format(mMonth[10]);
-        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[iDaysMonthMax - 10]));
+        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[10]));
 
     }
 
     public void setOnDispatchDateSelectListener(OnDispatchDateSelectListener v) {
         mListenerDateSelect = v;
     }
-
-
 }

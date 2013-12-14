@@ -41,6 +41,17 @@
     </FrameLayout>
     <GridView
         android:numColumns="7"
+        android:id="@+id/calendar_names_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:listSelector="@null"
+        android:background="#fff"
+        />
+    <GridView
+        android:numColumns="7"
         android:id="@+id/calendar_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

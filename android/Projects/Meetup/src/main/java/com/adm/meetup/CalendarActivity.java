@@ -1,5 +1,6 @@
 package com.adm.meetup;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,8 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
     private TextView mTextDate;
@@ -21,6 +39,8 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        new GetHolidaysTask().execute();
 
 
         mTextDate=(TextView)findViewById(R.id.display_date);
@@ -77,6 +97,79 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
             return rootView;
         }
+    }
+
+    private class GetHolidaysTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            // setProgressBarIndeterminateVisibility(true);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // TODO Auto-generated method stub
+            try {
+                // Values to add
+
+                /*SharedPreferences preferences = getSharedPreferences(
+                        PREFERENCES_FILE, Context.MODE_PRIVATE);
+
+                name = preferences.getString(PREFERENCES_USER_NAME, null);*/
+
+                List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+
+                pairs.add(new BasicNameValuePair("year", "2013"));
+                pairs.add(new BasicNameValuePair("country", "es"));
+
+                HttpClient client = new DefaultHttpClient();
+
+                HttpGet request = new HttpGet(
+                        "http://meetup.apiary.io/holidays?"
+                                + URLEncodedUtils.format(pairs, "utf-8"));
+
+                HttpResponse response = client.execute(request);
+
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    InputStream stream = entity.getContent();
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(stream));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    stream.close();
+                    String responseString = sb.toString();
+                    System.out.println(responseString);
+                }
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            /*catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // TODO Auto-generated method stub
+        }
+
     }
 
 }
