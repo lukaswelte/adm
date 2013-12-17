@@ -9,9 +9,8 @@
         "sails-disk": "~0.9.0",
         "ejs": "0.8.4",
         "optimist": "0.3.4",
-		"passport": "~0.1.17",
-		"passport-http-bearer" : "1.0.1",
-		"bcrypt": "~0.7.6"
+		"password-hash": "~1.2.1",
+        "geolib": "~1.3.1"
     },
     "scripts": {
         "start": "node app.js",

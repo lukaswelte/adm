@@ -21,7 +21,11 @@ module.exports = {
     	type: 'date',
 		required: true
     },
-    notifydate: 'date'  
+    notifydate: 'date',
+	userid: {
+		type: 'integer',
+		required: true
+	}  
     
   }
 

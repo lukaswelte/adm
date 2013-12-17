@@ -7,15 +7,38 @@
  * @docs        :: http://sailsjs.org/#!documentation/policies
  *
  */
-module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.isAuthenticated()) {
-    return next();
+  var users = [
+      { id: 1, username: 'bob', token: '123456789', email: 'bob@example.com' }
+    , { id: 2, username: 'joe', token: 'abcdefghi', email: 'joe@example.com' }
+  ]; 
+
+  function findByToken(token, fn) {
+	  User.findOneByToken(token).done(function(err, user) {
+
+	    // Error handling
+	    if (err) {
+	      return fn(err,null);  
+
+	    // The User was found successfully!
+	    } else if (!user || user.length<=0) {
+	    	return fn(null,null);
+	    } else {
+	      return fn(null,user);
+	    }
+	  });
   }
 
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+module.exports = function(req, res, next) {
+    findByToken(req.param("token"), function(err, user) {
+      if (err) { 
+		  return res.forbidden('You are not permitted to perform this action.');
+	  }
+      if (!user) { 
+		  return res.forbidden('You are not permitted to perform this action.'); 
+	  }
+	  delete req.query["token"];
+	  req.user = user;
+      return next();
+    });
 };

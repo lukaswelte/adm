@@ -24,31 +24,36 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to ExamController)
    */
-  _config: {}
+  _config: {},
+  
+  create: function(req, res) {
+	  Exam.create({
+		  "name": req.param("name"),
+		  "date": req.param("date"),
+		  "userid": req.user.id,
+		  "notifydate": req.param("notifydate")
+	  }).done(function(err, exam) {
+
+  // Error handling
+  if (err) {
+    res.json(err);
+
+  // The User was created successfully!
+  } else {
+	  res.json(exam);
+  }
+  });
+},
+
+read: function(req,res) {
+  Exam.find({"userid":req.user.id}).done(function(err,exams){
+	  if (err){
+
+		  res.json(err);
+	  } else {
+		  res.json(exams);
+	  }
+  });
+}
 
 };
-
-function nextPrime(n) {
-  var smaller;
-  n = Math.floor(n);
-
-  if (n >= 2) {
-    smaller = 1;
-    while (smaller * smaller <= n) {
-      n++;
-      smaller = 2;
-      while ((n % smaller > 0) && (smaller * smaller <= n)) {
-        smaller++;
-      }
-    }
-    return n;
-  } else {
-    return 2;
-  }
-}
-
-function add(n,a) {
-	return n+a;
-}
-module.exports.add = add;
-module.exports.nextPrime = nextPrime;

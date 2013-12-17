@@ -4,18 +4,11 @@
  * @module      :: Model
  * @description :: A short summary of how this model works and what it represents.
  *
- */
-var bcrypt = require('bcrypt');
- 
+ */ 
 module.exports = {
  
   attributes: {
-	  userid: {
-		  type: 'string',
-		  require: true,
-		  unique: true
-	  },
-    username: {
+    email: {
       type: 'string',
       required: true,
       unique: true
@@ -27,25 +20,14 @@ module.exports = {
 	token: {
 		type: 'string'
 	},
+  friends: 'array',
+	status: 'string',
+	statuslocation: 'json', //e.g. {"latitude": 51.5103, "longitude": 7.49347} 
+	appartmentlocation: 'json', //e.g. {"latitude": 51.5103, "longitude": 7.49347} 
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
       return obj;
     }
-  },
- 
-  beforeCreate: function(user, cb) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        }else{
-          user.password = hash;
-          cb(null, user);
-        }
-      });
-    });
   }
- 
 };
