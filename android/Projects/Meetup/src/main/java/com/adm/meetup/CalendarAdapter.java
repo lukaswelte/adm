@@ -64,7 +64,7 @@ public class CalendarAdapter extends BaseAdapter {
 
         if(mMonth[position] != null)
         {
-            if (position <7)
+            if (position < 7) //magic number
             {
                 holder.tvDay.setText(mFormatDay.format(mMonth[position]));
             }

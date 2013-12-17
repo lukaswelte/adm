@@ -40,8 +40,8 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        new GetHolidaysTask().execute();
-
+        //GetHolidaysTask task = new GetHolidaysTask(); //TODO: Refactor to Generic Network Service
+        //task.execute();
 
         mTextDate=(TextView)findViewById(R.id.display_date);
 
@@ -139,7 +139,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
                     StringBuilder sb = new StringBuilder();
                     String line = null;
                     while ((line = reader.readLine()) != null) {
-                        sb.append(line + "\n");
+                        sb.append(line).append("\n");
                     }
                     stream.close();
                     String responseString = sb.toString();

@@ -18,11 +18,11 @@ import java.util.GregorianCalendar;
 
 public class CalendarView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-    public static final int iDaysMonthMax = 39; //TODO How to do it dynamically?
+    public static final int iDaysMonthMax = 39; //TODO How to do it dynamically? //not needed
     private GridView                        mGrid;
     private View 							mConvertView;
     private GregorianCalendar               mCalendar;
-    private Date[]                          mMonth;
+    private Date[]                          mMonth; //refactor to arraylist
     private Context                         mContext;
     private TextView                        mMonthText;
     private SimpleDateFormat                mFormatMonth;
@@ -72,12 +72,12 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         int dateMonth = mCalendar.get(Calendar.MONTH),
                 currentMonth = mCalendar.get(Calendar.MONTH),
                 i=0;
-        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_WEEK) -1));
+        mCalendar.add(Calendar.DAY_OF_YEAR, - (mCalendar.get(Calendar.DAY_OF_WEEK) -1));
         while (dateMonth == currentMonth) {
             mMonth[i]=mCalendar.getTime();
             mCalendar.add(Calendar.DAY_OF_YEAR, 1);
 
-            if(i>8){
+            if(i>8){ //do not use magic numbers uncommented
             currentMonth = mCalendar.get(Calendar.MONTH);}
             i++;
         }
@@ -86,8 +86,8 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     @Override
     public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
         clearBackground();
-        v.setBackgroundColor(Color.parseColor("#3A9CE9"));
-        mListenerDateSelect.onDispatchDateSelect(mMonth[arg2]);
+        v.setBackgroundColor(Color.parseColor("#3A9CE9")); //constant
+        mListenerDateSelect.onDispatchDateSelect(mMonth[arg2]); //what is arg2?
     }
 
     @Override
@@ -106,9 +106,12 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     private void addMonth()
     {
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
+        refreshCalendar();
+    }
+
+    private void refreshCalendar() {
         implementMonth();
         mAdapter.notifyDataSetChanged();
-
         setSelectedMonthText();
         clearBackground();
     }
@@ -125,21 +128,16 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     private void subMonth()
     {
-        mCalendar.add(Calendar.DAY_OF_YEAR, -37);
-        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
-        implementMonth();
-
-        setSelectedMonthText();
-        mAdapter.notifyDataSetChanged();
-
-        clearBackground();
+        mCalendar.add(Calendar.DAY_OF_YEAR, -37); //magic number
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) - 1));
+        refreshCalendar();
     }
 
     private void setSelectedMonthText()
     {
         //TODO change constants
-        String monthText=mFormatMonth.format(mMonth[10]);
-        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[10]));
+        String monthText=mFormatMonth.format(mMonth[10]); //magic number
+        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[10])); //magic number
 
     }
 
