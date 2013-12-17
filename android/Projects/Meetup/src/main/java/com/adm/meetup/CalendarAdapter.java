@@ -53,12 +53,8 @@ public class CalendarAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView		= mInflater.inflate(R.layout.view_calendar_day, null);
             holder			= new ViewHolder();
-            /*
             if(convertView.findViewById(R.id.tv_day) != null) {
-            holder.tvDay 	= (TextView)  convertView.findViewById(R.id.tv_day);}*/
-            for(int i=0; i<7;i++){
-
-            }
+            holder.tvDay 	= (TextView)  convertView.findViewById(R.id.tv_day);}
             if(convertView.findViewById(R.id.tv_number) != null){
             holder.tvNumber	= (TextView)  convertView.findViewById(R.id.tv_number);}
             convertView.setTag(holder);
@@ -68,7 +64,10 @@ public class CalendarAdapter extends BaseAdapter {
 
         if(mMonth[position] != null)
         {
-        //holder.tvDay.setText(mFormatDay.format(mMonth[position]));
+            if (position <7)
+            {
+                holder.tvDay.setText(mFormatDay.format(mMonth[position]));
+            }
         holder.tvNumber.setText(mFormatNumber.format(mMonth[position]));
         }
         return convertView;
