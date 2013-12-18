@@ -1,6 +1,7 @@
 package com.adm.meetup;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
@@ -11,13 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 public class CalendarAdapter extends BaseAdapter {
 
+    public static final int iDaysOfWeek = 7;
     private Context 			mContext;
-    private Date[]              mMonth;
+    private ArrayList<Date>     mMonth;
     private SimpleDateFormat 	mFormatNumber;
     private SimpleDateFormat 	mFormatDay;
     private LayoutInflater		mInflater;
 
-    public CalendarAdapter(Context _context, Date[] _month) {
+    public CalendarAdapter(Context _context, ArrayList<Date> _month) {
         mContext 		= _context;
         mMonth          = _month;
         mFormatNumber	= new SimpleDateFormat("d");
@@ -32,7 +34,7 @@ public class CalendarAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mMonth.length;
+        return mMonth.size();
     }
 
     @Override
@@ -62,13 +64,14 @@ public class CalendarAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(mMonth[position] != null)
+        if(mMonth.get(position) != null)
         {
-            if (position < 7) //magic number
+            /*if (position < iDaysOfWeek)
             {
-                holder.tvDay.setText(mFormatDay.format(mMonth[position]));
-            }
-        holder.tvNumber.setText(mFormatNumber.format(mMonth[position]));
+                holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
+            }*/
+        holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
+        holder.tvNumber.setText(mFormatNumber.format(mMonth.get(position)));
         }
         return convertView;
     }

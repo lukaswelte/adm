@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,11 +19,10 @@ import java.util.GregorianCalendar;
 
 public class CalendarView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-    public static final int iDaysMonthMax = 39; //TODO How to do it dynamically? //not needed
     private GridView                        mGrid;
     private View 							mConvertView;
     private GregorianCalendar               mCalendar;
-    private Date[]                          mMonth; //refactor to arraylist
+    private ArrayList<Date>                 mMonthAL;
     private Context                         mContext;
     private TextView                        mMonthText;
     private SimpleDateFormat                mFormatMonth;
@@ -31,9 +31,11 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     private Button                          mArrowRight;
     private Button							mArrowLeft;
     private CalendarAdapter					mAdapter;
+
     public interface OnDispatchDateSelectListener {
         public void onDispatchDateSelect(Date date);
     }
+
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext			= context;
@@ -57,24 +59,24 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mCalendar.setTime(new Date());
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
 
-        mMonth =new Date[iDaysMonthMax];
+        mMonthAL = new ArrayList<Date>();
         implementMonth();
         setSelectedMonthText();
 
-        mAdapter=new CalendarAdapter(mContext, mMonth);
+        mAdapter=new CalendarAdapter(mContext, mMonthAL);
 
         mGrid.setAdapter(mAdapter);
     }
 
     private void implementMonth() {
 
-        Arrays.fill(mMonth, null);
+        mMonthAL.clear();
         int dateMonth = mCalendar.get(Calendar.MONTH),
                 currentMonth = mCalendar.get(Calendar.MONTH),
                 i=0;
         mCalendar.add(Calendar.DAY_OF_YEAR, - (mCalendar.get(Calendar.DAY_OF_WEEK) -1));
         while (dateMonth == currentMonth) {
-            mMonth[i]=mCalendar.getTime();
+            mMonthAL.add(mCalendar.getTime());
             mCalendar.add(Calendar.DAY_OF_YEAR, 1);
 
             if(i>8){ //do not use magic numbers uncommented
@@ -87,7 +89,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
         clearBackground();
         v.setBackgroundColor(Color.parseColor("#3A9CE9")); //constant
-        mListenerDateSelect.onDispatchDateSelect(mMonth[arg2]); //what is arg2?
+        mListenerDateSelect.onDispatchDateSelect(mMonthAL.get(arg2)); //what is arg2?
     }
 
     @Override
@@ -136,8 +138,8 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     private void setSelectedMonthText()
     {
         //TODO change constants
-        String monthText=mFormatMonth.format(mMonth[10]); //magic number
-        mMonthText.setText(monthText + " " + mFormatYear.format(mMonth[10])); //magic number
+        String monthText=mFormatMonth.format(mMonthAL.get(10)); //magic numb)er
+        mMonthText.setText(monthText + " " + mFormatYear.format(mMonthAL.get(10))); //magic number
 
     }
 
