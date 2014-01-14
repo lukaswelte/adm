@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 public class CalendarAdapter extends BaseAdapter {
 
@@ -30,6 +34,8 @@ public class CalendarAdapter extends BaseAdapter {
     private static class ViewHolder {
         public TextView		tvDay;
         public TextView		tvNumber;
+        public LinearLayout lLayout;
+        public Layout layout;
     }
 
     @Override
@@ -66,13 +72,21 @@ public class CalendarAdapter extends BaseAdapter {
 
         if(mMonth.get(position) != null)
         {
-            /*if (position < iDaysOfWeek)
+            String sNumberDay = mFormatNumber.format(mMonth.get(position));
+            if(!(Integer.parseInt(sNumberDay) > 7 && position < 7))
             {
-                holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
-            }*/
-        holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
-        holder.tvNumber.setText(mFormatNumber.format(mMonth.get(position)));
+
+                {
+                    holder.tvNumber.setText(sNumberDay);
+                    holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
+                }
+            }
+            else {
+                holder.tvNumber.setText("");
+                holder.tvDay.setText("");
+            }
         }
+
         return convertView;
     }
 
