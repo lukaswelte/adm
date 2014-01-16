@@ -5,14 +5,15 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.MatrixCursor.RowBuilder;
 import android.net.Uri;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -20,8 +21,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.json.JSONArray;
+
 
 public class EventManager extends ContentProvider implements IEventManager {
 	public HttpClient client = new DefaultHttpClient();
@@ -86,11 +89,6 @@ public class EventManager extends ContentProvider implements IEventManager {
 
         int match = sURIMatcher.match(uri);
 
-        String[] columns = {"data"};
-        MatrixCursor cursor = new MatrixCursor(columns);
-
-        //String encoding = Base64.encodeToString("API_KEY".getBytes(),2);
-
         StringBuilder baseurl= new StringBuilder(EventManager.SERVER);
         switch(match) {
             case    1:
@@ -98,31 +96,35 @@ public class EventManager extends ContentProvider implements IEventManager {
                 break;
         }
 
-        AjaxCallback<String> cb = new AjaxCallback<String>();
-        cb.url(baseurl.toString()).type(String.class).weakHandler(this,"stringCb");
-        cb.header("Authorization", "Basic " + encoding);
-
-        AQuery aq = new AQuery(getContext());
-
-        aq.sync(cb);
-
-        String jo = cb.getResult();
-        AjaxStatus status = cb.getStatus();
-
-        //Log.i(TAG, jo);
-        //Log.i(TAG,status.toString());
+        String s = "{"
+                + "  \"query\": \"Pizza\", "
+                + "  \"locations\": [ 94043, 90210 ] "
+                + "}";
+        JSONObject object;
+        String[] columnNames = {"id", "name"};
+        MatrixCursor cursor = new MatrixCursor(columnNames);
+        MatrixCursor.RowBuilder row = cursor.newRow();
 
         try {
-            JSONObject workspaceWrapper = (JSONObject) new JSONTokener(jo).nextValue();
-            JSONArray  workspaces       = workspaceWrapper.getJSONArray("data");
+            object = (JSONObject) new JSONTokener(s).nextValue();
+            String query = object.getString("query");
+            JSONArray locations = object.getJSONArray("locations");
+            BaseEvent e = new Event();
+            String name = "event";
+            String location = "Event location";
+            Long id = Long.MIN_VALUE;
+            Date date = new Date(2013,12,28);
+            Date dueDate = new Date(2013,12,20);
 
-            for (int i = 0; i < workspaces.length(); i++) {
-                String[] workspace = {workspaces.getJSONObject(i).toString()};
-                cursor.addRow(workspace);
-            }
-        }
-        catch (JSONException e) {
-            Log.e(TAG, "Failed to parse JSON.", e);
+            e.setDate(date);
+            e.setDueDate(dueDate);
+            e.setId(id);
+            e.setName(name);
+            e.setLocation(location);
+
+            row.add("asd", e);
+        } catch (Exception e) {
+
         }
 
         return cursor;
