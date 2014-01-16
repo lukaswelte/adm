@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location : "
+        android:id="@+id/textView4"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignRight="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type : "
+        android:id="@+id/textView3"
+        android:layout_gravity="right"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create an Event"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Date : "
+        android:id="@+id/startDateLabel"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentLeft="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/textView"
+        android:layout_toRightOf="@+id/textView3"
+         />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_alignRight="@+id/date_start_date_picker" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Date :"
+        android:id="@+id/endDateLabel"
+        android:layout_below="@+id/date_start_time_picker"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="39dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="set time"
+        android:id="@+id/date_end_time_picker"
+        android:layout_alignTop="@+id/endDateLabel"
+        android:layout_alignLeft="@+id/date_start_time_picker" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set date"
+        android:id="@+id/date_end_date_picker"
+        android:layout_alignTop="@+id/date_end_time_picker"
+        android:layout_alignLeft="@+id/date_start_date_picker" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="set time"
+        android:id="@+id/date_start_time_picker"
+        android:layout_alignTop="@+id/startDateLabel"
+        android:layout_toRightOf="@+id/startDateLabel" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="set date"
+        android:id="@+id/date_start_date_picker"
+        android:layout_alignTop="@+id/date_start_time_picker"
+        android:layout_toRightOf="@+id/textView4" />
+
+
+
+</RelativeLayout>

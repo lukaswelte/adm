@@ -1,13 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-     >
 
-    <!--
-    <item android:id="@+id/action_plus"
+    >
+
+
+    <item android:id="@+id/action_new_event"
         android:icon="@drawable/ic_action_add_alarm"
-        android:title="@string/app_name"
+        android:title="New event"
         android:showAsAction="always"
         app:showAsAction="always"
-        />-->
+        />
 
 </menu>

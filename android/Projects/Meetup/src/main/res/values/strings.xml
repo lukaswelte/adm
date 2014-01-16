@@ -5,4 +5,52 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- For the sideBar-->
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Event</item>
+        <item >Profile</item>
+        <item >Friends</item>
+        <item >Settings</item>
+        <item >Team</item>
+        <item>About</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home_sidebar</item>
+        <item>@drawable/ic_event_sidebar</item>
+        <item>@drawable/ic_profile_sidebar</item>
+        <item>@drawable/ic_friends_sidebar</item>
+        <item>@drawable/ic_settings_sidebar</item>
+        <item>@drawable/ic_team_sidebar</item>
+        <item>@drawable/ic_about_sidebar</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+
+    <!-- List icons event -->
+    <array name="list_event_icons">
+       <item> @drawable/sportevent</item>
+        <item>@drawable/partyevent</item>
+        <item>@drawable/tripevent</item>
+        <item> @drawable/musicevent</item>
+        <item> @drawable/sportevent</item>
+         <item>@drawable/tripevent</item>
+        <item>@drawable/partyevent</item>
+    </array>
+
+    <string-array name="event_categories">
+        <item>Sport</item>
+        <item>Party</item>
+        <item>Trip</item>
+        <item>Music</item>
+    </string-array>
+
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgCategorie"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title Event"
+        android:textStyle="bold"
+        android:id="@+id/titleEvent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/imgCategorie"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location : "
+        android:textStyle="bold"
+        android:id="@+id/labelLocation"
+        android:layout_below="@+id/titleEvent"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="a country and city"
+        android:id="@+id/location"
+        android:layout_alignTop="@+id/labelLocation"
+        android:layout_toRightOf="@+id/labelLocation" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description : "
+        android:textStyle="bold"
+        android:id="@+id/labelDescription"
+        android:layout_below="@+id/labelLocation"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="some description \n of the event \n with a large text"
+        android:id="@+id/description"
+        android:layout_below="@+id/labelDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+
+</RelativeLayout>

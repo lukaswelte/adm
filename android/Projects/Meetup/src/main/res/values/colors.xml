@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_color_sidebar">#333333</color>
+    <color name="background_color_sidebar_pressed">#000000</color>
+    <color name="sidebar_item_title">#E1E1E1</color>
+    <color name="sidebar_divider">#9F9F9F</color>
+</resources>
