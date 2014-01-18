@@ -12,26 +12,34 @@
         android:layout_height="wrap_content">
     </ListView>
 
-    <CheckBox
+    <RadioButton
         android:paddingTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Single"
-        android:id="@+id/checkBox_single"
+        android:id="@+id/radioButton_single"
         android:layout_below="@id/list_account_data"/>
-    <CheckBox
+    <RadioButton
         android:paddingTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="In a relationship"
-        android:id="@+id/checkBox_couple"
-        android:layout_below="@id/checkBox_single"/>
+        android:id="@+id/radioButton_couple"
+        android:layout_below="@id/radioButton_single"/>
     <CheckBox
         android:paddingTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Location"
+        android:text="Disable Location Services"
         android:id="@+id/checkBox_location"
-        android:layout_below="@id/checkBox_couple"/>
+        android:layout_below="@id/radioButton_couple"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_above="@+id/radioButton_single"
+        android:layout_alignRight="@+id/checkBox_location" />
+
 
 </RelativeLayout>
