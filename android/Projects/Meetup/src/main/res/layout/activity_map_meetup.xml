@@ -1,0 +1,90 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapActivity" >
+
+    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:name="com.google.android.gms.maps.MapFragment"
+        tools:layout="@layout/fragment_people_near_you" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_list_selector"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="#80000000"
+        android:padding="4dp" >
+
+        <ToggleButton
+            android:id="@+id/map_meetup_toggle_party_mode"
+            android:textSize="@dimen/map_meetup_radio_text_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textOff="@string/map_meetup_party_mode"
+            android:textOn="@string/map_meetup_party_mode"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_weight="1"/>
+            <!--android:background="@drawable/shape_radiobutton"-->
+            <!--android:textColor="@color/textcolor_radiobutton"-->
+        <View
+            android:id="@+id/VerticalLine"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+
+        <ToggleButton
+            android:id="@+id/map_meetup_toggle_whos_partying"
+            android:textSize="@dimen/map_meetup_radio_text_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:textOff="@string/map_meetup_whos_partying"
+            android:textOn="@string/map_meetup_whos_partying"
+            android:layout_weight="1"></ToggleButton>
+            <!--android:background="@drawable/shape_radiobutton2"-->
+            <!--android:textColor="@color/textcolor_radiobutton" -->
+
+
+        <View
+            android:id="@+id/VerticalLine"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+
+        <ToggleButton
+            android:id="@+id/map_meetup_toggle_events"
+            android:layout_width="0dp"
+            android:textSize="@dimen/map_meetup_radio_text_size"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/map_meetup_events"
+            android:textOff="@string/map_meetup_events"
+            android:textOn="@string/map_meetup_events"
+            android:layout_weight="1"></ToggleButton>
+            <!--android:background="@drawable/shape_radiobutton2"-->
+            <!--android:textColor="@color/textcolor_radiobutton"-->
+        <View
+            android:id="@+id/VerticalLine"
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="#aaa" />
+
+        <ToggleButton
+            android:id="@+id/map_meetup_toggle_friends"
+            android:layout_width="0dp"
+            android:textSize="@dimen/map_meetup_radio_text_size"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:textOff="@string/map_meetup_friends"
+            android:textOn="@string/map_meetup_friends"
+            android:layout_weight="1"></ToggleButton>
+            <!--android:background="@drawable/shape_radiobutton3"-->
+            <!--android:textColor="@color/textcolor_radiobutton" -->
+    </RadioGroup>
+</FrameLayout>

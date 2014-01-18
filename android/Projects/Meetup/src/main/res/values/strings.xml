@@ -4,5 +4,12 @@
     <string name="app_name">Meetup</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_people_near_you">PeopleNearYouActivity</string>
+    <string name="title_activity_map_meetup">Meetup Map</string>
+    <string name="map_meetup_youre_here">Moji is here !</string>
+    <string name="map_meetup_party_mode">Party mode</string>
+    <string name="map_meetup_events">Events</string>
+    <string name="map_meetup_whos_partying">Who\'s partying?</string>
+    <string name="map_meetup_friends">Friends</string>
 
 </resources>
