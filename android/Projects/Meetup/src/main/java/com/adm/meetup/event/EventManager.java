@@ -40,8 +40,7 @@ public class EventManager implements IEventManager {
         contentProvider = new EventDbContentProvider(context);
     }
 
-    public EventManager(Context context, ContentProvider contentProvider) {
-        contentProvider = new EventDbContentProvider(context);
+    public EventManager(ContentProvider contentProvider) {
         this.contentProvider = contentProvider;
     }
 
@@ -60,8 +59,7 @@ public class EventManager implements IEventManager {
         String[] selectionArgs = null;
         String sortOrder = "";
 
-        Cursor result = this.contentProvider.query(uri, projection, selection, selectionArgs,
-                sortOrder);
+        Cursor result = this.contentProvider.query(uri, projection, selection, selectionArgs, sortOrder);
         if (result != null ) {
             if  (result.moveToFirst()) {
                 event = new Event();

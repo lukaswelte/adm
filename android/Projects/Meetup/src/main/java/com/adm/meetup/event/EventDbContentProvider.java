@@ -1,16 +1,12 @@
 package com.adm.meetup.event;
 
-import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Created by jan on 18.1.14.
@@ -26,15 +22,12 @@ public class EventDbContentProvider extends EventContentProvider {
 
     @Override
     public boolean onCreate() {
-        Log.i("acontext", this.context.toString());
         db = new EventDatabase(this.context);
         return false;
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection,
-                        String selection, String[] selectionArgs,
-                        String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = this.db.getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         switch (sURIMatcher.match(uri)) {
@@ -43,63 +36,45 @@ public class EventDbContentProvider extends EventContentProvider {
                 break;
             case EVENTS_ID:
                 builder.setTables(EventDatabase.Tables.Events.TABLE);
-                builder.appendWhere(EventDatabase.Tables.Events.Columns.ID + " = " +
-                        uri.getLastPathSegment());
+                builder.appendWhere(EventDatabase.Tables.Events.Columns.ID + " = " + uri.getLastPathSegment());
                 break;
             default:
-                throw new IllegalArgumentException(
-                        "Unsupported URI: " + uri);
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
-        Cursor cursor =
-                builder.query(
-                        db,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+        Cursor cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 
-        cursor.setNotificationUri(
-                this.context.getContentResolver(),
-                uri);
+        cursor.setNotificationUri(this.context.getContentResolver(), uri);
 
         return cursor;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values)  {
-        Log.i("acontext", "acontex");
-        Log.i("acontext", this.context.toString());
         SQLiteDatabase db;
         db = this.db.getWritableDatabase();
-        if (sURIMatcher.match(uri) == EVENTS) {
-            long id =
-                    db.insert(
-                            EventDatabase.Tables.Events.TABLE,
-                            null,
-                            values);
-            return getUriForId(id, uri);
-        } else {
-            long id =
-                    db.insertWithOnConflict(
-                            EventDatabase.Tables.Events.TABLE,
-                            null,
-                            values,
-                            SQLiteDatabase.CONFLICT_REPLACE);
-            return getUriForId(id, uri);
+        Uri ret;
+        Long id;
+        switch(sURIMatcher.match(uri)) {
+            case EVENTS:
+                id = db.insert(EventDatabase.Tables.Events.TABLE, null, values);
+                ret = getUriForId(id, uri);
+             break;
+            case EVENTS_ID:
+                id = db.insertWithOnConflict(EventDatabase.Tables.Events.TABLE, null, values,SQLiteDatabase.CONFLICT_REPLACE);
+                ret = getUriForId(id, uri);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
+        return ret;
     }
 
     private Uri getUriForId(long id, Uri uri) {
         Uri itemUri = ContentUris.withAppendedId(uri, id);
         if (id > 0) {
-            this.context.
-                    getContentResolver().
-                    notifyChange(itemUri, null);
+            this.context.getContentResolver().notifyChange(itemUri, null);
         }
         return itemUri;
-        //throw new SQLException("Problem while inserting into uri: " + uri);
     }
 
     @Override
@@ -108,16 +83,10 @@ public class EventDbContentProvider extends EventContentProvider {
         int delCount = 0;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                delCount = db.delete(
-                        EventDatabase.Tables.Events.TABLE,
-                        selection,
-                        selectionArgs);
+                delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
                 break;
             case EVENTS_ID:
-                delCount = db.delete(
-                        EventDatabase.Tables.Events.TABLE,
-                        selection,
-                        selectionArgs);
+                delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -134,19 +103,10 @@ public class EventDbContentProvider extends EventContentProvider {
         int updateCount = 0;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                updateCount = db.update(
-                        EventDatabase.Tables.Events.TABLE,
-                        values,
-                        selection,
-                        selectionArgs);
+                updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
                 break;
             case EVENTS_ID:
-                Log.i("eventmanager", selection.toString());
-                updateCount = db.update(
-                        EventDatabase.Tables.Events.TABLE,
-                        values,
-                        selection,
-                        selectionArgs);
+                updateCount = db.update(EventDatabase.Tables.Events.TABLE, values,selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);

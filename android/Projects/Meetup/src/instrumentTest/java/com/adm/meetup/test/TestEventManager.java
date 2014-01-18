@@ -25,8 +25,8 @@ import com.adm.meetup.event.EventManager;
 /**
  * Created by jan on 25.11.13.
  */
-public class TestEventManager extends AndroidTestCase {
-    private EventManager manager;
+abstract public class TestEventManager extends AndroidTestCase {
+    protected EventManager manager;
 
     @Override
     public void setContext(Context context) {
@@ -51,9 +51,7 @@ public class TestEventManager extends AndroidTestCase {
     }
 
 
-    public void setUp() throws SQLException {
-        manager = new EventManager(getContext());
-    }
+    abstract public void setUp() throws SQLException;
 
     public void tearDown() {
     }
@@ -239,7 +237,6 @@ public class TestEventManager extends AndroidTestCase {
         manager.createEvent(Event);
 
         Event result = manager.getEventById(Event.getId());
-        Log.i("eventmanager", result.getId().toString());
 
         assertNotSame(Event, result);
         assertDeepEquals(Event, result);
