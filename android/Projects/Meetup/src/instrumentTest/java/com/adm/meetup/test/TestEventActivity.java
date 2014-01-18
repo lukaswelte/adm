@@ -23,7 +23,7 @@ public class TestEventActivity extends ActivityInstrumentationTestCase2<EventAct
     }
 
     public void testPreconditions() throws Exception {
-        assertNotNull(getActivity());
+
     }
 
     @Override

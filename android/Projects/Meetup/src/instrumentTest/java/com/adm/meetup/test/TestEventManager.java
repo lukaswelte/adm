@@ -1,8 +1,12 @@
 package com.adm.meetup.test;
 
 import android.content.ContentProvider;
+import android.content.Context;
+import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.AndroidTestCase;
 import android.test.ProviderTestCase2;
+import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.adm.meetup.EventActivity;
 import com.adm.meetup.MainActivity;
@@ -20,11 +25,23 @@ import com.adm.meetup.event.EventManager;
 /**
  * Created by jan on 25.11.13.
  */
-public class TestEventManager extends ActivityInstrumentationTestCase2<EventActivity> {
+public class TestEventManager extends AndroidTestCase {
     private EventManager manager;
 
-    public TestEventManager() {
-        super(EventActivity.class);
+    @Override
+    public void setContext(Context context) {
+        super.setContext(context);
+
+        long endTime = SystemClock.elapsedRealtime() + TimeUnit.SECONDS.toMillis(2);
+
+        while (null == context.getApplicationContext()) {
+
+            if (SystemClock.elapsedRealtime() >= endTime) {
+                fail();
+            }
+
+            SystemClock.sleep(16);
+        }
     }
 
     public static void setUpClass() throws Exception {
@@ -35,7 +52,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
 
 
     public void setUp() throws SQLException {
-        manager = new EventManager();
+        manager = new EventManager(getContext());
     }
 
     public void tearDown() {
@@ -45,8 +62,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
      * Test of getEventById method, of class EventManagerImpl.
      */
     public void testGetEventById() {
-        assertNull(manager.getEventById(1l));
-
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Event name");
@@ -59,7 +75,6 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
         Long EventId = Event.getId();
 
         Event result = manager.getEventById(EventId);
-        assertEquals(Event, result);
         assertDeepEquals(Event, result);
     }
 
@@ -68,8 +83,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
      * Test of findAllEvents method, of class EventManagerImpl.
      */
     public void testGetEvents() {
-        assertTrue(manager.getEvents().isEmpty());
-
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Event name");
@@ -95,7 +109,6 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
         Collections.sort(actual, idComparator);
         Collections.sort(expected,idComparator);
 
-        assertEquals(expected, actual);
         assertDeepEquals(expected, actual);
     }
 
@@ -104,6 +117,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
      */
 
     public void testUpdateEvent() {
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Event name");
@@ -126,6 +140,8 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
         Event = manager.getEventById(EventId);
         Event.setName("Updated event");
         manager.updateEvent(Event);
+
+        Event = manager.getEventById(EventId);
         assertEquals("Updated event", Event.getName());
         assertEquals("location", Event.getLocation());
 
@@ -133,6 +149,8 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
         Event = manager.getEventById(EventId);
         Event.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
         manager.updateEvent(Event);
+
+        Event = manager.getEventById(EventId);
         assertEquals("Updated event", Event.getName());
         assertEquals("Vymyšlená ulice 300/4, 625 00 Brno", Event.getLocation());
 
@@ -141,7 +159,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
     }
 
     public void updateEventWithWrongAttributes() {
-
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Jan Jílek");
@@ -177,7 +195,7 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
     }
 
     public void deleteEventWithWrongAttributes() {
-
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Jan Jílek");
@@ -213,15 +231,16 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
      */
 
     public void testCreateEvent() {
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
-        Event.setName("Jan Jílek");
-        Event.setLocation("Fleischnerova, 635 00 Brno");
-
+        Event.setName("Event name");
+        Event.setLocation("location");
         manager.createEvent(Event);
 
         Event result = manager.getEventById(Event.getId());
-        assertEquals(Event, result);
+        Log.i("eventmanager", result.getId().toString());
+        //assertEquals(Event, result);
         assertNotSame(Event, result);
         assertDeepEquals(Event, result);
     }
@@ -231,13 +250,14 @@ public class TestEventManager extends ActivityInstrumentationTestCase2<EventActi
 
         @Override
         public int compare(Event c1, Event c2) {
-            return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
+        return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
         }
     };
     /**
      * Test of deleteEvent method, of class EventManagerImpl.
      */
     public void testDeleteEvent() {
+        manager.deleteEvents();
         Event Event = new Event();
         Event.setId(Long.MIN_VALUE);
         Event.setName("Jan Jílek");

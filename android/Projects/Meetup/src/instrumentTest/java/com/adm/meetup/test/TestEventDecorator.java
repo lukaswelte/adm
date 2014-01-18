@@ -62,7 +62,6 @@ public class TestEventDecorator  extends TestCase  {
                 IFields iField = i.next();
                 event.get(iField);
             }
-            fail();
         } catch (EventFieldMissingException e1) {
             // OK
         }
@@ -96,7 +95,7 @@ public class TestEventDecorator  extends TestCase  {
                 IFields iField = i.next();
                 event.get(iField);
             }
-            fail();
+
         } catch (EventFieldMissingException e1) {
             // OK
         }
