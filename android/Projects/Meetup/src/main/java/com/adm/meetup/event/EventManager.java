@@ -40,6 +40,11 @@ public class EventManager implements IEventManager {
         contentProvider = new EventDbContentProvider(context);
     }
 
+    public EventManager(Context context, ContentProvider contentProvider) {
+        contentProvider = new EventDbContentProvider(context);
+        this.contentProvider = contentProvider;
+    }
+
     public Event getEventById(Long id) {
         Event event = null;
         Uri uri = Uri.parse(EventDbContentProvider.EVENTS_ID_URI + id.toString());
