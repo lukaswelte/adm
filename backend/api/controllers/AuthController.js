@@ -62,5 +62,37 @@ module.exports = {
 	            }
 	        }
 	    });
+	},
+
+	facebook: function (req,res) {
+		    var email = req.param("facebookToken");
+	        var password = "facbookPassword";
+         
+	        User.findOneByEmail(email).done(function(err, usr){
+	            if (err) {
+	                res.send(500, { error: "DB Error" });
+	            } else if (usr) {
+	                var hasher = require("password-hash");
+	                if (hasher.verify(password, usr.password)) {
+	                    req.user = usr;
+	                    res.send(usr);
+	                }
+	            } else {
+					var hasher = require("password-hash");
+					password = hasher.generate(password);
+	                User.create({email: email, 
+						password: password,
+						friends: [],
+						token: token()
+					}).done(function(error, user) {
+	                if (error) {
+	                    res.send(500, {error: "DB Error"});
+	                } else {
+	                    req.user = user;
+	                    res.send(user);
+	                }
+	            });
+	        }
+	    });
 	}
 };
