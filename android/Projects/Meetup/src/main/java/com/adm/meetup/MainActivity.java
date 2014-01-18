@@ -22,46 +22,12 @@ import com.facebook.model.GraphUser;
 
 
 public class MainActivity extends ActionBarActivity {
-    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnLogout = (Button) findViewById(R.id.dashboard_logout_button);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(login);
-                // Closing dashboard screen
-                finish();
-            }
-        });
-
-        setupFacebook();
     }
-
-    private void setupFacebook() {
-        Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-        Settings.addLoggingBehavior(LoggingBehavior.REQUESTS);
-
-        Request request = Request.newGraphPathRequest(null, "/4", new Request.Callback() {
-            @Override
-            public void onCompleted(Response response) {
-                if(response.getError() != null) {
-                    Log.i("MainActivity", String.format("Error making request: %s", response.getError()));
-                } else {
-                    GraphUser user = response.getGraphObjectAs(GraphUser.class);
-                    Log.i("MainActivity", String.format("Name: %s", user.getName()));
-                }
-            }
-        });
-        request.executeAsync();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,12 +39,23 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (item.getItemId()) {
+            case R.id.action_account:
+                Intent intent1 = new Intent(this, AccountActivity.class);
+                startActivity(intent1);
+                return true;
+
+            case R.id.action_friends:
+                return true;
+
+            case R.id.action_logout:
+                ProfileActivity.onClickLogout();
+                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(login);
+                // Closing dashboard screen
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

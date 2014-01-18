@@ -15,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.app.ProgressDialog;
 
+import com.adm.meetup.ProfileActivity;
+
 
 import com.facebook.*;
 import com.facebook.model.*;
@@ -30,6 +32,8 @@ public class ProfileActivity extends ActionBarActivity {
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private static final int REAUTH_ACTIVITY_CODE = 100;
+
+    public static String EMAIL, FIRST_NAME, LAST_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class ProfileActivity extends ActionBarActivity {
         registerScreen = (TextView) findViewById(R.id.profile_signup_button);
 
         // Listening to register new account link
-        registerScreen.setOnClickListener(new View.OnClickListener() {
+        registerScreen.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to Register screen
@@ -104,7 +108,7 @@ public class ProfileActivity extends ActionBarActivity {
         }
     }
 
-    private void onClickLogout() {
+    public static void onClickLogout() {
         Session session = Session.getActiveSession();
         if (!session.isClosed()) {
             session.closeAndClearTokenInformation();
@@ -168,8 +172,11 @@ public class ProfileActivity extends ActionBarActivity {
                         if (session == Session.getActiveSession()) {
                             if (user != null) {
                                 // Set the Textview's text to the user's name.
-                                emailText.setText(user.asMap().get("email").toString());
-//user.getLastName()
+                                //emailText.setText(user.asMap().get("email").toString());
+                                EMAIL = user.asMap().get("email").toString();
+                                LAST_NAME = user.getLastName();
+                                FIRST_NAME = user.getFirstName();
+
                             }
                         }
                         if (response.getError() != null) {
@@ -201,6 +208,15 @@ public class ProfileActivity extends ActionBarActivity {
         }
     }
 
+    public static String getEmail(){
+        return EMAIL;
+    }
+    public static String getFIRST_NAME(){
+        return FIRST_NAME;
+    }
+    public static String getLAST_NAME(){
+        return LAST_NAME;
+    }
     private OnClickListener loginListener = new OnClickListener() {
         public void onClick(View v) {
 
@@ -209,6 +225,7 @@ public class ProfileActivity extends ActionBarActivity {
                     passwordText.getText().toString().equals("a")){
                 //responding to the User inputs
                 Toast.makeText(getApplicationContext(), "Connexion réussie !!!", Toast.LENGTH_LONG).show();
+                EMAIL = emailText.getText().toString();
                 Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(mainIntent);
             }else

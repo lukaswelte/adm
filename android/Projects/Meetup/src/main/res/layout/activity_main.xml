@@ -16,15 +16,6 @@
             android:gravity="center"
             android:layout_marginTop="20dip"/>
 
-        <Button android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Log Out"
-            android:textSize="20dip"
-            android:textColor="#21dbd4"
-            android:textStyle="bold"
-            android:id="@+id/dashboard_logout_button"
-            android:layout_marginTop="80dip"
-            android:background="@null"/>
 
     </LinearLayout>
 </ScrollView>

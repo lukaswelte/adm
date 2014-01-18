@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountActivity"
+    tools:ignore="MergeRootFrame">
+
+    <ListView
+        android:id="@+id/list_account_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    <CheckBox
+        android:paddingTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single"
+        android:id="@+id/checkBox_single"
+        android:layout_below="@id/list_account_data"/>
+    <CheckBox
+        android:paddingTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In a relationship"
+        android:id="@+id/checkBox_couple"
+        android:layout_below="@id/checkBox_single"/>
+    <CheckBox
+        android:paddingTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Location"
+        android:id="@+id/checkBox_location"
+        android:layout_below="@id/checkBox_couple"/>
+
+</RelativeLayout>
