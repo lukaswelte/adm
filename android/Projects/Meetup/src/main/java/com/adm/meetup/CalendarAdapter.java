@@ -16,7 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 public class CalendarAdapter extends BaseAdapter {
 
-    public static final int iDaysOfWeek = 7;
+    public static final int iDaysToCheck = 7;
+    public static final int iDaysOfPreviousMonth = 7;
     private Context 			mContext;
     private ArrayList<Date>     mMonth;
     private SimpleDateFormat 	mFormatNumber;
@@ -34,8 +35,6 @@ public class CalendarAdapter extends BaseAdapter {
     private static class ViewHolder {
         public TextView		tvDay;
         public TextView		tvNumber;
-        public LinearLayout lLayout;
-        public Layout layout;
     }
 
     @Override
@@ -73,17 +72,19 @@ public class CalendarAdapter extends BaseAdapter {
         if(mMonth.get(position) != null)
         {
             String sNumberDay = mFormatNumber.format(mMonth.get(position));
-            if(!(Integer.parseInt(sNumberDay) > 7 && position < 7))
-            {
 
-                {
-                    holder.tvNumber.setText(sNumberDay);
-                    holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
-                }
-            }
-            else {
-                holder.tvNumber.setText("");
-                holder.tvDay.setText("");
+            holder.tvNumber.setText(sNumberDay);
+            holder.tvDay.setText(mFormatDay.format(mMonth.get(position)));
+
+            //Reinitialisation of the color to black
+            holder.tvNumber.setTextColor(Color.BLACK);
+            holder.tvDay.setTextColor(Color.BLACK);
+
+            //Days of the previous month appears in grey
+            if(Integer.parseInt(sNumberDay) > iDaysOfPreviousMonth && position < iDaysToCheck)
+            {
+                    holder.tvNumber.setTextColor(Color.parseColor("#C1C9B7"));
+                    holder.tvDay.setTextColor(Color.parseColor("#C1C9B7"));
             }
         }
 

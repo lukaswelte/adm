@@ -19,6 +19,10 @@ import java.util.GregorianCalendar;
 
 public class CalendarView extends LinearLayout implements View.OnClickListener, AdapterView.OnItemClickListener{
 
+    public static final int iDaysOfWeek = 8;
+    public static final String sBackgrdColorItemClick = "#3A9CE9";
+    public static final int iArrayListMonthMax = 37;
+    public static final int iInMonth = 10;
     private GridView                        mGrid;
     private View 							mConvertView;
     private GregorianCalendar               mCalendar;
@@ -55,17 +59,30 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mArrowRight=(Button)mConvertView.findViewById(R.id.calendar_arrow_right);
         mArrowRight.setOnClickListener(this);
 
-        mCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
+        mCalendar =(GregorianCalendar)GregorianCalendar.getInstance();
         mCalendar.setTime(new Date());
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
+        String s = mCalendar.getTime().toString();
 
         mMonthAL = new ArrayList<Date>();
-        implementMonth();
-        setSelectedMonthText();
+        //implementMonth();
+        //setSelectedMonthText();
 
         mAdapter=new CalendarAdapter(mContext, mMonthAL);
 
         mGrid.setAdapter(mAdapter);
+    }
+
+    public GregorianCalendar getmCalendar() {
+        //Calender is set to the next month, manipulation to set it
+        GregorianCalendar returnCal = mCalendar;
+        returnCal.add(Calendar.DAY_OF_YEAR, - 1);
+        returnCal.add(Calendar.DAY_OF_YEAR, - mCalendar.get(Calendar.DAY_OF_MONTH)+1);
+        return returnCal;
+    }
+
+    public void setmCalendar(GregorianCalendar mCalendar) {
+        this.mCalendar = mCalendar;
     }
 
     private void implementMonth() {
@@ -76,20 +93,22 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
                 i=0;
         mCalendar.add(Calendar.DAY_OF_YEAR, - (mCalendar.get(Calendar.DAY_OF_WEEK) -1));
         while (dateMonth == currentMonth) {
+            String s = mCalendar.getTime().toString();
             mMonthAL.add(mCalendar.getTime());
             mCalendar.add(Calendar.DAY_OF_YEAR, 1);
 
-            if(i>8){ //do not use magic numbers uncommented
+            //Only doing that when for sure, next week (can be with previous month days) is over
+            if(i> iDaysOfWeek){
             currentMonth = mCalendar.get(Calendar.MONTH);}
             i++;
         }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+    public void onItemClick(AdapterView<?> av, View v, int arg2PositionItem, long arg3) {
         clearBackground();
-        v.setBackgroundColor(Color.parseColor("#3A9CE9")); //constant
-        mListenerDateSelect.onDispatchDateSelect(mMonthAL.get(arg2)); //what is arg2?
+        v.setBackgroundColor(Color.parseColor(sBackgrdColorItemClick));
+        mListenerDateSelect.onDispatchDateSelect(mMonthAL.get(arg2PositionItem));
     }
 
     @Override
@@ -111,7 +130,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         refreshCalendar();
     }
 
-    private void refreshCalendar() {
+    public void refreshCalendar() {
         implementMonth();
         mAdapter.notifyDataSetChanged();
         setSelectedMonthText();
@@ -130,16 +149,15 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     private void subMonth()
     {
-        mCalendar.add(Calendar.DAY_OF_YEAR, -37); //magic number
+        mCalendar.add(Calendar.DAY_OF_YEAR, -iArrayListMonthMax);
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) - 1));
         refreshCalendar();
     }
 
     private void setSelectedMonthText()
     {
-        //TODO change constants
-        String monthText=mFormatMonth.format(mMonthAL.get(10)); //magic numb)er
-        mMonthText.setText(monthText + " " + mFormatYear.format(mMonthAL.get(10))); //magic number
+        String monthText=mFormatMonth.format(mMonthAL.get(iInMonth));
+        mMonthText.setText(monthText + " " + mFormatYear.format(mMonthAL.get(iInMonth)));
 
     }
 

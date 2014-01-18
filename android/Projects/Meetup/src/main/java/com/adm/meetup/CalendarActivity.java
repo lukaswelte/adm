@@ -1,5 +1,7 @@
 package com.adm.meetup;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
@@ -28,12 +31,18 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
+    private CalendarView cal;
+
+    private final String PREFERENCES_MONTH = "shown_month";
+    private final String PREFERENCES_FILE = "calendar_preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +50,67 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         setContentView(R.layout.activity_calendar);
 
         mTextDate=(TextView)findViewById(R.id.display_date);
-
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
 
-        CalendarView cal = (CalendarView) findViewById(R.id.calendar);
+        cal = (CalendarView) findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
+    }
 
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }*/
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        GregorianCalendar actualCal = cal.getmCalendar();
+        String s =actualCal.getTime().toString();
+        Long timeToSave = actualCal.getTimeInMillis();
+
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(PREFERENCES_MONTH, timeToSave);
+        editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+                Context.MODE_PRIVATE);
+
+        GregorianCalendar tempCal = new GregorianCalendar();
+        tempCal.setTime(new Date());
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        String s = tempCal.getTime().toString();
+        long iDefaultTime = tempCal.getTimeInMillis();
+        tempCal.setTimeInMillis(preferences.getLong(PREFERENCES_MONTH, iDefaultTime));
+
+        s = tempCal.getTime().toString();
+        cal = (CalendarView) findViewById(R.id.calendar);
+        cal.setmCalendar(tempCal);
+        cal.refreshCalendar();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        GregorianCalendar tempCal = new GregorianCalendar();
+        tempCal.setTime(new Date());
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        String s = tempCal.getTime().toString();
+
+        cal.setmCalendar(tempCal);
     }
 
     @Override
     public void onDispatchDateSelect(Date date) {
         mTextDate.setText(mFormat.format(date));
+
     }
 
     @Override
