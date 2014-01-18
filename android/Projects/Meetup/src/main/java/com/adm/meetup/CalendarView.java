@@ -62,11 +62,8 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mCalendar =(GregorianCalendar)GregorianCalendar.getInstance();
         mCalendar.setTime(new Date());
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
-        String s = mCalendar.getTime().toString();
 
         mMonthAL = new ArrayList<Date>();
-        //implementMonth();
-        //setSelectedMonthText();
 
         mAdapter=new CalendarAdapter(mContext, mMonthAL);
 
@@ -77,7 +74,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         //Calender is set to the next month, manipulation to set it
         GregorianCalendar returnCal = mCalendar;
         returnCal.add(Calendar.DAY_OF_YEAR, - 1);
-        returnCal.add(Calendar.DAY_OF_YEAR, - mCalendar.get(Calendar.DAY_OF_MONTH)+1);
+        returnCal.add(Calendar.DAY_OF_YEAR, -mCalendar.get(Calendar.DAY_OF_MONTH) + 1);
         return returnCal;
     }
 
@@ -93,7 +90,6 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
                 i=0;
         mCalendar.add(Calendar.DAY_OF_YEAR, - (mCalendar.get(Calendar.DAY_OF_WEEK) -1));
         while (dateMonth == currentMonth) {
-            String s = mCalendar.getTime().toString();
             mMonthAL.add(mCalendar.getTime());
             mCalendar.add(Calendar.DAY_OF_YEAR, 1);
 
@@ -129,6 +125,12 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) -1));
         refreshCalendar();
     }
+    private void subMonth()
+    {
+        mCalendar.add(Calendar.DAY_OF_YEAR, -iArrayListMonthMax);
+        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) - 1));
+        refreshCalendar();
+    }
 
     public void refreshCalendar() {
         implementMonth();
@@ -145,13 +147,6 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
                 mGrid.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
             }
         }
-    }
-
-    private void subMonth()
-    {
-        mCalendar.add(Calendar.DAY_OF_YEAR, -iArrayListMonthMax);
-        mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_MONTH) - 1));
-        refreshCalendar();
     }
 
     private void setSelectedMonthText()
