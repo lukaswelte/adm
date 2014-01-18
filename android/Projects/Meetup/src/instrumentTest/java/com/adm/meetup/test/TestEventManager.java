@@ -140,8 +140,8 @@ public class TestEventManager extends AndroidTestCase {
         Event = manager.getEventById(EventId);
         Event.setName("Updated event");
         manager.updateEvent(Event);
-
         Event = manager.getEventById(EventId);
+
         assertEquals("Updated event", Event.getName());
         assertEquals("location", Event.getLocation());
 
@@ -240,7 +240,7 @@ public class TestEventManager extends AndroidTestCase {
 
         Event result = manager.getEventById(Event.getId());
         Log.i("eventmanager", result.getId().toString());
-        //assertEquals(Event, result);
+
         assertNotSame(Event, result);
         assertDeepEquals(Event, result);
     }

@@ -134,9 +134,9 @@ public class EventManager extends ContentProvider implements IEventManager {
     }
 
     public void updateEvent(Event event) {
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/event");
+        Uri uri = Uri.parse("content://" + AUTHORITY + "/event/" + event.getId().toString());
+        String selection = EventDatabase.Tables.Events.Columns.ID + "='" + event.getId().toString() + "'";
         ContentValues content = new ContentValues();
-        content.put(EventDatabase.Tables.Events.Columns.ID, event.getId());
         content.put(EventDatabase.Tables.Events.Columns.NAME, event.getName());
         content.put(EventDatabase.Tables.Events.Columns.LOCATION, event.getLocation());
         try {
@@ -145,7 +145,7 @@ public class EventManager extends ContentProvider implements IEventManager {
         try {
             content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, event.getDueDate().toString());
         } catch (NullPointerException e) {}
-        this.update(uri, content, null, null);
+        this.update(uri, content, selection, null);
     }
 
     @Override
@@ -339,6 +339,7 @@ public class EventManager extends ContentProvider implements IEventManager {
                             selectionArgs);
                     break;
                 case EVENTS_ID:
+                    Log.i("eventmanager", selection.toString());
                     updateCount = db.update(
                             EventDatabase.Tables.Events.TABLE,
                             values,
