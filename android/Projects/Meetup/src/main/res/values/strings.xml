@@ -2,11 +2,16 @@
 <resources>
 
     <string name="app_name">Meetup</string>
+
+    <string name="logout">Log out</string>
+    <string name="app_id">200155020171205</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
     <string name="profile_email">Email</string>
     <string name="profile_password">Password</string>

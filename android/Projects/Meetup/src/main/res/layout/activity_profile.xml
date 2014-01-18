@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -82,6 +83,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="43dp"
                 android:background="@null"/>
+
+            <com.facebook.widget.LoginButton
+                android:id="@+id/buttonLoginLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"/>
 
         </LinearLayout>
         <!-- Login Form Ends -->

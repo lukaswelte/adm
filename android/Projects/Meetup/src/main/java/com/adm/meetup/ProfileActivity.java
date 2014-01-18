@@ -1,8 +1,10 @@
 package com.adm.meetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,99 +13,56 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-import java.util.HashMap;
+import android.app.ProgressDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.util.Log;
+import com.facebook.*;
+import com.facebook.model.*;
 
-import com.adm.meetup.MainActivity;
-import com.adm.meetup.UserFunctions;
+
 
 public class ProfileActivity extends ActionBarActivity {
-    EditText emailText,passwordText;
-    Button loginButton,registerButton;
-    TextView loginErrorMsg;
 
-    // JSON Response node names
-    private static String KEY_SUCCESS = "success";
-    private static String KEY_ERROR = "error";
-    private static String KEY_ERROR_MSG = "error_msg";
-    private static String KEY_UID = "uid";
-    private static String KEY_NAME = "name";
-    private static String KEY_EMAIL = "email";
-    private static String KEY_CREATED_AT = "created_at";
+    private EditText emailText,passwordText;
+    private Button loginButton;
+    private TextView registerScreen;
+
+    private Button buttonLoginLogout;
+    private Session.StatusCallback statusCallback = new SessionStatusCallback();
+    private static final int REAUTH_ACTIVITY_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-/*
-        // Importing all assets like buttons, text fields
-        emailText = (EditText) findViewById(R.id.profile_email_field);
-        passwordText = (EditText) findViewById(R.id.profile_password_field);
-        loginButton = (Button) findViewById(R.id.profile_login_button);
-        registerButton = (Button) findViewById(R.id.profile_signup_button);
-        loginErrorMsg = (TextView) findViewById(R.id.profile_error_field);
 
-        // Login button Click Event
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        buttonLoginLogout = (Button)findViewById(R.id.buttonLoginLogout);
 
-            public void onClick(View view) {
-                String email = emailText.getText().toString();
-                String password = passwordText.getText().toString();
-                UserFunctions userFunction = new UserFunctions();
-                JSONObject json = userFunction.loginUser(email, password);
-
-                // check for login response
-                try {
-                    if (json.getString(KEY_SUCCESS) != null) {
-                        loginErrorMsg.setText("");
-                        String res = json.getString(KEY_SUCCESS);
-                        if(Integer.parseInt(res) == 1){
-                            // user successfully logged in
-                            // Store user details in SQLite Database
-                            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                            JSONObject json_user = json.getJSONObject("user");
-
-                            // Clear all previous data in database
-                            userFunction.logoutUser(getApplicationContext());
-                            db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
-
-                            // Launch Dashboard Screen
-                            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
-
-                            // Close all views before launching Dashboard
-                            dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(dashboard);
-
-                            // Close Login Screen
-                            finish();
-                        }else{
-                            // Error in login
-                            loginErrorMsg.setText("Incorrect username/password");
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        Session session = Session.getActiveSession();
+        if (session == null) {
+            if (savedInstanceState != null) {
+                session = Session.restoreSession(this, null, statusCallback, savedInstanceState);
             }
-        });
-
-        // Link to Register Screen
-        registerButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
-                startActivity(i);
-                finish();
+            if (session == null) {
+                session = new Session(this);
             }
-        });*/
+            Session.setActiveSession(session);
+            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
+                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+            }
+        }
 
+        updateView();
+//END OF FACEBOOK INTEGRATION (INSIDE ON CREATE)
 
-        TextView registerScreen = (TextView) findViewById(R.id.profile_signup_button);
+        emailText=(EditText)findViewById(R.id.profile_email_field);
+        passwordText=(EditText)findViewById(R.id.profile_password_field);
+        loginButton=(Button)findViewById(R.id.profile_login_button);
+
+        loginButton.setOnClickListener(loginListener);
+
+        registerScreen = (TextView) findViewById(R.id.profile_signup_button);
 
         // Listening to register new account link
         registerScreen.setOnClickListener(new View.OnClickListener() {
@@ -114,23 +73,140 @@ public class ProfileActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
-
-        emailText=(EditText)findViewById(R.id.profile_email_field);
-        passwordText=(EditText)findViewById(R.id.profile_password_field);
-       loginButton=(Button)findViewById(R.id.profile_login_button);
-
-        loginButton.setOnClickListener(loginListener);
-
-/*        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-        }*/
+        uiHelper = new UiLifecycleHelper(this,callback);
+        uiHelper.onCreate(savedInstanceState);
     }
+
+    private void updateView() {
+        Session session = Session.getActiveSession();
+        if (session.isOpened()) {
+            //  textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
+            buttonLoginLogout.setText(R.string.logout);
+            buttonLoginLogout.setOnClickListener(new OnClickListener() {
+                public void onClick(View view) { onClickLogout(); }
+            });
+            // Get the user's data
+            makeMeRequest(session);
+
+        } else {
+            buttonLoginLogout.setOnClickListener(new OnClickListener() {
+                public void onClick(View view) { onClickLogin(); }
+            });
+        }
+    }
+
+    private void onClickLogin() {
+        Session session = Session.getActiveSession();
+        if (!session.isOpened() && !session.isClosed()) {
+            session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+        } else {
+            Session.openActiveSession(this, true,statusCallback);
+        }
+    }
+
+    private void onClickLogout() {
+        Session session = Session.getActiveSession();
+        if (!session.isClosed()) {
+            session.closeAndClearTokenInformation();
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Session.getActiveSession().addCallback(statusCallback);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Session.getActiveSession().removeCallback(statusCallback);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        uiHelper.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        uiHelper.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        uiHelper.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        if (requestCode == REAUTH_ACTIVITY_CODE) {
+            uiHelper.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        Session session = Session.getActiveSession();
+        Session.saveSession(session, bundle);
+        uiHelper.onSaveInstanceState(bundle);
+
+    }
+
+    private void makeMeRequest(final Session session) {
+        // Make an API call to get user data and define a
+        // new callback to handle the response.
+        Request request = Request.newMeRequest(session,
+                new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(GraphUser user, Response response) {
+                        // If the response is successful
+                        if (session == Session.getActiveSession()) {
+                            if (user != null) {
+                                // Set the Textview's text to the user's name.
+                                emailText.setText(user.asMap().get("email").toString());
+//user.getLastName()
+                            }
+                        }
+                        if (response.getError() != null) {
+                            // Handle errors, will do so later.
+                        }
+                    }
+                });
+        request.executeAsync();
+    }
+
+    private void onSessionStateChange(final Session session, SessionState state, Exception exception) {
+        if (session != null && session.isOpened()) {
+            // Get the user's data.
+            makeMeRequest(session);
+        }
+    }
+    private UiLifecycleHelper uiHelper;
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(final Session session, final SessionState state, final Exception exception) {
+            onSessionStateChange(session, state, exception);
+        }
+    };
+
+    private class SessionStatusCallback implements Session.StatusCallback {
+        @Override
+        public void call(Session session, SessionState state, Exception exception) {
+            updateView();
+        }
+    }
+
     private OnClickListener loginListener = new OnClickListener() {
         public void onClick(View v) {
 
             //getting inputs from user and performing data operations
-            if(emailText.getText().toString().equals("swineas") &&
-                    passwordText.getText().toString().equals("abc")){
+            if(emailText.getText().toString().equals("a") &&
+                    passwordText.getText().toString().equals("a")){
                 //responding to the User inputs
                 Toast.makeText(getApplicationContext(), "Connexion réussie !!!", Toast.LENGTH_LONG).show();
                 Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
@@ -160,20 +236,5 @@ public class ProfileActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-/*    *//**
-     * A placeholder fragment containing a simple view.
-     *//*
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-            return rootView;
-        }
-    }*/
 
 }

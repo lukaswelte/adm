@@ -2,7 +2,6 @@ package com.adm.meetup;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,17 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.adm.meetup.DatabaseHandler;
-import com.adm.meetup.UserFunctions;
 
 public class RegisterActivity extends ActionBarActivity {
 
@@ -30,16 +21,6 @@ public class RegisterActivity extends ActionBarActivity {
     EditText emailText;
     EditText passwordText;
     TextView registerErrorMsg;
-
-    // JSON Response node names
-    private static String KEY_SUCCESS = "success";
-    private static String KEY_ERROR = "error";
-    private static String KEY_ERROR_MSG = "error_msg";
-    private static String KEY_UID = "uid";
-    private static String KEY_NAME = "name";
-    private static String KEY_EMAIL = "email";
-    private static String KEY_CREATED_AT = "created_at";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,38 +44,7 @@ public class RegisterActivity extends ActionBarActivity {
                 String name = fullNameText.getText().toString();
                 String email = emailText.getText().toString();
                 String password = passwordText.getText().toString();
-                UserFunctions userFunction = new UserFunctions();
-                JSONObject json = userFunction.registerUser(name, email, password);
 
-                // check for login response
-                try {
-                    if (json.getString(KEY_SUCCESS) != null) {
-                        registerErrorMsg.setText("");
-                        String res = json.getString(KEY_SUCCESS);
-                        if(Integer.parseInt(res) == 1){
-                            // user successfully registred
-                            // Store user details in SQLite Database
-                            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                            JSONObject json_user = json.getJSONObject("user");
-
-                            // Clear all previous data in database
-                            userFunction.logoutUser(getApplicationContext());
-                            db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
-                            // Launch Dashboard Screen
-                            Intent dashboard = new Intent(getApplicationContext(), MainActivity.class);
-                            // Close all views before launching Dashboard
-                            dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(dashboard);
-                            // Close Registration Screen
-                            finish();
-                        }else{
-                            // Error in registration
-                            registerErrorMsg.setText("Error occured in registration");
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -110,22 +60,6 @@ public class RegisterActivity extends ActionBarActivity {
             }
         });
 
-/*        // Listening to login screen link
-        loginScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-*//*                // Switching to Login screen
-                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(i);*//*
-                finish();
-            }
-        });*/
-
-/*        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }*/
     }
 
     @Override
