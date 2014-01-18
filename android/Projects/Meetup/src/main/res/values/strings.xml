@@ -12,6 +12,7 @@
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_account">AccountActivity</string>
+    <string name="title_activity_friends">Friends</string>
 
     <string name="profile_email">Email</string>
     <string name="profile_password">Password</string>
@@ -28,7 +29,7 @@
     <string name="action_main_friends">Friends</string>
     <string name="action_main_logout">Logout</string>
 
-
+    <string name="tab_friends">Friends</string>
 
 
 </resources>

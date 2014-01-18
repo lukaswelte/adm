@@ -26,13 +26,10 @@ public class AccountActivity extends ActionBarActivity {
 
         SimpleAdapter mSchedule=null;
 
-        // ListView
         parametersList = (ListView)findViewById(R.id.list_account_data);
 
-        //Creation de la ArrayList qui nous permettra de remplire la listView
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
-        //On declare la HashMap qui contiendra les informations pour un item
         HashMap<String, String> map = new HashMap<String, String>();
 
         if(mSchedule==null){

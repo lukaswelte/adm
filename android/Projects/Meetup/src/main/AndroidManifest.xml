@@ -43,6 +43,10 @@
             android:name="com.adm.meetup.AccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_friends" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

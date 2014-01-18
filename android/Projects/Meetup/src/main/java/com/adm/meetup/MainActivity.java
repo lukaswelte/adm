@@ -47,6 +47,8 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_friends:
+                Intent intent2 = new Intent(this, FriendsActivity.class);
+                startActivity(intent2);
                 return true;
 
             case R.id.action_logout:
