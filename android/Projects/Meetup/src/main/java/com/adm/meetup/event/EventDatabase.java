@@ -20,7 +20,7 @@ public class EventDatabase extends SQLiteOpenHelper {
         public class Events {
             final static String TABLE = "event";
             public class Columns {
-                final static String ID = "_ID";
+                final static String ID = "id";
                 final static String NAME = "name";
                 final static String DESCRIPTION = "description";
                 final static String LOCATION = "location";

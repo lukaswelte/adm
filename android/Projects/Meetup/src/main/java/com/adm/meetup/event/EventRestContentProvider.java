@@ -9,6 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import com.adm.meetup.helpers.NetworkHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.koushikdutta.async.future.FutureCallback;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,13 +35,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by jan on 18.1.14.
  */
 public class EventRestContentProvider extends EventContentProvider {
     private Context context = null;
-    private static final String SERVER = "http://erasmus-meetup.herokuapp.com/";
+    private static final String SERVERAPIPATH = "/event";
     private HttpClient client = new DefaultHttpClient();
 
     public EventRestContentProvider(Context context) {
@@ -50,15 +63,15 @@ public class EventRestContentProvider extends EventContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        int match = sURIMatcher.match(uri);
-
-        StringBuilder baseurl= new StringBuilder(EventRestContentProvider.SERVER);
-
+        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        baseURL.append("/query");
+        JsonObject selectionJsonObject = new JsonObject();
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                baseurl.append("event");
+                break; //Nothing to do
             case EVENTS_ID:
-                baseurl.append("event"); // TODO parse ID
+                String eventID = uri.getLastPathSegment();
+                selectionJsonObject.addProperty("id",eventID);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -70,55 +83,65 @@ public class EventRestContentProvider extends EventContentProvider {
         MatrixCursor cursor = new MatrixCursor(projection);
 
         try {
-            HttpGet request = new HttpGet(baseurl.toString());
-            HttpResponse response = client.execute(request);
-            HttpEntity entity = response.getEntity();
-            InputStream stream = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            JsonElement receivedObject = NetworkHelper.requestBackendSynchronously(null,baseURL.toString(),selectionJsonObject,true);
+            if (receivedObject.isJsonArray()) {
+                Iterator<JsonElement> iterator = receivedObject.getAsJsonArray().iterator();
+                while (iterator.hasNext()) {
+                    JsonElement element = iterator.next();
+                    object = new JSONObject(element.toString());
+                    addJSONObjectToCursor(object, cursor);
+                }
+            } else {
+                object = new JSONObject(receivedObject.toString());
+                addJSONObjectToCursor(object, cursor);
             }
-            stream.close();
-            String responseString = sb.toString();
-
-            object = (JSONObject) new JSONTokener(responseString).nextValue();
-            String[] row;
-            row = new String[] {
-                object.getString(EventDatabase.Tables.Events.Columns.ID),
-                object.getString(EventDatabase.Tables.Events.Columns.NAME),
-                object.getString(EventDatabase.Tables.Events.Columns.LOCATION),
-                object.getString(EventDatabase.Tables.Events.Columns.DESCRIPTION),
-                object.getString(EventDatabase.Tables.Events.Columns.DUE_DATE),
-                object.getString(EventDatabase.Tables.Events.Columns.DATE),
-                object.getString(EventDatabase.Tables.Events.Columns.SOURCE)
-            };
-
-            cursor.addRow(row);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         return cursor;
     }
 
+    private void addJSONObjectToCursor(JSONObject object, MatrixCursor cursor) {
+        List<Object> columnValues = new ArrayList<Object>();
+        String[] columnNames = cursor.getColumnNames();
+        for (String columnName : columnNames) {
+            Object value;
+            if (columnName.equalsIgnoreCase(EventDatabase.Tables.Events.Columns.ID)) {
+                try {
+                    String idString = object.getString(columnName);
+                    value = Long.parseLong(idString);
+                } catch (JSONException e) {
+                    value = "";
+                }
+            } else {
+                try {
+                    value = object.getString(columnName);
+                } catch (JSONException e) {
+                    value = "";
+                }
+            }
+            columnValues.add(value);
+        }
+
+        cursor.addRow(columnValues);
+    }
+
     @Override
     public Uri insert(Uri uri, ContentValues values)  {
-        Uri ret;
 
-        StringBuilder baseurl= new StringBuilder(EventRestContentProvider.SERVER);
+        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        baseURL.append("/create");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                baseurl.append("event");
+                break;
             case EVENTS_ID:
-                baseurl.append("event/" + uri.getLastPathSegment());
+                baseURL.append("/"+uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
-        ret = Uri.parse(baseurl.toString());
-        HttpPost request = new HttpPost(baseurl.toString());
+
         JSONObject object = new JSONObject();
 
         try {
@@ -129,48 +152,41 @@ public class EventRestContentProvider extends EventContentProvider {
             object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
             object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
             object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
-            request.setEntity(new StringEntity(object.toString()));
-            HttpResponse response = client.execute(request);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("kurva", e.toString());
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.i("kurva", "kurva 2" + e.toString());
         }
 
-        return ret;
-    }
-
-    private Uri getUriForId(long id, Uri uri) {
-        Uri itemUri = ContentUris.withAppendedId(uri, id);
-        if (id > 0) {
-            this.context.
-                    getContentResolver().
-                    notifyChange(itemUri, null);
+        JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
+        try {
+            NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject,true);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return itemUri;
+
+        return uri;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        Uri ret;
-        StringBuilder baseurl= new StringBuilder(EventRestContentProvider.SERVER);
+        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        baseURL.append("/destroy");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                baseurl.append("event");
+                break;
             case EVENTS_ID:
-                baseurl.append("event/" + uri.getLastPathSegment());
+                baseURL.append("/"+uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
-        ret = Uri.parse(baseurl.toString());
 
-        HttpDelete request = new HttpDelete(baseurl.toString());
         try {
-            HttpResponse response = client.execute(request);
-        } catch (IOException e) {
+           NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), null, true);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return 1;
@@ -179,20 +195,19 @@ public class EventRestContentProvider extends EventContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         Uri ret;
-        StringBuilder baseurl= new StringBuilder(EventRestContentProvider.SERVER);
+        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        baseURL.append("/update");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
-                baseurl.append("event");
+                break;
             case EVENTS_ID:
-                baseurl.append("event/" + uri.getLastPathSegment());
+                baseURL.append("/"+uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
-        ret = Uri.parse(baseurl.toString());
-        HttpPost request = new HttpPost(baseurl.toString());
-        JSONObject object = new JSONObject();
 
+        JSONObject object = new JSONObject();
         try {
             object.put(EventDatabase.Tables.Events.Columns.ID, values.get(EventDatabase.Tables.Events.Columns.ID));
             object.put(EventDatabase.Tables.Events.Columns.NAME, values.get(EventDatabase.Tables.Events.Columns.NAME));
@@ -201,14 +216,19 @@ public class EventRestContentProvider extends EventContentProvider {
             object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
             object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
             object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
-            request.setEntity(new StringEntity(object.toString()));
-            HttpResponse response = client.execute(request);
-        } catch (IOException e) {
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
+        JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
+        JsonElement element = null;
+        try {
+           element = NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject,true);
+        } catch (ExecutionException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        return 0;
+        if (element != null) return 0;
+        return 1;
     }
 }

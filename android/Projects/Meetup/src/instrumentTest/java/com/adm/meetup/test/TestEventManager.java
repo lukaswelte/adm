@@ -62,7 +62,7 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void testGetEventById() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Event name");
         Event.setLocation("location");
         Event.setDate(new Date(2013,11,25));
@@ -83,14 +83,14 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void testGetEvents() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Event name");
         Event.setLocation("location");
         Event.setDate(new Date(2013, 11, 25));
         Event.setDueDate(new Date(2013, 11, 27));
 
         Event Event2 = new Event();
-        Event2.setId((Long.MIN_VALUE)+1);
+        Event2.setId((Long.valueOf(1))+1);
         Event2.setName("Event name 2");
         Event2.setLocation("location 2");
         Event2.setDate(new Date(2015, 11, 25));
@@ -117,14 +117,14 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void testUpdateEvent() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Event name");
         Event.setLocation("location");
         Event.setDate(new Date(2013, 11, 25));
         Event.setDueDate(new Date(2013, 11, 27));
 
         Event Event2 = new Event();
-        Event2.setId((Long.MIN_VALUE)+1);
+        Event2.setId((Long.valueOf(1))+1);
         Event2.setName("Event name 2");
         Event2.setLocation("location 2");
         Event2.setDate(new Date(2015, 11, 25));
@@ -159,7 +159,7 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void updateEventWithWrongAttributes() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Jan Jílek");
         Event.setLocation("Fleischnerova 930/7, 635 00 Brno");
 
@@ -195,7 +195,7 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void deleteEventWithWrongAttributes() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Jan Jílek");
         Event.setLocation("Fleischnerova, 635 00 Brno");
 
@@ -230,16 +230,16 @@ abstract public class TestEventManager extends AndroidTestCase {
 
     public void testCreateEvent() {
         manager.deleteEvents();
-        Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
-        Event.setName("Event name");
-        Event.setLocation("location");
-        manager.createEvent(Event);
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("event name");
+        event.setLocation("location");
+        manager.createEvent(event);
 
-        Event result = manager.getEventById(Event.getId());
+        Event result = manager.getEventById(event.getId());
 
-        assertNotSame(Event, result);
-        assertDeepEquals(Event, result);
+        assertNotSame(event, result);
+        assertDeepEquals(event, result);
     }
 
 
@@ -256,12 +256,12 @@ abstract public class TestEventManager extends AndroidTestCase {
     public void testDeleteEvent() {
         manager.deleteEvents();
         Event Event = new Event();
-        Event.setId(Long.MIN_VALUE);
+        Event.setId(Long.valueOf(1));
         Event.setName("Jan Jílek");
         Event.setLocation("Fleischnerova, 635 00 Brno");
 
         Event Event2 = new Event();
-        Event2.setId((Long.MIN_VALUE)+1);
+        Event2.setId(Long.valueOf(2));
         Event2.setName("Micha Pokorný");
         Event2.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
 
