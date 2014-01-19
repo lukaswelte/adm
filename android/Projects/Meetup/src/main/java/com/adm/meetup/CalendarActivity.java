@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
@@ -39,7 +38,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
+public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener {
     public static final int iMoreThanAMonth = 32;
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
@@ -53,7 +52,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        mTextDate=(TextView)findViewById(R.id.display_date);
+        mTextDate = (TextView) findViewById(R.id.display_date);
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
 
         cal = (CalendarView) findViewById(R.id.calendar);
@@ -83,7 +82,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         //Getting default value : today's date
         GregorianCalendar tempCal = new GregorianCalendar();
         tempCal.setTime(new Date());
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         long iDefaultTime = tempCal.getTimeInMillis();
         //Setting month
         tempCal.setTimeInMillis(preferences.getLong(PREFERENCES_MONTH, iDefaultTime));
@@ -111,7 +110,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         tempCal.setTime(new Date());
         //Setting to the next month for future getmMonth method's call
         tempCal.add(Calendar.DAY_OF_YEAR, iMoreThanAMonth);
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         cal.setmCalendar(tempCal);
     }
 
@@ -123,8 +122,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_HOME)
-        {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
             resettingCalendar();
             //Normal home button action
             Intent showOptions = new Intent(Intent.ACTION_MAIN);
@@ -142,7 +140,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.calendar, menu);
         return true;
@@ -170,7 +168,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
             return rootView;
