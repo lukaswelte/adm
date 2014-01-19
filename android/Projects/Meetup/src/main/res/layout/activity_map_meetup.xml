@@ -84,7 +84,27 @@
             android:textOff="@string/map_meetup_friends"
             android:textOn="@string/map_meetup_friends"
             android:layout_weight="1"></ToggleButton>
-            <!--android:background="@drawable/shape_radiobutton3"-->
-            <!--android:textColor="@color/textcolor_radiobutton" -->
     </RadioGroup>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="147dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:background="@android:color/background_light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/map_your_status"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/map_status_edit_text"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
+    </LinearLayout>
 </FrameLayout>

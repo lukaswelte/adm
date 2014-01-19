@@ -36,5 +36,5 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.android.gms:play-services:4.0.30'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.koushikdutta.ion:ion:1.2.1'
 }

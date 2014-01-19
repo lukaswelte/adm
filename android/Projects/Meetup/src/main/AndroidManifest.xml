@@ -14,7 +14,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -46,6 +46,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.adm.meetup.MapMeetupActivity"
+            android:label="@string/title_activity_map_meetup" >
+        </activity>
+
         <!-- Goolge Maps API Key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -53,11 +58,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="4030500" />
-
-        <activity
-            android:name=".MapMeetupActivity"
-            android:label="@string/title_activity_map_meetup" >
-        </activity>
     </application>
 
 </manifest>

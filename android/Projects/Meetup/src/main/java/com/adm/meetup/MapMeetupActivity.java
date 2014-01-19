@@ -13,14 +13,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.adm.meetup.helpers.NetworkHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,8 +38,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.google.code.gson;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.NullDataCallback;
+import com.koushikdutta.async.future.FutureCallback;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -66,18 +74,29 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
     private final static int
             MAP_DEFAULT_CAMERA_ZOOM = 15;
 
+    /*
+     * Define the factor between the zoom value and the distance in which the user will see
+     * markers. DISTANCE = FACTOR * ZOOM
+     */
+    private final static int
+            FACTOR_BETWEEN_ZOOM_AND_DISTANCE_TO_MARKERS = 10;
 
-    private GoogleMap mMap;
+
+    private GoogleMap map;
     private Marker markerUser;
 
-    private ToggleButton mtoggleButtonPartyMode;
-    private ToggleButton mtoggleButtonWhosPartying;
-    private ToggleButton mtoggleButtonEvents;
-    private ToggleButton mtoggleButtonFriends;
+    private String status;
 
-    private ArrayList<Marker> mwhosPartyingMarkers;
-    private ArrayList<Marker> meventsMarkers;
-    private ArrayList<Marker> mfriendsMarkers;
+    private ToggleButton toggleButtonPartyMode;
+    private ToggleButton toggleButtonWhosPartying;
+    private ToggleButton toggleButtonEvents;
+    private ToggleButton toggleButtonFriends;
+
+    private EditText statusEditText;
+
+    private ArrayList<Marker> whosPartyingMarkers;
+    private ArrayList<Marker> eventsMarkers;
+    private ArrayList<Marker> friendsMarkers;
 
     protected LocationManager locationManager;
     protected LocationListener locationListener;
@@ -99,58 +118,91 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
 
             if(servicesConnected())
             {
-                mtoggleButtonEvents = (ToggleButton) findViewById(R.id.map_meetup_toggle_events);
-                mtoggleButtonFriends = (ToggleButton) findViewById(R.id.map_meetup_toggle_friends);
-                mtoggleButtonPartyMode = (ToggleButton) findViewById(R.id.map_meetup_toggle_party_mode);
-                mtoggleButtonWhosPartying = (ToggleButton) findViewById(R.id.map_meetup_toggle_whos_partying);
+                status = "twerking";
 
-                mtoggleButtonPartyMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                statusEditText = (EditText)findViewById(R.id.map_status_edit_text);
+
+                final MapMeetupActivity currContext = this;
+
+                statusEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                            if(!statusEditText.getText().toString().equals(""))
+                            {
+                                status = statusEditText.getText().toString();
+                                markerUser.setTitle(status);
+                                markerUser.showInfoWindow();
+                            }
+                            InputMethodManager inputManager = (InputMethodManager)
+                                    currContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputManager.toggleSoftInput(0, 0);
+
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                toggleButtonEvents = (ToggleButton) findViewById(R.id.map_meetup_toggle_events);
+                toggleButtonFriends = (ToggleButton) findViewById(R.id.map_meetup_toggle_friends);
+                toggleButtonPartyMode = (ToggleButton) findViewById(R.id.map_meetup_toggle_party_mode);
+                toggleButtonWhosPartying = (ToggleButton) findViewById(R.id.map_meetup_toggle_whos_partying);
+
+                toggleButtonPartyMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if(markerUser!=null)
-                        {
-                            if(b)
-                            {
+                        if (markerUser != null) {
+                            if (b) {
                                 markerUser.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.google_maps_marker_party_mode));
-                            }
-                            else
-                            {
+                            } else {
                                 markerUser.setIcon(BitmapDescriptorFactory.defaultMarker());
                             }
                         }
                     }
                 });
 
-                mtoggleButtonWhosPartying.setOnCheckedChangeListener(
+                toggleButtonWhosPartying.setOnCheckedChangeListener(
                         new OnToggleWithMarkersCheckChangedListener(
                                 this,
                                 BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
-                                mwhosPartyingMarkers,
+                                whosPartyingMarkers,
                                 MarkerType.MARKER_TYPE_WHOS_PARTYING));
 
-                mtoggleButtonEvents.setOnCheckedChangeListener(
+                toggleButtonEvents.setOnCheckedChangeListener(
                         new OnToggleWithMarkersCheckChangedListener(
                                 this,
                                 BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW),
-                                meventsMarkers,
+                                eventsMarkers,
                                 MarkerType.MARKER_TYPE_EVENTS));
 
-                mtoggleButtonFriends.setOnCheckedChangeListener(
+                toggleButtonFriends.setOnCheckedChangeListener(
                         new OnToggleWithMarkersCheckChangedListener(
                                 this,
                                 BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-                                mfriendsMarkers,
+                                friendsMarkers,
                                 MarkerType.MARKER_TYPE_FRIENDS));
 
-                mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+                map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+
+                        Log.d("lol", "pas lol");
+                    }
+                });
+
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
 
-                        if(marker.getId().equals(markerUser.getId())){
-                            marker.setTitle(getString(R.string.map_meetup_youre_here));
-                        }
+                        /*if (marker.getId().equals(markerUser.getId())) {
+                            marker.setTitle(status);
+                           // marker.
+                        }*/
 
                         return false;
                     }
@@ -162,10 +214,22 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
         }
     }
 
-    public ArrayList<LatLng> getLatLng(MarkerType atype) {
+    public void getMarkersLatLng(MarkerType atype, FutureCallback<ArrayList<LatLng>> futureCallback) {
         ArrayList<LatLng> latLngs = new ArrayList<LatLng>();
         switch(atype){
             case MARKER_TYPE_WHOS_PARTYING:
+                FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject jsonObject) {
+                       // futureCallback.onCompleted(e, jsonObject);
+                    }
+                };
+                NetworkHelper.peopleNearYouRequest(
+                        this.context,
+                        this.map.getCameraPosition().target.longitude,
+                        this.map.getCameraPosition().target.latitude,
+                        (int)this.map.getCameraPosition().zoom*FACTOR_BETWEEN_ZOOM_AND_DISTANCE_TO_MARKERS,
+                        callback);
                 latLngs.add(new LatLng(39.483326,-0.344891));
                 latLngs.add(new LatLng(39.48215,-0.346972));
                 latLngs.add(new LatLng(39.482622,-0.348539));
@@ -180,7 +244,7 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
                 break;
         }
 
-        return latLngs;
+        //return latLngs;
     }
 
 
@@ -198,10 +262,7 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -283,16 +344,15 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("locaca", "changed");
         if(!cameraMovedToCurrLocation)
         {
             LatLng currLatLng = new LatLng(location.getLatitude(),location.getLongitude());
 
             // Move the camera instantly to the current location
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLatLng, MAP_DEFAULT_CAMERA_ZOOM));
-            markerUser = mMap.addMarker(new MarkerOptions()
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(currLatLng, MAP_DEFAULT_CAMERA_ZOOM));
+            markerUser = map.addMarker(new MarkerOptions()
                     .position(currLatLng)
-                    .title("En tu mano izquierda, capullo !"));
+                    .title(status));
 
             cameraMovedToCurrLocation = true;
         }
@@ -314,7 +374,7 @@ public class MapMeetupActivity extends ActionBarActivity implements LocationList
     }
 
     public GoogleMap getMap() {
-        return mMap;
+        return map;
     }
 }
 
@@ -341,7 +401,8 @@ private MapMeetupActivity.MarkerType mtype;
     {
         if(b)
         {
-            ArrayList<LatLng> whosPartyingLatLng = msource.getLatLng(mtype);
+            ArrayList<LatLng> whosPartyingLatLng = null;
+                    msource.getMarkersLatLng(mtype, null);
             {
                 for(LatLng latLng : whosPartyingLatLng)
                 {
@@ -385,7 +446,7 @@ private MapMeetupActivity.MarkerType mtype;
                     builder.append(line);
                 }
             } else {
-                Log.e(ParseJSON.class.toString(), "Failed to download file");
+                //Log.e(ParseJSON.class.toString(), "Failed to download file");
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -393,6 +454,9 @@ private MapMeetupActivity.MarkerType mtype;
             e.printStackTrace();
             return builder.toString();
         }
+
+        return null;
+    }
 }
 
 class WaitForToastTask extends AsyncTask<Void, Integer, Boolean> {
@@ -416,6 +480,6 @@ class WaitForToastTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        enableInteractions(true);
+        //enableInteractions(true);
     }
 }
