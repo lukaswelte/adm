@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.adm.meetup.helpers.NetworkHelper;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -44,6 +50,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
     private CalendarView cal;
+    private Context context;
 
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
@@ -55,9 +62,11 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
         mTextDate=(TextView)findViewById(R.id.display_date);
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
+        context = this;
 
         cal = (CalendarView) findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
+        getHolidays();
     }
 
     @Override
@@ -158,6 +167,117 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private ArrayList<Date> getHolidays()
+    {
+        ArrayList<Date> holidays = new ArrayList<Date>();
+        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject jsonObject) {
+                int i=0;
+                try{
+                    if (e != null) {
+                        throw e;
+                    }
+                    String s = jsonObject.toString();
+                    Log.d("TAG", s);
+                    Log.d("Wait", "1");
+                }
+                catch (Exception ex)
+                {
+                    Log.e("ERROR", "Error in CalendarActivity: " + ex.toString());
+                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        NetworkHelper.holidaysRequest(this, "2013", "es", callback);
+
+        return holidays;
+    }
+
+    private ArrayList<Date> getExams()
+    {
+        ArrayList<Date> exams = new ArrayList<Date>();
+        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject jsonObject) {
+                try{
+                    Log.d("TAG", jsonObject.toString());
+                    Log.d("Wait", "1");
+                }
+                catch (Exception ex)
+                {
+                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
+                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        NetworkHelper.examsRequest(context, "token", callback);
+
+        return exams;
+    }
+
+    private void createExam(String date, String notifyDate, String name)
+    {
+        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject jsonObject) {
+                try{
+                    Log.d("TAG", jsonObject.toString());
+                    Log.d("Wait", "1");
+                }
+                catch (Exception ex)
+                {
+                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
+                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        NetworkHelper.createExamRequest(context, "token", date, notifyDate, name, callback);
+    }
+
+    private void updateExam(int examId, String date, String notifyDate, String name)
+    {
+        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject jsonObject) {
+                try{
+                    Log.d("TAG", jsonObject.toString());
+                    Log.d("Wait", "1");
+                }
+                catch (Exception ex)
+                {
+                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
+                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        NetworkHelper.updateExamRequest(context, "token", examId, date, notifyDate, name, callback);
+    }
+
+    private void deleteExam(int examId)
+    {
+        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+            @Override
+            public void onCompleted(Exception e, JsonObject jsonObject) {
+                try{
+                    Log.d("TAG", jsonObject.toString());
+                    Log.d("Wait", "1");
+                }
+                catch (Exception ex)
+                {
+                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
+                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        NetworkHelper.deleteExamRequest(context, "token", examId, callback);
     }
 
     /**

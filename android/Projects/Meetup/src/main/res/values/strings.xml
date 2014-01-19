@@ -4,7 +4,10 @@
     <string name="app_name">Meetup</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_calendar">CalendarActivity</string>
-    <string name="title_activity_calendar_view">CalendarView</string>
+
+    <!-- Calendar Activity -->
+    <string name="calendar_title_activity">CalendarActivity</string>
+    <string name="calendar_title_activity_view">CalendarView</string>
+    <string name="calendar_servor_error">The servor can\'t be access. You may check your connection</string>
 
 </resources>
