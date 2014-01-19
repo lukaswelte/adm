@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:id="@+id/layoutItemAccount"
 	android:padding="5dip" >
 
@@ -10,20 +10,14 @@
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:gravity="left"
-        android:layout_weight="0.4"
-        android:text="Text 1"/>
-    
+        android:text="Text 1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <TextView
         android:id="@+id/item_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="right"
-        android:layout_weight="0.6"
-        android:text="Text 2"/>
-    
+        android:text="Text 2"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.adm.meetup;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.os.Build;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.adm.meetup.util.Util;
 import com.facebook.LoggingBehavior;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -55,6 +58,18 @@ public class MainActivity extends ActionBarActivity {
                 ProfileActivity.onClickLogout();
                 Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(login);
+                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.commit();
                 // Closing dashboard screen
                 finish();
                 return true;

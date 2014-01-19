@@ -1,5 +1,6 @@
 package com.adm.meetup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +19,7 @@ import android.app.ProgressDialog;
 import com.adm.meetup.ProfileActivity;
 
 
+import com.adm.meetup.util.Util;
 import com.facebook.*;
 import com.facebook.model.*;
 
@@ -32,8 +34,6 @@ public class ProfileActivity extends ActionBarActivity {
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private static final int REAUTH_ACTIVITY_CODE = 100;
-
-    public static String EMAIL, FIRST_NAME, LAST_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,8 @@ public class ProfileActivity extends ActionBarActivity {
 
         } else {
             buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogin(); }
+                public void onClick(View view) { onClickLogin();
+                }
             });
         }
     }
@@ -173,9 +174,14 @@ public class ProfileActivity extends ActionBarActivity {
                             if (user != null) {
                                 // Set the Textview's text to the user's name.
                                 //emailText.setText(user.asMap().get("email").toString());
-                                EMAIL = user.asMap().get("email").toString();
-                                LAST_NAME = user.getLastName();
-                                FIRST_NAME = user.getFirstName();
+                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString(Util.PREFERENCES_EMAIL,user.asMap().get("email").toString());
+                                editor.putString(Util.PREFERENCES_FIRSTNAME,user.getFirstName());
+                                editor.putString(Util.PREFERENCES_LASTNAME,user.getLastName());
+                                editor.commit();
+                                Intent mainview = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(mainview);
 
                             }
                         }
@@ -207,25 +213,18 @@ public class ProfileActivity extends ActionBarActivity {
             updateView();
         }
     }
-
-    public static String getEmail(){
-        return EMAIL;
-    }
-    public static String getFIRST_NAME(){
-        return FIRST_NAME;
-    }
-    public static String getLAST_NAME(){
-        return LAST_NAME;
-    }
     private OnClickListener loginListener = new OnClickListener() {
         public void onClick(View v) {
 
             //getting inputs from user and performing data operations
             if(emailText.getText().toString().equals("a") &&
                     passwordText.getText().toString().equals("a")){
+                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
                 //responding to the User inputs
                 Toast.makeText(getApplicationContext(), "Connexion réussie !!!", Toast.LENGTH_LONG).show();
-                EMAIL = emailText.getText().toString();
+                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                editor.commit();
                 Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(mainIntent);
             }else

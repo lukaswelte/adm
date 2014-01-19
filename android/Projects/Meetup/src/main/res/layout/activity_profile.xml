@@ -66,13 +66,6 @@
                 android:layout_marginBottom="87dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true" />
-            <!--  Error message -->
-            <TextView android:id="@+id/profile_error_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#e30000"
-                android:padding="10dip"
-                android:textStyle="bold"/>
             <!-- Link to Registration Screen -->
             <Button
                 android:id="@+id/profile_signup_button"
