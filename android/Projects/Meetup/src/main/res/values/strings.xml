@@ -4,6 +4,7 @@
     <string name="app_name">Meetup</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="event_type_sport">Sport</string>
 
     <!-- Calendar Activity -->
     <string name="calendar_title_activity">CalendarActivity</string>

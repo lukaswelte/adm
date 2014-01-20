@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,8 +131,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_HOME)
-        {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
             resettingCalendar();
             //Normal home button action
             Intent showOptions = new Intent(Intent.ACTION_MAIN);
@@ -151,7 +149,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.calendar, menu);
         return true;
@@ -290,7 +288,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
             return rootView;
