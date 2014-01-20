@@ -2,6 +2,7 @@ package com.adm.meetup.helpers;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;

@@ -15,19 +15,19 @@
 
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
-     
+
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Home</item>
-        <item >Events</item>
-        <item >Calendar</item>
-        <item >Profile</item>
-        <item >Settings</item>
-        <item >Team</item>
+        <item>Home</item>
+        <item>Events</item>
+        <item>Calendar</item>
+        <item>Profile</item>
+        <item>Settings</item>
+        <item>Team</item>
     </string-array>
 
-     
+
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
- 
+
 </resources>

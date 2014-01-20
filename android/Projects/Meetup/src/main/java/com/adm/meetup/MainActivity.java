@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
@@ -35,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         mMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mIcon = new int[] {
+        mIcon = new int[]{
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
@@ -66,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
-                ) {
+        ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -102,8 +101,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-         // The action bar home/up action should open or close the drawer.
-         // ActionBarDrawerToggle will take care of this.
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -138,30 +137,28 @@ public class MainActivity extends ActionBarActivity {
     private void selectItem(int position) {
         // update the main content by replacing fragments
 
-        switch(position) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (position) {
 
 
-                case 1:
-                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
-                    //Intent a = new Intent(MainActivity.this, Dev_team.class);
-                    //startActivity(a);
-                    break;
-                case 2:
-                    Fragment fragment = new CalendarFragment();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                    break;
-                default:
+            case 2:
+                Fragment fragment = new CalendarFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                break;
+            default:
+                Fragment emptyFragment = new Fragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
+                break;
 
         }
 
-            // create intent
-            //Intent intent = new Intent(this,CalendarFragment.class);
-            //startActivity(intent);
-            //Fragment fragment = new CalendarFragment();
+        // create intent
+        //Intent intent = new Intent(this,CalendarFragment.class);
+        //startActivity(intent);
+        //Fragment fragment = new CalendarFragment();
 
-            //FragmentManager fragmentManager = getFragmentManager();
-            //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        //FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
 
 

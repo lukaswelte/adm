@@ -3,6 +3,7 @@ package com.adm.meetup;
 /**
  * Created by timomuller on 19/01/14.
  */
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

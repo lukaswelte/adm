@@ -1,13 +1,11 @@
 package com.adm.meetup;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,8 +47,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private final String PREFERENCES_FILE = "calendar_preferences";
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
-        return inflater.inflate(R.layout.fragment_calendar,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
     @Override
@@ -60,18 +58,18 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         mTextDate = (TextView) getView().findViewById(R.id.display_date);
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
 
-        cal = (CalendarView) findViewById(R.id.calendar);
+        cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
 
         //Saving current month to show it later
         GregorianCalendar actualCal = cal.getmCalendar();
         Long timeToSave = actualCal.getTimeInMillis();
-        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCES_FILE,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(PREFERENCES_MONTH, timeToSave);
@@ -79,9 +77,9 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCES_FILE,
                 Context.MODE_PRIVATE);
 
         //Getting default value : today's date
@@ -91,20 +89,19 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         long iDefaultTime = tempCal.getTimeInMillis();
         //Setting month
         tempCal.setTimeInMillis(preferences.getLong(PREFERENCES_MONTH, iDefaultTime));
-        cal = (CalendarView) findViewById(R.id.calendar);
+        cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setmCalendar(tempCal);
         cal.refreshCalendar();
 
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
     }
 
-    @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         resettingCalendar();
 
     }
@@ -119,13 +116,11 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         cal.setmCalendar(tempCal);
     }
 
-    @Override
     public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+        //super.onAttachedToWindow();
+        getActivity().getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
     }
 
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_HOME) {
             resettingCalendar();
@@ -134,7 +129,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
             showOptions.addCategory(Intent.CATEGORY_HOME);
             startActivity(showOptions);
         }
-        return super.onKeyDown(keyCode, event);
+        return true; //super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -143,11 +138,10 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.calendar, menu);
+        getActivity().getMenuInflater().inflate(R.menu.calendar, menu);
         return true;
     }
 
