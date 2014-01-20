@@ -1,12 +1,10 @@
 package com.adm.meetup.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.Builders;
@@ -106,7 +104,7 @@ public class NetworkHelper {
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void holidaysRequest(Context context, String year, String country,
-                                       FutureCallback<JsonObject> callback) {
+                                       FutureCallback<JsonArray> callback) {
         JsonObject postedJsonObject = new JsonObject();
         postedJsonObject.addProperty("year", year);
         postedJsonObject.addProperty("country", country);

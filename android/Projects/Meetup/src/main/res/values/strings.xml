@@ -10,5 +10,7 @@
     <string name="calendar_title_activity">CalendarActivity</string>
     <string name="calendar_title_activity_view">CalendarView</string>
     <string name="calendar_servor_error">The servor can\'t be access. You may check your connection</string>
+    <string name="calendar_select_date">Select a date</string>
+
 
 </resources>

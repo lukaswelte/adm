@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adm.meetup.helpers.NetworkHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
@@ -42,9 +44,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
-public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
+public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener {
     public static final int iMoreThanAMonth = 32;
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
@@ -65,7 +68,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
         cal = (CalendarView) findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
-        getHolidays();
+        getHolidays(cal.getmCalendar().getTime());
     }
 
     @Override
@@ -167,20 +170,38 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         return super.onOptionsItemSelected(item);
     }
 
-    private ArrayList<Date> getHolidays()
-    {
+    private ArrayList<Date> getHolidays(final Date currentDate) {
         ArrayList<Date> holidays = new ArrayList<Date>();
-        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+        FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
             @Override
-            public void onCompleted(Exception e, JsonObject jsonObject) {
-                int i=0;
+            public void onCompleted(Exception e, JsonArray jsonArray) {
                 try{
                     if (e != null) {
                         throw e;
                     }
-                    String s = jsonObject.toString();
-                    Log.d("TAG", s);
-                    Log.d("Wait", "1");
+                    Iterator<JsonElement> iterator = jsonArray.iterator();
+                    while (iterator.hasNext()) {
+                        JsonObject jsonObject = iterator.next().getAsJsonObject();
+
+                        //Get date
+                        String dateStr = jsonObject.get("date").getAsString();
+                        dateStr = dateStr.replace(".", "/");
+                        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+                        Date dateObj = curFormater.parse(dateStr);
+
+                        //Comparing dates
+                        Calendar cal1 = Calendar.getInstance();
+                        Calendar cal2 = Calendar.getInstance();
+                        cal1.setTime(currentDate);
+                        cal2.setTime(dateObj);
+                        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+
+                        //If sameDay, we need details
+                        if (sameDay) {
+                            String name = jsonObject.get("name").getAsString();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
