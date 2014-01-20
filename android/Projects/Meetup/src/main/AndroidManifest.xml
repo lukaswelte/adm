@@ -10,19 +10,31 @@
         android:protectionLevel="signature" />
      
      
-    <uses-permission android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE" />
+    
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
+    <provider
+        android:name=".provider.EventManager"
+        android:authorities="com.adm.meetup.event.EventManager"
+        android:exported="true"
+        android:grantUriPermissions="true"
+        android:label="LentItemsProvider"
+        android:readPermission="com.adm.meetup.event.EventManager.READ"
+        android:writePermission="com.adm.meetup.event.EventManager.WRITE" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Required to show current location -->
+    <uses-permission android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -32,14 +44,15 @@
         android:required="true" />
 
     <application
+        android:name="com.adm.meetup.helpers.SharedApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.adm.meetup.MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
+            android:label="@string/app_name">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -59,5 +72,6 @@
             android:name="com.google.android.gms.version"
             android:value="4030500" />
     </application>
+
 
 </manifest>
