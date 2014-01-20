@@ -37,9 +37,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.adm.meetup.CalendarActivity"
-            android:label="@string/calendar_title_activity" >
-        </activity>
+            android:name=".CalendarFragment"
+            android:label="@string/title_activity_calendar"></activity>
     </application>
     
     

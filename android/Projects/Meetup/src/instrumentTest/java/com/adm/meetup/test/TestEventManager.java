@@ -1,26 +1,18 @@
 package com.adm.meetup.test;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.os.SystemClock;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
-import android.test.ProviderTestCase2;
-import android.util.Log;
+
+import com.adm.meetup.event.Event;
+import com.adm.meetup.event.EventManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import com.adm.meetup.EventActivity;
-import com.adm.meetup.MainActivity;
-import com.adm.meetup.event.Event;
-import com.adm.meetup.event.EventManager;
 
 /**
  * Created by jan on 25.11.13.
@@ -65,8 +57,8 @@ abstract public class TestEventManager extends AndroidTestCase {
         Event.setId(Long.valueOf(1));
         Event.setName("Event name");
         Event.setLocation("location");
-        Event.setDate(new Date(2013,11,25));
-        Event.setDueDate(new Date(2013,11,27));
+        Event.setDate(new Date(2013, 11, 25));
+        Event.setDueDate(new Date(2013, 11, 27));
 
         manager.createEvent(Event);
 
@@ -90,7 +82,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         Event.setDueDate(new Date(2013, 11, 27));
 
         Event Event2 = new Event();
-        Event2.setId((Long.valueOf(1))+1);
+        Event2.setId((Long.valueOf(1)) + 1);
         Event2.setName("Event name 2");
         Event2.setLocation("location 2");
         Event2.setDate(new Date(2015, 11, 25));
@@ -105,7 +97,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         ArrayList<Event> actual = manager.getEvents();
 
         Collections.sort(actual, idComparator);
-        Collections.sort(expected,idComparator);
+        Collections.sort(expected, idComparator);
 
         assertDeepEquals(expected, actual);
     }
@@ -124,7 +116,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         Event.setDueDate(new Date(2013, 11, 27));
 
         Event Event2 = new Event();
-        Event2.setId((Long.valueOf(1))+1);
+        Event2.setId((Long.valueOf(1)) + 1);
         Event2.setName("Event name 2");
         Event2.setLocation("location 2");
         Event2.setDate(new Date(2015, 11, 25));
@@ -247,9 +239,10 @@ abstract public class TestEventManager extends AndroidTestCase {
 
         @Override
         public int compare(Event c1, Event c2) {
-        return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
+            return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
         }
     };
+
     /**
      * Test of deleteEvent method, of class EventManagerImpl.
      */

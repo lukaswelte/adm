@@ -1,5 +1,6 @@
 package com.adm.meetup;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,13 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.adm.meetup.helpers.NetworkHelper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -44,31 +37,31 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
-public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener {
+public class CalendarFragment extends Fragment implements CalendarView.OnDispatchDateSelectListener {
     public static final int iMoreThanAMonth = 32;
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
     private CalendarView cal;
-    private Context context;
 
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
+        return inflater.inflate(R.layout.fragment_calendar,container,false);
+    }
 
-        mTextDate=(TextView)findViewById(R.id.display_date);
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mTextDate = (TextView) getView().findViewById(R.id.display_date);
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
-        context = this;
 
         cal = (CalendarView) findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
-        getHolidays(cal.getmCalendar().getTime());
     }
 
     @Override
@@ -94,7 +87,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         //Getting default value : today's date
         GregorianCalendar tempCal = new GregorianCalendar();
         tempCal.setTime(new Date());
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         long iDefaultTime = tempCal.getTimeInMillis();
         //Setting month
         tempCal.setTimeInMillis(preferences.getLong(PREFERENCES_MONTH, iDefaultTime));
@@ -122,7 +115,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         tempCal.setTime(new Date());
         //Setting to the next month for future getmMonth method's call
         tempCal.add(Calendar.DAY_OF_YEAR, iMoreThanAMonth);
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         cal.setmCalendar(tempCal);
     }
 
@@ -168,135 +161,6 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private ArrayList<Date> getHolidays(final Date currentDate) {
-        ArrayList<Date> holidays = new ArrayList<Date>();
-        FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
-            @Override
-            public void onCompleted(Exception e, JsonArray jsonArray) {
-                try{
-                    if (e != null) {
-                        throw e;
-                    }
-                    Iterator<JsonElement> iterator = jsonArray.iterator();
-                    while (iterator.hasNext()) {
-                        JsonObject jsonObject = iterator.next().getAsJsonObject();
-
-                        //Get date
-                        String dateStr = jsonObject.get("date").getAsString();
-                        dateStr = dateStr.replace(".", "/");
-                        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-                        Date dateObj = curFormater.parse(dateStr);
-
-                        //Comparing dates
-                        Calendar cal1 = Calendar.getInstance();
-                        Calendar cal2 = Calendar.getInstance();
-                        cal1.setTime(currentDate);
-                        cal2.setTime(dateObj);
-                        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
-
-                        //If sameDay, we need details
-                        if (sameDay) {
-                            String name = jsonObject.get("name").getAsString();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ERROR", "Error in CalendarActivity: " + ex.toString());
-                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-        NetworkHelper.holidaysRequest(this, "2013", "es", callback);
-
-        return holidays;
-    }
-
-    private ArrayList<Date> getExams()
-    {
-        ArrayList<Date> exams = new ArrayList<Date>();
-        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
-            @Override
-            public void onCompleted(Exception e, JsonObject jsonObject) {
-                try{
-                    Log.d("TAG", jsonObject.toString());
-                    Log.d("Wait", "1");
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
-                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-        NetworkHelper.examsRequest(context, "token", callback);
-
-        return exams;
-    }
-
-    private void createExam(String date, String notifyDate, String name)
-    {
-        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
-            @Override
-            public void onCompleted(Exception e, JsonObject jsonObject) {
-                try{
-                    Log.d("TAG", jsonObject.toString());
-                    Log.d("Wait", "1");
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
-                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-        NetworkHelper.createExamRequest(context, "token", date, notifyDate, name, callback);
-    }
-
-    private void updateExam(int examId, String date, String notifyDate, String name)
-    {
-        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
-            @Override
-            public void onCompleted(Exception e, JsonObject jsonObject) {
-                try{
-                    Log.d("TAG", jsonObject.toString());
-                    Log.d("Wait", "1");
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
-                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-        NetworkHelper.updateExamRequest(context, "token", examId, date, notifyDate, name, callback);
-    }
-
-    private void deleteExam(int examId)
-    {
-        FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
-            @Override
-            public void onCompleted(Exception e, JsonObject jsonObject) {
-                try{
-                    Log.d("TAG", jsonObject.toString());
-                    Log.d("Wait", "1");
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ERROR", "Error in CalendarActivity: " + e.toString());
-                    Toast.makeText(context, getString(R.string.calendar_servor_error), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-        NetworkHelper.deleteExamRequest(context, "token", examId, callback);
     }
 
     /**

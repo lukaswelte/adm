@@ -11,15 +11,16 @@ import com.adm.meetup.event.FacebookEvent;
 import com.adm.meetup.event.IFields;
 import com.adm.meetup.event.SportEvent;
 
+import junit.framework.TestCase;
+
 import java.util.Date;
 import java.util.Iterator;
-import junit.framework.TestCase;
 
 
 /**
  * Created by Jan on 2.12.13.
  */
-public class TestEventDecorator  extends TestCase  {
+public class TestEventDecorator extends TestCase {
     private BaseEvent event = null;
 
     public TestEventDecorator() {
@@ -37,8 +38,8 @@ public class TestEventDecorator  extends TestCase  {
         String name = "event";
         String location = "Event location";
         Long id = Long.MIN_VALUE;
-        Date date = new Date(2013,12,28);
-        Date dueDate = new Date(2013,12,20);
+        Date date = new Date(2013, 12, 28);
+        Date dueDate = new Date(2013, 12, 20);
 
         e.setDate(date);
         e.setDueDate(dueDate);
@@ -58,7 +59,7 @@ public class TestEventDecorator  extends TestCase  {
         BaseEvent event = this.event;
         Iterator<IFields> i = event.getFields();
         try {
-            while(i.hasNext()) {
+            while (i.hasNext()) {
                 IFields iField = i.next();
                 event.get(iField);
             }
@@ -68,7 +69,7 @@ public class TestEventDecorator  extends TestCase  {
 
         event = new SportEvent(event);
         try {
-            while(i.hasNext()) {
+            while (i.hasNext()) {
                 IFields iField = i.next();
                 event.get(iField);
             }
@@ -91,7 +92,7 @@ public class TestEventDecorator  extends TestCase  {
 
         Iterator<IFields> i = event.getFields();
         try {
-            while(i.hasNext()) {
+            while (i.hasNext()) {
                 IFields iField = i.next();
                 event.get(iField);
             }
@@ -102,7 +103,7 @@ public class TestEventDecorator  extends TestCase  {
 
         event = new SportEvent(event);
         try {
-            while(i.hasNext()) {
+            while (i.hasNext()) {
                 IFields iField = i.next();
                 event.get(iField);
             }
@@ -132,51 +133,51 @@ public class TestEventDecorator  extends TestCase  {
             event = new AttendeeExactEventConstraint(event, attendee);
             event = new AttendeeMaxEventConstraint(event, maxAttendee);
             event = new AttendeeMinEventConstraint(event, minAttendee);
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             fail();
         }
 
         BaseEvent event2 = new Event();
-        event2.setAttendee(attendee-1);
+        event2.setAttendee(attendee - 1);
         try {
             event2 = new AttendeeExactEventConstraint(event2, attendee);
             fail();
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             // OK
         }
 
         BaseEvent event3 = new Event();
-        event3.setAttendee(minAttendee-1);
+        event3.setAttendee(minAttendee - 1);
         try {
             event3 = new AttendeeMinEventConstraint(event3, minAttendee);
             fail();
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             // OK
         }
 
         BaseEvent event4 = new Event();
-        event4.setAttendee(minAttendee+1);
+        event4.setAttendee(minAttendee + 1);
         try {
             event4 = new AttendeeMinEventConstraint(event4, minAttendee);
 
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             fail();
         }
 
         BaseEvent event5 = new Event();
-        event5.setAttendee(maxAttendee+1);
+        event5.setAttendee(maxAttendee + 1);
         try {
             event5 = new AttendeeMaxEventConstraint(event5, maxAttendee);
             fail();
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             // OK
         }
 
         BaseEvent event6 = new Event();
-        event6.setAttendee(maxAttendee+1);
+        event6.setAttendee(maxAttendee + 1);
         try {
             event6 = new AttendeeMinEventConstraint(event6, maxAttendee);
-        }  catch (EventValidationException e1) {
+        } catch (EventValidationException e1) {
             fail();
         }
 

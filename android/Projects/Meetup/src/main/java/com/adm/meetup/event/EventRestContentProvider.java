@@ -1,45 +1,24 @@
 package com.adm.meetup.event;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 import com.adm.meetup.helpers.NetworkHelper;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.koushikdutta.async.future.FutureCallback;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -63,7 +42,7 @@ public class EventRestContentProvider extends EventContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/query");
         JsonObject selectionJsonObject = new JsonObject();
         switch (sURIMatcher.match(uri)) {
@@ -71,7 +50,7 @@ public class EventRestContentProvider extends EventContentProvider {
                 break; //Nothing to do
             case EVENTS_ID:
                 String eventID = uri.getLastPathSegment();
-                selectionJsonObject.addProperty("id",eventID);
+                selectionJsonObject.addProperty("id", eventID);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -83,7 +62,7 @@ public class EventRestContentProvider extends EventContentProvider {
         MatrixCursor cursor = new MatrixCursor(projection);
 
         try {
-            JsonElement receivedObject = NetworkHelper.requestBackendSynchronously(null,baseURL.toString(),selectionJsonObject,true);
+            JsonElement receivedObject = NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), selectionJsonObject, true);
             if (receivedObject.isJsonArray()) {
                 Iterator<JsonElement> iterator = receivedObject.getAsJsonArray().iterator();
                 while (iterator.hasNext()) {
@@ -128,15 +107,15 @@ public class EventRestContentProvider extends EventContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values)  {
+    public Uri insert(Uri uri, ContentValues values) {
 
-        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/create");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 break;
             case EVENTS_ID:
-                baseURL.append("/"+uri.getLastPathSegment());
+                baseURL.append("/" + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -158,7 +137,7 @@ public class EventRestContentProvider extends EventContentProvider {
 
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
         try {
-            NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject,true);
+            NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject, true);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -170,20 +149,20 @@ public class EventRestContentProvider extends EventContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/destroy");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 break;
             case EVENTS_ID:
-                baseURL.append("/"+uri.getLastPathSegment());
+                baseURL.append("/" + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
 
         try {
-           NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), null, true);
+            NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), null, true);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -195,13 +174,13 @@ public class EventRestContentProvider extends EventContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         Uri ret;
-        StringBuilder baseURL= new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
+        StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/update");
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 break;
             case EVENTS_ID:
-                baseURL.append("/"+uri.getLastPathSegment());
+                baseURL.append("/" + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -222,7 +201,7 @@ public class EventRestContentProvider extends EventContentProvider {
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
         JsonElement element = null;
         try {
-           element = NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject,true);
+            element = NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), postedObject, true);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
