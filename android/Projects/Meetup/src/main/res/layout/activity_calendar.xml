@@ -14,13 +14,12 @@
     <com.adm.meetup.CalendarView
         android:id="@+id/calendar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Sélectionnez une date"
         android:id="@+id/display_date"
-        android:background="#587"
-        />
+        android:background="#587" />
 </LinearLayout>

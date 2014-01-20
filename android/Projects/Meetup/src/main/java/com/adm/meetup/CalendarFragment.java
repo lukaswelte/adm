@@ -1,12 +1,11 @@
 package com.adm.meetup;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,7 +37,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class CalendarActivity extends ActionBarActivity implements CalendarView.OnDispatchDateSelectListener{
+public class CalendarFragment extends Fragment implements CalendarView.OnDispatchDateSelectListener {
     public static final int iMoreThanAMonth = 32;
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
@@ -48,25 +47,29 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
     private final String PREFERENCES_FILE = "calendar_preferences";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
+        return inflater.inflate(R.layout.fragment_calendar,container,false);
+    }
 
-        mTextDate=(TextView)findViewById(R.id.display_date);
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mTextDate = (TextView) getView().findViewById(R.id.display_date);
         mFormat = new SimpleDateFormat("EEEE d MMMM yyyy");
 
-        cal = (CalendarView) findViewById(R.id.calendar);
+        cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
 
         //Saving current month to show it later
         GregorianCalendar actualCal = cal.getmCalendar();
         Long timeToSave = actualCal.getTimeInMillis();
-        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCES_FILE,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(PREFERENCES_MONTH, timeToSave);
@@ -74,32 +77,31 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE,
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFERENCES_FILE,
                 Context.MODE_PRIVATE);
 
         //Getting default value : today's date
         GregorianCalendar tempCal = new GregorianCalendar();
         tempCal.setTime(new Date());
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         long iDefaultTime = tempCal.getTimeInMillis();
         //Setting month
         tempCal.setTimeInMillis(preferences.getLong(PREFERENCES_MONTH, iDefaultTime));
-        cal = (CalendarView) findViewById(R.id.calendar);
+        cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setmCalendar(tempCal);
         cal.refreshCalendar();
 
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
     }
 
-    @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         resettingCalendar();
 
     }
@@ -110,27 +112,24 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
         tempCal.setTime(new Date());
         //Setting to the next month for future getmMonth method's call
         tempCal.add(Calendar.DAY_OF_YEAR, iMoreThanAMonth);
-        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) -1));
+        tempCal.add(Calendar.DAY_OF_YEAR, -(tempCal.get(Calendar.DAY_OF_MONTH) - 1));
         cal.setmCalendar(tempCal);
     }
 
-    @Override
     public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+        //super.onAttachedToWindow();
+        getActivity().getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
     }
 
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_HOME)
-        {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
             resettingCalendar();
             //Normal home button action
             Intent showOptions = new Intent(Intent.ACTION_MAIN);
             showOptions.addCategory(Intent.CATEGORY_HOME);
             startActivity(showOptions);
         }
-        return super.onKeyDown(keyCode, event);
+        return true; //super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -139,11 +138,10 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.calendar, menu);
+        getActivity().getMenuInflater().inflate(R.menu.calendar, menu);
         return true;
     }
 
@@ -169,7 +167,7 @@ public class CalendarActivity extends ActionBarActivity implements CalendarView.
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
             return rootView;
