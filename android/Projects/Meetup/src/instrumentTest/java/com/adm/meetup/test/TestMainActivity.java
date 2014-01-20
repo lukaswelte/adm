@@ -4,8 +4,6 @@ import com.adm.meetup.R;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
-import com.adm.meetup.MainActivity;
-
 /**
  * Created by lukas on 18.11.13.
  */
