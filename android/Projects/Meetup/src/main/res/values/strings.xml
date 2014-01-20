@@ -11,8 +11,6 @@
     <string name="calendar_title_activity_view">CalendarView</string>
     <string name="calendar_servor_error">The servor can\'t be access. You may check your connection</string>
     <string name="calendar_select_date">Select a date</string>
-
-
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
 
@@ -26,8 +24,21 @@
         <item>Team</item>
     </string-array>
 
-
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_team">Team</string>
+
+    <!-- TeamFragment Strings -->
+    <string name="team_text">Our international Team:</string>
+    <string-array name="members">
+        <item>Maela</item>
+        <item>Lukas</item>
+        <item>Sanaa</item>
+        <item>Florian</item>
+        <item>Jan</item>
+        <item>Timo</item>
+        <item>Andreas</item>
+    </string-array>
+
 
 </resources>

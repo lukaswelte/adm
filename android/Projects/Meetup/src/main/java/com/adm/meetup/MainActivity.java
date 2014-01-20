@@ -145,6 +145,12 @@ public class MainActivity extends ActionBarActivity {
                 Fragment fragment = new CalendarFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
                 break;
+
+            case 5:
+                Fragment fragmentTeam = new TeamFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
+                break;
+
             default:
                 Fragment emptyFragment = new Fragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
@@ -152,22 +158,6 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        // create intent
-        //Intent intent = new Intent(this,CalendarFragment.class);
-        //startActivity(intent);
-        //Fragment fragment = new CalendarFragment();
-
-        //FragmentManager fragmentManager = getFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-
-
-        /*
-        Fragment fragment = new XXXFragment();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        */
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mMenuTitles[position]);
