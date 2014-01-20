@@ -35,6 +35,6 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile project(':libraries:facebook')
     compile 'com.koushikdutta.ion:ion:1.2.1'
+    compile project(':libraries:facebook')
 }

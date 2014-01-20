@@ -1,5 +1,6 @@
 package com.adm.meetup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,15 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-import android.app.ProgressDialog;
-
-import com.adm.meetup.ProfileActivity;
 
 
+import com.adm.meetup.helpers.NetworkHelper;
+import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
 import com.facebook.*;
 import com.facebook.model.*;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
 
 
 public class ProfileActivity extends ActionBarActivity {
@@ -30,6 +32,8 @@ public class ProfileActivity extends ActionBarActivity {
     private EditText emailText,passwordText;
     private Button loginButton;
     private TextView registerScreen;
+    ProgressDialog progressBar;
+
 
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
@@ -172,17 +176,35 @@ public class ProfileActivity extends ActionBarActivity {
                         // If the response is successful
                         if (session == Session.getActiveSession()) {
                             if (user != null) {
-                                // Set the Textview's text to the user's name.
-                                //emailText.setText(user.asMap().get("email").toString());
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString(Util.PREFERENCES_EMAIL,user.asMap().get("email").toString());
                                 editor.putString(Util.PREFERENCES_FIRSTNAME,user.getFirstName());
-                                editor.putString(Util.PREFERENCES_LASTNAME,user.getLastName());
+                                editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
-                                Intent mainview = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(mainview);
+                                NetworkHelper.facebookAuthRequest(ProfileActivity.this, session.getAccessToken(), new FutureCallback<JsonObject>() {
+                                    @Override
+                                    public void onCompleted(Exception e, JsonObject jsonObject) {
+                                        JsonElement error = jsonObject.get("error");
+                                        Log.d("facebook auth", jsonObject.toString());
+                                        if(error != null)
+                                        {
+                                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                        {
+                                            String token = jsonObject.get("token").getAsString();
+                                            if (token != null) {
+                                                Log.d("facebook auth token", token);
 
+                                                SharedApplication.getInstance().setUserToken(token);
+                                                Intent mainview = new Intent(getApplicationContext(), MainActivity.class);
+                                                startActivity(mainview);
+                                            }
+                                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
                         }
                         if (response.getError() != null) {
@@ -215,20 +237,39 @@ public class ProfileActivity extends ActionBarActivity {
     }
     private OnClickListener loginListener = new OnClickListener() {
         public void onClick(View v) {
+            progressBar = new ProgressDialog(v.getContext());
+            progressBar.setCancelable(true);
+            progressBar.setMessage("Please wait");
+            progressBar.setProgress(20000);
+            progressBar.show();
+                FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject jsonObject) {
+                        progressBar.hide();
+                        JsonElement error = jsonObject.get("error");
+                        Log.d("login", jsonObject.toString());
+                        if (error !=null)
+                        {
+                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            String token = jsonObject.get("token").getAsString();
+                            if (token != null) {
+                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                                editor.commit();
+                                SharedApplication.getInstance().setUserToken(token);
+                                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                NetworkHelper.loginRequest(ProfileActivity.this, emailText.getText().toString(), passwordText.getText().toString(), callback);
 
-            //getting inputs from user and performing data operations
-            if(emailText.getText().toString().equals("a") &&
-                    passwordText.getText().toString().equals("a")){
-                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                //responding to the User inputs
-                Toast.makeText(getApplicationContext(), "Connexion réussie !!!", Toast.LENGTH_LONG).show();
-                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
-                editor.commit();
-                Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(mainIntent);
-            }else
-                Toast.makeText(getApplicationContext(), "Connexion échouée !!!", Toast.LENGTH_LONG).show();
         }
     };
 

@@ -35,14 +35,6 @@ android:fillViewport="true">
         android:padding="10dip"
         android:layout_below="@id/header"
         android:id="@+id/linearLayout">
-        <!-- Full Name Label -->
-        <EditText android:id="@+id/register_fullName_field"
-            android:hint="@string/register_fullName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:singleLine="true"
-            android:layout_marginBottom="20dip"/>
         <!--  Email Label -->
         <EditText android:id="@+id/register_email_field"
             android:hint="@string/register_email"
@@ -50,6 +42,7 @@ android:fillViewport="true">
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:singleLine="true"
+            android:inputType="textEmailAddress"
             android:layout_marginBottom="20dip"/>
         <!-- Password Label -->
         <EditText android:id="@+id/register_password_field"
@@ -65,13 +58,12 @@ android:fillViewport="true">
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"/>
-        <!--  Error message -->
-        <TextView android:id="@+id/register_error_field"
-            android:layout_width="fill_parent"
+        <ProgressBar
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#e30000"
-            android:padding="10dip"
-            android:textStyle="bold"/>
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
         <!-- Link to Login Screen -->
         <Button android:id="@+id/register_linkToLogin_button"
             android:text="@string/register_linkToLogin"

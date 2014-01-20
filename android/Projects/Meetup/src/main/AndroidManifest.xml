@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adm.meetup"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
     <provider
-        android:name=".provider.EventManager"
+        android:name="com.adm.meetup.provider.EventManager"
         android:authorities="com.adm.meetup.event.EventManager"
         android:exported="true"
         android:grantUriPermissions="true"
@@ -17,19 +17,19 @@
         android:readPermission="com.adm.meetup.event.EventManager.READ"
         android:writePermission="com.adm.meetup.event.EventManager.WRITE" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:name="com.adm.meetup.helpers.SharedApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.adm.meetup.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.adm.meetup.CalendarActivity"
@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name="com.adm.meetup.ProfileActivity"
-            android:label="@string/title_activity_profile">
+            android:label="@string/title_activity_profile" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,8 +62,12 @@
             android:label="@string/title_activity_account" >
         </activity>
         <activity
-            android:name=".FriendsActivity"
+            android:name="com.adm.meetup.FriendsActivity"
             android:label="@string/title_activity_friends" >
+        </activity>
+        <activity
+            android:name="com.adm.meetup.RegisterConfirmationActivity"
+            android:label="@string/title_activity_register_confirmation" >
         </activity>
     </application>
 

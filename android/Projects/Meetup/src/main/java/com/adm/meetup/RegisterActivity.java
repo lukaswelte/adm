@@ -1,50 +1,87 @@
 package com.adm.meetup;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.adm.meetup.helpers.NetworkHelper;
+import com.adm.meetup.helpers.SharedApplication;
+import com.adm.meetup.util.Util;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
 
 public class RegisterActivity extends ActionBarActivity {
 
     Button registerButton;
     Button loginButton;
-    EditText fullNameText;
     EditText emailText;
     EditText passwordText;
-    TextView registerErrorMsg;
+    ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-/*
-        TextView loginScreen = (TextView) findViewById(R.id.register_linkToLogin_button);
-*/
 
-        // Importing all assets like buttons, text fields
-        fullNameText = (EditText) findViewById(R.id.register_fullName_field);
         emailText = (EditText) findViewById(R.id.register_email_field);
         passwordText = (EditText) findViewById(R.id.register_password_field);
         registerButton = (Button) findViewById(R.id.register_registerNewAccount_button);
         loginButton = (Button) findViewById(R.id.register_linkToLogin_button);
-        registerErrorMsg = (TextView) findViewById(R.id.register_error_field);
 
         // Register Button Click event
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = fullNameText.getText().toString();
                 String email = emailText.getText().toString();
                 String password = passwordText.getText().toString();
 
+                progressBar = new ProgressDialog(view.getContext());
+                progressBar.setCancelable(true);
+                progressBar.setMessage("Please wait");
+                progressBar.setProgress(20000);
+                progressBar.show();
+                FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject jsonObject) {
+                        progressBar.hide();
+                        JsonElement error = jsonObject.get("error");
+                        Log.d("register", jsonObject.toString());
+                        if(error != null)
+                        {
+                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            String token = jsonObject.get("token").getAsString();
+                            if (token != null) {
+                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                                editor.commit();
+                                SharedApplication.getInstance().setUserToken(token);
+                                Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
+                                startActivity(intent);
+                            }
+                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                NetworkHelper.registerRequest(RegisterActivity.this, email, password, callback);
             }
         });
 
