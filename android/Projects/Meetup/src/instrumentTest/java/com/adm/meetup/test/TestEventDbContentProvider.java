@@ -1,14 +1,9 @@
 package com.adm.meetup.test;
 
-    import android.database.Cursor;
-    import android.net.Uri;
-    import android.test.ProviderTestCase2;
-    import android.test.mock.MockContentResolver;
-    import android.util.Log;
+import android.test.ProviderTestCase2;
+import android.test.mock.MockContentResolver;
 
-    import com.adm.meetup.event.EventContentProvider;
-    import com.adm.meetup.event.EventDatabase;
-    import com.adm.meetup.event.EventDbContentProvider;
+import com.adm.meetup.event.EventDbContentProvider;
 
 public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContentProvider> {
 
@@ -16,7 +11,7 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
 
     private static MockContentResolver resolve;
 
-    public TestEventDbContentProvider(Class<EventDbContentProvider> providerClass,String providerAuthority) {
+    public TestEventDbContentProvider(Class<EventDbContentProvider> providerClass, String providerAuthority) {
         super(providerClass, providerAuthority);
     }
 
@@ -30,8 +25,7 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
         try {
             super.setUp();
             resolve = this.getMockContentResolver();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
 
 
         }
@@ -39,10 +33,9 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
 
     @Override
     public void tearDown() {
-        try{
+        try {
             super.tearDown();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
 
 
         }

@@ -7,8 +7,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="event_type_sport">Sport</string>
-    <string name="title_activity_calendar">CalendarActivity</string>
-    <string name="title_activity_calendar_view">CalendarView</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
@@ -33,6 +31,41 @@
     <string name="register_confirmation_main_button">I will do it later</string>
     <string name="register_confirmation_profile_button">Yes</string>
     <string name="token_not_found_error">Error. Please retry</string>
+
+
+    <!-- Calendar Activity -->
+    <string name="calendar_title_activity">CalendarActivity</string>
+    <string name="calendar_title_activity_view">CalendarView</string>
+    <string name="calendar_servor_error">The servor can\'t be access. You may check your connection</string>
+    <string name="calendar_select_date">Select a date</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Events</item>
+        <item>Calendar</item>
+        <item>Profile</item>
+        <item>Settings</item>
+        <item>Team</item>
+    </string-array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_team">Team</string>
+
+    <!-- TeamFragment Strings -->
+    <string name="team_text">Our international Team:</string>
+    <string-array name="members">
+        <item>Maela</item>
+        <item>Lukas</item>
+        <item>Sanaa</item>
+        <item>Florian</item>
+        <item>Jan</item>
+        <item>Timo</item>
+        <item>Andreas</item>
+    </string-array>
 
 
 </resources>

@@ -19,7 +19,14 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sélectionnez une date"
+        android:text="@string/calendar_select_date"
         android:id="@+id/display_date"
         android:background="#587" />
+    
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/display_details"
+        android:background="#587" />
+
 </LinearLayout>
