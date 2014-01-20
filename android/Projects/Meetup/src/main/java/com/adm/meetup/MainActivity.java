@@ -1,5 +1,8 @@
 package com.adm.meetup;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -14,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.adm.meetup.util.Util;
 
 public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
@@ -106,21 +111,38 @@ public class MainActivity extends ActionBarActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        // Handle action buttons
-        /*
-        switch(item.getItemId()) {
 
-        case R.id.XXX:
-            // create intent
-            Intent intent = new Intent(Intent.XXX);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_account:
+                Intent intent1 = new Intent(this, AccountActivity.class);
+                startActivity(intent1);
+                return true;
 
-        case ...
+            case R.id.action_friends:
+                Intent intent2 = new Intent(this, FriendsActivity.class);
+                startActivity(intent2);
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.action_logout:
+                ProfileActivity.onClickLogout();
+                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(login);
+                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.commit();
+                // Closing dashboard screen
+                finish();
+                return true;
         }
-        */
         return super.onOptionsItemSelected(item);
     }
 

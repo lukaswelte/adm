@@ -2,9 +2,36 @@
 <resources>
 
     <string name="app_name">Meetup</string>
+    <string name="logout">Log out</string>
+    <string name="app_id">200155020171205</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="event_type_sport">Sport</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="title_activity_friends">Friends</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_password">Password</string>
+    <string name="profile_login">Log in</string>
+    <string name="profile_signup">Sign up</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">Password</string>
+    <string name="register_registerNewAccount">Register New Account</string>
+    <string name="register_linkToLogin">Already has account! Login here</string>
+    <string name="action_main_account">Account</string>
+    <string name="action_main_friends">Friends</string>
+    <string name="action_main_logout">Logout</string>
+    <string name="tab_friends">Friends</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_register_confirmation">RegisterConfirmationActivity</string>
+    <string name="register_confirmation_text">Thank you for your registration.\nYour account has been successfully registered.\nDo you want to modify you profile?</string>
+    <string name="register_confirmation_main_button">I will do it later</string>
+    <string name="register_confirmation_profile_button">Yes</string>
+    <string name="token_not_found_error">Error. Please retry</string>
+
 
     <!-- Calendar Activity -->
     <string name="calendar_title_activity">CalendarActivity</string>

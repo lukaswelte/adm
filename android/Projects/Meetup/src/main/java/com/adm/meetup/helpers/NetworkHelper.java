@@ -1,5 +1,6 @@
 package com.adm.meetup.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.google.gson.JsonArray;
@@ -89,8 +90,8 @@ public class NetworkHelper {
      */
     public static void loginRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
         JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("email", "test@test.com");
-        postedJsonObject.addProperty("password", "pass");
+        postedJsonObject.addProperty("email", email);
+        postedJsonObject.addProperty("password", password);
 
         NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback);
     }
@@ -182,4 +183,31 @@ public class NetworkHelper {
         NetworkHelper.requestBackend(context, "/exam/delete", postedJsonObject, callback);
     }
 
+    /**
+     * Method to Register new user via email
+     *
+     * @param context  The applications context interested in the request
+     * @param email    The users email address
+     * @param password The users password
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void registerRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("email", email);
+        postedJsonObject.addProperty("password", password);
+
+        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback);
+    }    /**
+     * Method to Authenticate the user from facebook
+     *
+     * @param context  The applications context interested in the request
+     * @param facebookAuthToken    facebook auth token
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void facebookAuthRequest(Context context, String facebookAuthToken, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("facebookToken", facebookAuthToken);
+
+        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback);
+    }
 }
