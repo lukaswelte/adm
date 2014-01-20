@@ -1,5 +1,6 @@
 package com.adm.meetup.test;
 
+import com.adm.meetup.EventActivity;
 import com.adm.meetup.R;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
@@ -7,12 +8,13 @@ import android.widget.TextView;
 import com.adm.meetup.MainActivity;
 
 /**
- * Created by lukas on 18.11.13.
+ * Created by Jan on 2.12.13.
  */
-public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActivity> {
+public class TestEventActivity extends ActivityInstrumentationTestCase2<EventActivity> {
 
-    public TestMainActivity() {
-        super(MainActivity.class);
+
+    public TestEventActivity() {
+        super(EventActivity.class);
     }
 
     @Override
@@ -21,7 +23,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testPreconditions() throws Exception {
-        assertNotNull(getActivity());
+
     }
 
     @Override
