@@ -1,12 +1,9 @@
 package com.adm.meetup.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.Builders;
@@ -35,10 +32,10 @@ public class NetworkHelper {
     /**
      * Request Something from the backend
      *
-     * @param context           The applications context interested in the request. Can be null
-     * @param apiURL            The Path to the API Method /auth/login for example
-     * @param postedJsonObject  A json object if desired. Pass in null for get requests
-     * @param jsonObjectHandler The Response JsonObject Handler dealing with the result
+     * @param context                The applications context interested in the request. Can be null
+     * @param apiURL                 The Path to the API Method /auth/login for example
+     * @param postedJsonObject       A json object if desired. Pass in null for get requests
+     * @param jsonObjectHandler      The Response JsonObject Handler dealing with the result
      * @param addAuthenticationToken Should add the current logged in user token to the request or not
      */
     public static void requestBackend(Context context, String apiURL, JsonObject postedJsonObject, FutureCallback jsonObjectHandler, boolean addAuthenticationToken) {
@@ -48,8 +45,8 @@ public class NetworkHelper {
 
         if (addAuthenticationToken) {
             String userToken = SharedApplication.getInstance().userToken();
-            if (userToken!=null && userToken.length() > 0) {
-                apiURL = apiURL + "?token="+userToken;
+            if (userToken != null && userToken.length() > 0) {
+                apiURL = apiURL + "?token=" + userToken;
             }
         }
 
@@ -68,8 +65,8 @@ public class NetworkHelper {
 
         if (addAuthenticationToken) {
             String userToken = SharedApplication.getInstance().userToken();
-            if (userToken!=null && userToken.length() > 0) {
-                apiURL = apiURL + "?token="+userToken;
+            if (userToken != null && userToken.length() > 0) {
+                apiURL = apiURL + "?token=" + userToken;
             }
         }
 

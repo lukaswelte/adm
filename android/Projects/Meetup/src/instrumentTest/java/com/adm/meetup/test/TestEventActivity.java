@@ -1,11 +1,8 @@
 package com.adm.meetup.test;
 
-import com.adm.meetup.EventActivity;
-import com.adm.meetup.R;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.TextView;
 
-import com.adm.meetup.MainActivity;
+import com.adm.meetup.EventActivity;
 
 /**
  * Created by Jan on 2.12.13.

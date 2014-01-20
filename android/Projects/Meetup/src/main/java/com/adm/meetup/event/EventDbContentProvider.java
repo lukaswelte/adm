@@ -49,18 +49,18 @@ public class EventDbContentProvider extends EventContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values)  {
+    public Uri insert(Uri uri, ContentValues values) {
         SQLiteDatabase db;
         db = this.db.getWritableDatabase();
         Uri ret;
         Long id;
-        switch(sURIMatcher.match(uri)) {
+        switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 id = db.insert(EventDatabase.Tables.Events.TABLE, null, values);
                 ret = getUriForId(id, uri);
-             break;
+                break;
             case EVENTS_ID:
-                id = db.insertWithOnConflict(EventDatabase.Tables.Events.TABLE, null, values,SQLiteDatabase.CONFLICT_REPLACE);
+                id = db.insertWithOnConflict(EventDatabase.Tables.Events.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 ret = getUriForId(id, uri);
                 break;
             default:
@@ -106,7 +106,7 @@ public class EventDbContentProvider extends EventContentProvider {
                 updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
                 break;
             case EVENTS_ID:
-                updateCount = db.update(EventDatabase.Tables.Events.TABLE, values,selection, selectionArgs);
+                updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
