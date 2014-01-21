@@ -64,7 +64,7 @@ public class AccountActivity extends ActionBarActivity {
                 {
                     HashMap<String, String> map = (HashMap<String, String>)itemAtPosition;
 
-                    if(id==0 || id==1 || id==2 || id==5 || id==6 || id==7){ // firstname
+                    if(id==0 || id==1 || id==4 || id==5){
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final EditText input = new EditText(AccountActivity.this);
@@ -88,7 +88,7 @@ public class AccountActivity extends ActionBarActivity {
                         adb.setView(input);
                         adb.show();
                     }
-                    else if(id==4){		//relationship status
+                    else if(id==3){		//relationship status
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final String[] types = {"Single", "In a relationship", "Engaged", "Married", "It's complicated", "In an open relationship", "Separated", "Divorced", "Widowed"};
@@ -109,7 +109,7 @@ public class AccountActivity extends ActionBarActivity {
 
                         adb.show();
                     }
-                    else if(id==8){		//location services
+                    else if(id==7){		//location services
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final String[] types = {"Yes", "No"};
@@ -130,7 +130,7 @@ public class AccountActivity extends ActionBarActivity {
 
                         adb.show();
                     }
-                    else if(id==3){		//location services
+                    else if(id==2){		//date of birth
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final DatePicker input = new DatePicker(AccountActivity.this);
@@ -168,10 +168,10 @@ public class AccountActivity extends ActionBarActivity {
         Editor editor = pref.edit();
         if (id==0) editor.putString(Util.PREFERENCES_FIRSTNAME, input.getText().toString());
         if (id==1) editor.putString(Util.PREFERENCES_LASTNAME, input.getText().toString());
-        if (id==2) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
-        if (id==5) editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, input.getText().toString());
-        if (id==6) editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, input.getText().toString());
-        if (id==7) editor.putString(Util.PREFERENCES_STATUS, input.getText().toString());
+        if (id==6) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
+        if (id==4) editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, input.getText().toString());
+        if (id==5) editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, input.getText().toString());
+        //if (id==7) editor.putString(Util.PREFERENCES_STATUS, input.getText().toString());
 
         editor.commit();
     }
@@ -188,53 +188,61 @@ public class AccountActivity extends ActionBarActivity {
         HashMap<String, String> map = new HashMap<String, String>();
 
         if(mSchedule==null){
+            // 0 first name
             map.put("title", "First Name");
             map.put("description",preferences.getString(Util.PREFERENCES_FIRSTNAME,
                     Util.PREFERENCES_FIRSTNAME_DEFAULT));
             listItem.add(map);
 
+            //1 last name
             map = new HashMap<String, String>();
             map.put("title", "Last Name");
             map.put("description",preferences.getString(Util.PREFERENCES_LASTNAME,
                     Util.PREFERENCES_LASTNAME_DEFAULT));
             listItem.add(map);
 
-            map = new HashMap<String, String>();
-            map.put("title", "Email");
-            map.put("description",preferences.getString(Util.PREFERENCES_EMAIL,
-                    Util.PREFERENCES_EMAIL_DEFAULT));
-                    listItem.add(map);
-
+            // 2 date of birth
             map = new HashMap<String, String>();
             map.put("title", "Date of Birth");
             map.put("description",preferences.getString(Util.PREFERENCES_DATEOFBIRTH,
                     Util.PREFERENCES_DATEOFBIRTH_DEFAULT));
             listItem.add(map);
 
+            //3 relationship
             map = new HashMap<String, String>();
             map.put("title", "Relationship status");
             map.put("description",preferences.getString(Util.PREFERENCES_RELATIONSHIPSTATUS,
                     Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT));
             listItem.add(map);
 
+            //4 home university
             map = new HashMap<String, String>();
             map.put("title", "Home University");
             map.put("description",preferences.getString(Util.PREFERENCES_HOMEUNIVERSITY,
                     Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT));
             listItem.add(map);
 
+            //5 erasmus university
             map = new HashMap<String, String>();
             map.put("title", "Erasmus University");
             map.put("description",preferences.getString(Util.PREFERENCES_ERASMUSUNIVERSITY,
                     Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT));
             listItem.add(map);
 
-            map = new HashMap<String, String>();
+/*            map = new HashMap<String, String>();
             map.put("title", "Status");
             map.put("description",preferences.getString(Util.PREFERENCES_STATUS,
                     Util.PREFERENCES_STATUS_DEFAULT));
+            listItem.add(map);*/
+
+            //6 email
+            map = new HashMap<String, String>();
+            map.put("title", "Email");
+            map.put("description",preferences.getString(Util.PREFERENCES_EMAIL,
+                    Util.PREFERENCES_EMAIL_DEFAULT));
             listItem.add(map);
 
+            //7 location services
             map = new HashMap<String, String>();
             map.put("title", "Disable location services");
             map.put("description",preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
