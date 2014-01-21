@@ -73,7 +73,7 @@ style="@style/AppThemeBg">
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:background="@drawable/button_normal"
-            android:textColor="#1C1C1C"/>
+            android:textColor="@android:color/white"/>
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,12 +85,12 @@ style="@style/AppThemeBg">
             android:text="@string/register_linkToLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_normal"
+            android:background="@android:color/transparent"
             android:layout_below="@+id/linearLayout"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="100dp"
             android:textColor="#1C1C1C"
-            />
+            android:textSize="14dp"/>
         </LinearLayout>
         <!-- Registration Form Ends -->
     </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Meetup</string>
+    <string name="app_name">Erasmus Events</string>
     <string name="app_id">200155020171205</string>
     <string name="hello_world">Hello world!</string>
     <string name="event_type_sport">Sport</string>
@@ -27,7 +27,7 @@
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_login">Log in</string>
-    <string name="login_signup">Sign up</string>
+    <string name="login_signup">Click here to register!</string>
     <string name="logout">Log out</string>
     <string name="sign_up">Here you can create an account!</string>
     <string name="welcome">Welcome to ErasmusEvents!</string>
@@ -40,7 +40,7 @@
     <string name="register_email">Email</string>
     <string name="register_password">Password</string>
     <string name="register_registerNewAccount">Register New Account</string>
-    <string name="register_linkToLogin">Already has account! Login here</string>
+    <string name="register_linkToLogin">Already got an account? Login here</string>
     <string name="tab_friends">Friends</string>
     <string name="cancel">Cancel</string>
     <string name="register_confirmation_text">Thank you for your registration.\nYour account has been successfully registered.\nDo you want to modify you profile?</string>
@@ -79,24 +79,24 @@
     <string name="team_text">Our international Team:</string>
 
     <!-- Account Strings -->
-    <string name="single">Single</string>
-    <string name="inRelationship">In a relationship</string>
-    <string name="engaged">Engaged</string>
-    <string name="married">Married</string>
-    <string name="complicated">It\'s complicated</string>
-    <string name="openRelationship">In an open relationship</string>
-    <string name="separated">Separated</string>
-    <string name="divorced">Divorced</string>
-    <string name="widowed">Widowed</string>
-    <string name="firstName">First Name</string>
-    <string name="lastName">Last Name</string>
-    <string name="dateOfBirth">Date of Birth</string>
-    <string name="relationshipStatus">Relationship status</string>
-    <string name="homeUniversity">Home University</string>
-    <string name="ErasmusUniversity">Erasmus University</string>
-    <string name="email">Email</string>
-    <string name="disableLocationServices">Disable location services</string>
-    <string name="status">Status</string>
+    <string name="single">Single:</string>
+    <string name="inRelationship">In a relationship:</string>
+    <string name="engaged">Engaged:</string>
+    <string name="married">Married:</string>
+    <string name="complicated">It\'s complicated:</string>
+    <string name="openRelationship">In an open relationship:</string>
+    <string name="separated">Separated:</string>
+    <string name="divorced">Divorced:</string>
+    <string name="widowed">Widowed:</string>
+    <string name="firstName">First Name:</string>
+    <string name="lastName">Last Name:</string>
+    <string name="dateOfBirth">Date of Birth:</string>
+    <string name="relationshipStatus">Relationship status:</string>
+    <string name="homeUniversity">Home University:</string>
+    <string name="ErasmusUniversity">Erasmus University:</string>
+    <string name="email">Email:</string>
+    <string name="disableLocationServices">Disable location services:</string>
+    <string name="status">Status:</string>
 
     <string-array name="members">
         <item>Maela</item>
