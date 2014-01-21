@@ -163,6 +163,11 @@ public class MainActivity extends ActionBarActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
 
+            case 0:
+                Fragment homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, homeFragment).commit();
+                break;
+
 
             case 2:
                 Fragment fragment = new CalendarFragment();

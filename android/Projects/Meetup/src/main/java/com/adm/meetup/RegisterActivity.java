@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,6 +36,10 @@ public class RegisterActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_register);
 
         emailText = (EditText) findViewById(R.id.register_email_field);
@@ -50,7 +55,7 @@ public class RegisterActivity extends ActionBarActivity {
 
                 progressBar = new ProgressDialog(view.getContext());
                 progressBar.setCancelable(true);
-                progressBar.setMessage("Please wait");
+                progressBar.setMessage(getString(R.string.progressBar_message));
                 progressBar.setProgress(20000);
                 progressBar.show();
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {

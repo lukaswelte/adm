@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
                         input.setLayoutParams(lp);
                         final AlertDialog.Builder adb2 = adb;
                         final HashMap<String, String> mapIp = map;
-                        adb.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        adb.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -128,7 +128,7 @@ public class ProfileFragment extends Fragment {
         if(mSchedule==null){
 
             map = new HashMap<String, String>();
-            map.put("title", "Status");
+            map.put("title",getString(R.string.status));
             map.put("description",preferences.getString(Util.PREFERENCES_STATUS,
                     Util.PREFERENCES_STATUS_DEFAULT));
             listItem.add(map);

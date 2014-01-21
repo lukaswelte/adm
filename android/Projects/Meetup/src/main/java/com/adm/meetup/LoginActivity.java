@@ -10,18 +10,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
-
 
 import com.adm.meetup.helpers.NetworkHelper;
 import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
-import com.facebook.*;
-import com.facebook.model.*;
+import com.facebook.LoggingBehavior;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.Settings;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -182,9 +188,15 @@ public class LoginActivity extends ActionBarActivity {
                                 editor.putString(Util.PREFERENCES_FIRSTNAME,user.getFirstName());
                                 editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
+                                final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
+                                progressBar.setCancelable(true);
+                                progressBar.setMessage(getString(R.string.progressBar_message));
+                                progressBar.setProgress(20000);
+                                progressBar.show();
                                 NetworkHelper.facebookAuthRequest(LoginActivity.this, session.getAccessToken(), new FutureCallback<JsonObject>() {
                                     @Override
                                     public void onCompleted(Exception e, JsonObject jsonObject) {
+                                        progressBar.hide();
                                         JsonElement error = jsonObject.get("error");
                                         Log.d("facebook auth", jsonObject.toString());
                                         if(error != null)
@@ -240,7 +252,7 @@ public class LoginActivity extends ActionBarActivity {
         public void onClick(View v) {
             progressBar = new ProgressDialog(v.getContext());
             progressBar.setCancelable(true);
-            progressBar.setMessage("Please wait");
+            progressBar.setMessage(getString(R.string.progressBar_message));
             progressBar.setProgress(20000);
             progressBar.show();
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {

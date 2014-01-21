@@ -74,7 +74,7 @@ public class AccountActivity extends ActionBarActivity {
                         input.setLayoutParams(lp);
                         final AlertDialog.Builder adb2 = adb;
                         final HashMap<String, String> mapIp = map;
-                        adb.setPositiveButton("Ok", new OnClickListener() {
+                        adb.setPositiveButton(getString(R.string.ok), new OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -91,7 +91,10 @@ public class AccountActivity extends ActionBarActivity {
                     else if(id==3){		//relationship status
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
-                        final String[] types = {"Single", "In a relationship", "Engaged", "Married", "It's complicated", "In an open relationship", "Separated", "Divorced", "Widowed"};
+                        final String[] types = {getString(R.string.single), getString(R.string.inRelationship),
+                                getString(R.string.engaged), getString(R.string.married), getString(R.string.complicated),
+                                getString(R.string.openRelationship), getString(R.string.separated),
+                                getString(R.string.divorced), getString(R.string.widowed)};
                         adb.setItems(types, new OnClickListener() {
 
                             @Override
@@ -112,7 +115,7 @@ public class AccountActivity extends ActionBarActivity {
                     else if(id==7){		//location services
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
-                        final String[] types = {"Yes", "No"};
+                        final String[] types = {getString(R.string.yes), getString(R.string.no)};
                         adb.setItems(types, new OnClickListener() {
 
                             @Override
@@ -140,7 +143,7 @@ public class AccountActivity extends ActionBarActivity {
                         input.setLayoutParams(lp);
                         final AlertDialog.Builder adb2 = adb;
                         final HashMap<String, String> mapIp = map;
-                        adb.setPositiveButton("Ok", new OnClickListener() {
+                        adb.setPositiveButton(getString(R.string.ok), new OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -189,42 +192,42 @@ public class AccountActivity extends ActionBarActivity {
 
         if(mSchedule==null){
             // 0 first name
-            map.put("title", "First Name");
+            map.put("title", getString(R.string.firstName));
             map.put("description",preferences.getString(Util.PREFERENCES_FIRSTNAME,
                     Util.PREFERENCES_FIRSTNAME_DEFAULT));
             listItem.add(map);
 
             //1 last name
             map = new HashMap<String, String>();
-            map.put("title", "Last Name");
+            map.put("title", getString(R.string.lastName));
             map.put("description",preferences.getString(Util.PREFERENCES_LASTNAME,
                     Util.PREFERENCES_LASTNAME_DEFAULT));
             listItem.add(map);
 
             // 2 date of birth
             map = new HashMap<String, String>();
-            map.put("title", "Date of Birth");
+            map.put("title", getString(R.string.dateOfBirth));
             map.put("description",preferences.getString(Util.PREFERENCES_DATEOFBIRTH,
                     Util.PREFERENCES_DATEOFBIRTH_DEFAULT));
             listItem.add(map);
 
             //3 relationship
             map = new HashMap<String, String>();
-            map.put("title", "Relationship status");
+            map.put("title", getString(R.string.relationshipStatus));
             map.put("description",preferences.getString(Util.PREFERENCES_RELATIONSHIPSTATUS,
                     Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT));
             listItem.add(map);
 
             //4 home university
             map = new HashMap<String, String>();
-            map.put("title", "Home University");
+            map.put("title", getString(R.string.homeUniversity));
             map.put("description",preferences.getString(Util.PREFERENCES_HOMEUNIVERSITY,
                     Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT));
             listItem.add(map);
 
             //5 erasmus university
             map = new HashMap<String, String>();
-            map.put("title", "Erasmus University");
+            map.put("title", getString(R.string.ErasmusUniversity));
             map.put("description",preferences.getString(Util.PREFERENCES_ERASMUSUNIVERSITY,
                     Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT));
             listItem.add(map);
@@ -237,14 +240,14 @@ public class AccountActivity extends ActionBarActivity {
 
             //6 email
             map = new HashMap<String, String>();
-            map.put("title", "Email");
+            map.put("title", getString(R.string.email));
             map.put("description",preferences.getString(Util.PREFERENCES_EMAIL,
                     Util.PREFERENCES_EMAIL_DEFAULT));
             listItem.add(map);
 
             //7 location services
             map = new HashMap<String, String>();
-            map.put("title", "Disable location services");
+            map.put("title", getString(R.string.disableLocationServices));
             map.put("description",preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
                     Util.PREFERENCES_LOCATIONSERVICES_DEFAULT));
             listItem.add(map);
