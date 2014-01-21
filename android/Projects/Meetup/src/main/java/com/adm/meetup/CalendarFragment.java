@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.adm.meetup.calendar.Holiday;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -36,6 +37,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private CalendarView cal;
     private ListView details;
 
+    HashMap<String, ArrayList<Holiday>> holidaysCache = new HashMap<String,ArrayList<Holiday>>();
+
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
 
@@ -53,8 +56,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
-
-
     }
 
     @Override
@@ -90,17 +91,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    public void onBackPressed() {
-        //super.onBackPressed();
-        resettingCalendar();
-
-    }
-
     private void resettingCalendar() {
         //Getting today's date
         GregorianCalendar tempCal = new GregorianCalendar();
@@ -112,47 +102,64 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     }
 
     private void getHolidays(final Date selectDate) {
-        FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
-            @Override
-            public void onCompleted(Exception e, JsonArray jsonArray) {
-                try {
-                    if (e != null) throw e;
-                    ArrayList<String> list_names = new ArrayList<String>();
-                    Iterator iterator = jsonArray.iterator();
-                    while (iterator.hasNext()) {
-                        JsonObject element = (JsonObject) iterator.next();
-                        String name = element.get("englishName").getAsString();
-                        JsonObject date = element.get("date").getAsJsonObject();
 
-                        //Comparing dates
-                        Date dateObj = new Date(date.get("year").getAsInt() - 1900, date.get("month").getAsInt() - 1, date.get("day").getAsInt());
-                        Calendar cal1 = Calendar.getInstance();
-                        Calendar cal2 = Calendar.getInstance();
-                        cal1.setTime(selectDate);
-                        cal2.setTime(dateObj);
-                        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+        SimpleDateFormat postFormatter = new SimpleDateFormat("yyyy");
+        final String year = postFormatter.format(selectDate);
 
-                        if (sameDay) {
-                            list_names.add(name);
+        //try retrieving from local cache
+        ArrayList<Holiday> holidaysOfYear = holidaysCache.get(year);
+
+        if (holidaysOfYear != null) {
+
+            updateHolidaysInCalendar(holidayNamesOnDay(selectDate, holidaysOfYear));
+
+        } else {  //fetch new dates from the backend
+            FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
+                @Override
+                public void onCompleted(Exception e, JsonArray jsonArray) {
+                    try {
+                        if (e != null) throw e;
+
+                        ArrayList<Holiday> holidayList = new ArrayList<Holiday>();
+                        Iterator iterator = jsonArray.iterator();
+                        Holiday holidayObject;
+                        while (iterator.hasNext()) {
+                            JsonObject element = (JsonObject) iterator.next();
+                            holidayObject = new Holiday(element);
+                            holidayList.add(holidayObject);
                         }
+
+                        holidaysCache.put(year,holidayList);
+                        updateHolidaysInCalendar(holidayNamesOnDay(selectDate, holidayList));
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
-                    if (list_names.isEmpty())
-                        list_names.add(getString(R.string.calendar_no_detail));
-                    
-                    majHolidays(list_names);
-                } catch (Exception ex) {
-
                 }
-            }
-        };
+            };
 
-        SimpleDateFormat postFormater = new SimpleDateFormat("yyyy");
-        String year = postFormater.format(selectDate);
-        NetworkHelper.holidaysRequest(getActivity(), year, "es", callback);
+            NetworkHelper.holidaysRequest(getActivity(), year, "es", callback);
+        }
+
+
     }
 
-    private void majHolidays(ArrayList<String> details_names) {
+    private ArrayList<String> holidayNamesOnDay(final Date date, ArrayList<Holiday> holidayDateList) {
+        ArrayList<String> list_names = new ArrayList<String>();
+
+        for (Holiday holiday : holidayDateList) {
+            if (holiday.isOnTheSameDay(date)) {
+                list_names.add(holiday.getName());
+            }
+        }
+        if (list_names.isEmpty())
+            list_names.add(getString(R.string.calendar_no_detail));
+
+        return list_names;
+    }
+
+
+    private void updateHolidaysInCalendar(ArrayList<String> details_names) {
         SimpleAdapter mSchedule;
         details = (ListView) getView().findViewById(R.id.display_details);
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
@@ -197,16 +204,9 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     @Override
     public void onDispatchDateSelect(Date date) {
         ArrayList<String> list_names = new ArrayList<String>();
-        majHolidays(list_names);
+        updateHolidaysInCalendar(list_names);
         mTextDate.setText(mFormat.format(date));
         getHolidays(date);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getActivity().getMenuInflater().inflate(R.menu.calendar, menu);
-        return true;
     }
 
     @Override
