@@ -121,13 +121,11 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                     Iterator iterator = jsonArray.iterator();
                     while (iterator.hasNext()) {
                         JsonObject element = (JsonObject) iterator.next();
-                        String name = element.get("name").getAsString();
-                        String date = element.get("date").getAsString();
-                        date = date.replace(".", "/");
+                        String name = element.get("englishName").getAsString();
+                        JsonObject date = element.get("date").getAsJsonObject();
 
                         //Comparing dates
-                        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-                        Date dateObj = curFormater.parse(date);
+                        Date dateObj = new Date(date.get("year").getAsInt() - 1900, date.get("month").getAsInt() - 1, date.get("day").getAsInt());
                         Calendar cal1 = Calendar.getInstance();
                         Calendar cal2 = Calendar.getInstance();
                         cal1.setTime(selectDate);
@@ -141,13 +139,17 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                     }
                     if (list_names.isEmpty())
                         list_names.add(getString(R.string.calendar_no_detail));
+                    
                     majHolidays(list_names);
                 } catch (Exception ex) {
 
                 }
             }
         };
-        NetworkHelper.holidaysRequest(getActivity(), "2014", "es", callback);
+
+        SimpleDateFormat postFormater = new SimpleDateFormat("yyyy");
+        String year = postFormater.format(selectDate);
+        NetworkHelper.holidaysRequest(getActivity(), year, "es", callback);
     }
 
     private void majHolidays(ArrayList<String> details_names) {
