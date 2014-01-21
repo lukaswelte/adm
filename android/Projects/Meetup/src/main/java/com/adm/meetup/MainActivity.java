@@ -164,6 +164,10 @@ public class MainActivity extends ActionBarActivity {
         switch (position) {
 
 
+            case 1:
+                Fragment fragmentEvent = new EventListFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvent).commit();
+                break;
             case 2:
                 Fragment fragment = new CalendarFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
