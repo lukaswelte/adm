@@ -17,7 +17,6 @@ import java.util.List;
 public class EventListAdapter extends BaseAdapter {
 
     private Context context;
-    private LayoutInflater inflater;
     private List<Event> eventList;
 
     public EventListAdapter(Context context, List<Event> eventList) {
@@ -42,12 +41,15 @@ public class EventListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.event_list_item, viewGroup, false);
 
-        Event event = eventList.get(i);
-        TextView eventName = (TextView) itemView.findViewById(R.id.eventNameTextView);
-        eventName.setText(event.getName());
+
+        if (itemView != null) {
+            Event event = eventList.get(i);
+            TextView eventName = (TextView) itemView.findViewById(R.id.eventNameTextView);
+            eventName.setText(event.getName());
+        }
 
         return itemView;
     }
