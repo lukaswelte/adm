@@ -9,7 +9,7 @@ public class EventDatabase extends SQLiteOpenHelper {
     private static final String TAG = "EventDatabase";
 
     private static final String DATABASE_NAME = "event.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
 
     public EventDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,6 +30,18 @@ public class EventDatabase extends SQLiteOpenHelper {
                 final static String SOURCE = "source";
             }
         }
+
+        public class Comments {
+            final static String TABLE = "event_comment";
+
+            public class Columns {
+                final static String ID = "id";
+                final static String EVENT_ID = "event_id";
+                final static String USER_ID = "user_id";
+                final static String COMMENT = "comment";
+                final static String DATE = "date";
+            }
+        }
     }
 
     @Override
@@ -44,7 +56,15 @@ public class EventDatabase extends SQLiteOpenHelper {
                 + Tables.Events.Columns.DATE + " TEXT NULL, "
                 + Tables.Events.Columns.SOURCE + " TEXT NULL, "
                 + "UNIQUE (" + Tables.Events.Columns.ID + ") ON CONFLICT REPLACE)";
-        Log.i(TAG, query);
+        db.execSQL(query);
+
+        query = "CREATE TABLE " + Tables.Comments.TABLE + " ("
+                + Tables.Comments.Columns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Tables.Comments.Columns.EVENT_ID + " INTEGER NOT NULL, "
+                + Tables.Comments.Columns.USER_ID + " INTEGER NOT NULL, "
+                + Tables.Comments.Columns.COMMENT + " TEXT NOT NULL, "
+                + Tables.Comments.Columns.DATE + " TEXT NOT NULL, "
+                + "UNIQUE (" + Tables.Comments.Columns.ID + ") ON CONFLICT REPLACE)";
         db.execSQL(query);
 
     }
@@ -54,6 +74,7 @@ public class EventDatabase extends SQLiteOpenHelper {
         //if(oldVersion<newVersion){
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.Events.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.Comments.TABLE);
 
         // create tables
         onCreate(db);

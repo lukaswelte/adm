@@ -5,6 +5,7 @@ import android.os.SystemClock;
 import android.test.AndroidTestCase;
 
 import com.adm.meetup.event.Event;
+import com.adm.meetup.event.EventComment;
 import com.adm.meetup.event.EventManager;
 
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 abstract public class TestEventManager extends AndroidTestCase {
     protected EventManager manager;
+    protected Long userId = Long.valueOf(1);
 
     @Override
     public void setContext(Context context) {
@@ -53,19 +55,19 @@ abstract public class TestEventManager extends AndroidTestCase {
      */
     public void testGetEventById() {
         manager.deleteEvents();
-        Event Event = new Event();
-        Event.setId(Long.valueOf(1));
-        Event.setName("Event name");
-        Event.setLocation("location");
-        Event.setDate(new Date(2013, 11, 25));
-        Event.setDueDate(new Date(2013, 11, 27));
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("Event name");
+        event.setLocation("location");
+        event.setDate(new Date(2013, 11, 25));
+        event.setDueDate(new Date(2013, 11, 27));
+        event.setDescription("description");
+        manager.createEvent(event);
 
-        manager.createEvent(Event);
-
-        Long EventId = Event.getId();
+        Long EventId = event.getId();
 
         Event result = manager.getEventById(EventId);
-        assertDeepEquals(Event, result);
+        assertDeepEquals(event, result);
     }
 
 
@@ -74,26 +76,28 @@ abstract public class TestEventManager extends AndroidTestCase {
      */
     public void testGetEvents() {
         manager.deleteEvents();
-        Event Event = new Event();
-        Event.setId(Long.valueOf(1));
-        Event.setName("Event name");
-        Event.setLocation("location");
-        Event.setDate(new Date(2013, 11, 25));
-        Event.setDueDate(new Date(2013, 11, 27));
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("Event name");
+        event.setLocation("location");
+        event.setDate(new Date(2013, 11, 25));
+        event.setDueDate(new Date(2013, 11, 27));
+        event.setDescription("description");
 
-        Event Event2 = new Event();
-        Event2.setId((Long.valueOf(1)) + 1);
-        Event2.setName("Event name 2");
-        Event2.setLocation("location 2");
-        Event2.setDate(new Date(2015, 11, 25));
-        Event2.setDueDate(new Date(2015, 11, 27));
+        Event event2 = new Event();
+        event2.setId((Long.valueOf(1)) + 1);
+        event2.setName("Event name 2");
+        event2.setLocation("location 2");
+        event2.setDate(new Date(2015, 11, 25));
+        event2.setDueDate(new Date(2015, 11, 27));
+        event.setDescription("description 2");
 
-        manager.createEvent(Event);
-        manager.createEvent(Event2);
+        manager.createEvent(event);
+        manager.createEvent(event2);
 
         ArrayList<Event> expected = new ArrayList<Event>();
-        expected.add(Event);
-        expected.add(Event2);
+        expected.add(event);
+        expected.add(event2);
         ArrayList<Event> actual = manager.getEvents();
 
         Collections.sort(actual, idComparator);
@@ -108,44 +112,46 @@ abstract public class TestEventManager extends AndroidTestCase {
 
     public void testUpdateEvent() {
         manager.deleteEvents();
-        Event Event = new Event();
-        Event.setId(Long.valueOf(1));
-        Event.setName("Event name");
-        Event.setLocation("location");
-        Event.setDate(new Date(2013, 11, 25));
-        Event.setDueDate(new Date(2013, 11, 27));
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("Event name");
+        event.setLocation("location");
+        event.setDate(new Date(2013, 11, 25));
+        event.setDueDate(new Date(2013, 11, 27));
+        event.setDescription("description");
 
-        Event Event2 = new Event();
-        Event2.setId((Long.valueOf(1)) + 1);
-        Event2.setName("Event name 2");
-        Event2.setLocation("location 2");
-        Event2.setDate(new Date(2015, 11, 25));
-        Event2.setDueDate(new Date(2015, 11, 27));
+        Event event2 = new Event();
+        event2.setId((Long.valueOf(1)) + 1);
+        event2.setName("Event name 2");
+        event2.setLocation("location 2");
+        event2.setDate(new Date(2015, 11, 25));
+        event2.setDueDate(new Date(2015, 11, 27));
+        event.setDescription("description 2");
 
-        manager.createEvent(Event);
-        manager.createEvent(Event2);
+        manager.createEvent(event);
+        manager.createEvent(event2);
 
-        Long EventId = Event.getId();
+        Long eventId = event.getId();
 
-        Event = manager.getEventById(EventId);
-        Event.setName("Updated event");
-        manager.updateEvent(Event);
-        Event = manager.getEventById(EventId);
+        event = manager.getEventById(eventId);
+        event.setName("Updated event");
+        manager.updateEvent(event);
+        event = manager.getEventById(eventId);
 
-        assertEquals("Updated event", Event.getName());
-        assertEquals("location", Event.getLocation());
+        assertEquals("Updated event", event.getName());
+        assertEquals("location",event.getLocation());
 
 
-        Event = manager.getEventById(EventId);
-        Event.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
-        manager.updateEvent(Event);
+        event = manager.getEventById(eventId);
+        event.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
+        manager.updateEvent(event);
 
-        Event = manager.getEventById(EventId);
-        assertEquals("Updated event", Event.getName());
-        assertEquals("Vymyšlená ulice 300/4, 625 00 Brno", Event.getLocation());
+        event = manager.getEventById(eventId);
+        assertEquals("Updated event", event.getName());
+        assertEquals("Vymyšlená ulice 300/4, 625 00 Brno", event.getLocation());
 
         // Check if updates didn't affected other records
-        assertDeepEquals(Event2, manager.getEventById(Event2.getId()));
+        assertDeepEquals(event2, manager.getEventById(event2.getId()));
     }
 
     public void updateEventWithWrongAttributes() {
@@ -226,6 +232,10 @@ abstract public class TestEventManager extends AndroidTestCase {
         event.setId(Long.valueOf(1));
         event.setName("event name");
         event.setLocation("location");
+        event.setDate(new Date(12, 12, 2014));
+        event.setDueDate(new Date(12, 10, 2014));
+        event.setDescription("description");
+
         manager.createEvent(event);
 
         Event result = manager.getEventById(event.getId());
@@ -234,6 +244,34 @@ abstract public class TestEventManager extends AndroidTestCase {
         assertDeepEquals(event, result);
     }
 
+    /**
+     * Test of createEventComment method, of class EventManagerImpl.
+     */
+
+    public void testCreateEventComment() {
+        manager.deleteEvents();
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("event name");
+        event.setLocation("location");
+        event.setDate(new Date(12, 12, 2014));
+        event.setDueDate(new Date(12, 10, 2014));
+        event.setDescription("description");
+        manager.createEvent(event);
+
+        EventComment comment = new EventComment();
+        comment.setId(Long.valueOf(1));
+        comment.setEventId(event.getId());
+        comment.setUserId(userId);
+        comment.setDate(new Date(12,12,2014));
+        comment.setComment("comment");
+
+        manager.createEventComment(comment);
+        EventComment result = manager.getEventCommentById(comment.getId());
+
+        assertNotSame(comment, result);
+        assertDeepCommentEquals(comment, result);
+    }
 
     private static Comparator<Event> idComparator = new Comparator<Event>() {
 
@@ -252,11 +290,17 @@ abstract public class TestEventManager extends AndroidTestCase {
         Event.setId(Long.valueOf(1));
         Event.setName("Jan Jílek");
         Event.setLocation("Fleischnerova, 635 00 Brno");
+        Event.setDate(new Date(12, 12, 2014));
+        Event.setDueDate(new Date(12, 10, 2014));
+        Event.setDescription("description");
 
         Event Event2 = new Event();
         Event2.setId(Long.valueOf(2));
         Event2.setName("Micha Pokorný");
         Event2.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
+        Event2.setDate(new Date(12, 12, 2014));
+        Event2.setDueDate(new Date(12, 10, 2014));
+        Event2.setDescription("description");
 
         manager.createEvent(Event);
         manager.createEvent(Event2);
@@ -274,6 +318,23 @@ abstract public class TestEventManager extends AndroidTestCase {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getLocation(), actual.getLocation());
+    }
+
+    private void assertDeepCommentEquals(EventComment expected, EventComment actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getUserId(), actual.getUserId());
+        assertEquals(expected.getEventId(), actual.getEventId());
+        assertEquals(expected.getDate(), actual.getDate());
+        assertEquals(expected.getComment(), actual.getComment());
+
+    }
+
+    private void assertDeepCommentEquals(ArrayList<EventComment> expectedList, ArrayList<EventComment> actualList) {
+        for (int i = 0; i < expectedList.size(); i++) {
+            EventComment expected = expectedList.get(i);
+            EventComment actual = actualList.get(i);
+            assertDeepCommentEquals(expected, actual);
+        }
     }
 
     private void assertDeepEquals(ArrayList<Event> expectedList, ArrayList<Event> actualList) {

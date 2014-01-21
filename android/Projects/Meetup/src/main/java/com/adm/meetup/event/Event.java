@@ -31,6 +31,7 @@ public class Event extends BaseEvent {
     private Date date;
     private Date dueDate;
     private Long attendee = 0l;
+    private String description;
     private Hashtable<IFields, String> fields = new Hashtable<IFields, String>();
     public Vector<EventType> eventTypeList = new Vector<EventType>();
     public Vector<EventComment> eventCommentList = new Vector<EventComment>();
@@ -91,6 +92,14 @@ public class Event extends BaseEvent {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
         // this.addField(Event.Fields.DUEDATE, this.dueDate.toString());
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLocation() {

@@ -38,6 +38,13 @@ public class EventDbContentProvider extends EventContentProvider {
                 builder.setTables(EventDatabase.Tables.Events.TABLE);
                 builder.appendWhere(EventDatabase.Tables.Events.Columns.ID + " = " + uri.getLastPathSegment());
                 break;
+            case COMMENTS:
+                builder.setTables(EventDatabase.Tables.Comments.TABLE);
+                break;
+            case COMMENTS_ID:
+                builder.setTables(EventDatabase.Tables.Comments.TABLE);
+                builder.appendWhere(EventDatabase.Tables.Comments.Columns.ID + " = " + uri.getLastPathSegment());
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
@@ -61,6 +68,14 @@ public class EventDbContentProvider extends EventContentProvider {
                 break;
             case EVENTS_ID:
                 id = db.insertWithOnConflict(EventDatabase.Tables.Events.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                ret = getUriForId(id, uri);
+                break;
+            case COMMENTS:
+                id = db.insert(EventDatabase.Tables.Comments.TABLE, null, values);
+                ret = getUriForId(id, uri);
+                break;
+            case COMMENTS_ID:
+                id = db.insertWithOnConflict(EventDatabase.Tables.Comments.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 ret = getUriForId(id, uri);
                 break;
             default:
@@ -88,6 +103,12 @@ public class EventDbContentProvider extends EventContentProvider {
             case EVENTS_ID:
                 delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
                 break;
+            case COMMENTS:
+                delCount = db.delete(EventDatabase.Tables.Comments.TABLE, selection, selectionArgs);
+                break;
+            case COMMENTS_ID:
+                delCount = db.delete(EventDatabase.Tables.Comments.TABLE, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
@@ -107,6 +128,12 @@ public class EventDbContentProvider extends EventContentProvider {
                 break;
             case EVENTS_ID:
                 updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
+                break;
+            case COMMENTS:
+                updateCount = db.update(EventDatabase.Tables.Comments.TABLE, values, selection, selectionArgs);
+                break;
+            case COMMENTS_ID:
+                updateCount = db.update(EventDatabase.Tables.Comments.TABLE, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
