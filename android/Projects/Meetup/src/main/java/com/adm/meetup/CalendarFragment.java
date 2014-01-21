@@ -3,7 +3,6 @@ package com.adm.meetup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -13,35 +12,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import com.adm.meetup.helpers.NetworkHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class CalendarFragment extends Fragment implements CalendarView.OnDispatchDateSelectListener {
     public static final int iMoreThanAMonth = 32;
     private TextView mTextDate;
     private SimpleDateFormat mFormat;
     private CalendarView cal;
+    private ListView details;
 
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
@@ -60,6 +53,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
+
+
     }
 
     @Override
@@ -116,6 +111,71 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         cal.setmCalendar(tempCal);
     }
 
+    private void getHolidays(final Date selectDate) {
+        FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
+            @Override
+            public void onCompleted(Exception e, JsonArray jsonArray) {
+                try {
+                    if (e != null) throw e;
+                    ArrayList<String> list_names = new ArrayList<String>();
+                    Iterator iterator = jsonArray.iterator();
+                    while (iterator.hasNext()) {
+                        JsonObject element = (JsonObject) iterator.next();
+                        String name = element.get("name").getAsString();
+                        String date = element.get("date").getAsString();
+                        date = date.replace(".", "/");
+
+                        //Comparing dates
+                        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+                        Date dateObj = curFormater.parse(date);
+                        Calendar cal1 = Calendar.getInstance();
+                        Calendar cal2 = Calendar.getInstance();
+                        cal1.setTime(selectDate);
+                        cal2.setTime(dateObj);
+                        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+
+                        if (sameDay) {
+                            list_names.add(name);
+                        }
+                    }
+                    if (list_names.isEmpty())
+                        list_names.add(getString(R.string.calendar_no_detail));
+                    majHolidays(list_names);
+                } catch (Exception ex) {
+
+                }
+            }
+        };
+        NetworkHelper.holidaysRequest(getActivity(), "2014", "es", callback);
+    }
+
+    private void majHolidays(ArrayList<String> details_names) {
+        SimpleAdapter mSchedule;
+        details = (ListView) getView().findViewById(R.id.display_details);
+        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+
+        HashMap<String, String> map;
+        if (details_names.isEmpty()) {
+            map = new HashMap<String, String>();
+            map.put("detail", getString(R.string.calendar_loading));
+            listItem.add(map);
+        } else {
+
+            Iterator<String> iterator = details_names.iterator();
+            while (iterator.hasNext()) {
+                map = new HashMap<String, String>();
+                map.put("detail", iterator.next());
+                listItem.add(map);
+            }
+        }
+
+        mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_calendar_detail,
+                new String[]{"detail"}, new int[]{R.id.item_detail});
+
+        details.setAdapter(mSchedule);
+    }
+
     public void onAttachedToWindow() {
         //super.onAttachedToWindow();
         getActivity().getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
@@ -134,8 +194,10 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     @Override
     public void onDispatchDateSelect(Date date) {
+        ArrayList<String> list_names = new ArrayList<String>();
+        majHolidays(list_names);
         mTextDate.setText(mFormat.format(date));
-
+        getHolidays(date);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,79 +234,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
             return rootView;
         }
-    }
-
-    private class GetHolidaysTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            // setProgressBarIndeterminateVisibility(true);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // TODO Auto-generated method stub
-            try {
-                // Values to add
-
-                /*SharedPreferences preferences = getSharedPreferences(
-                        PREFERENCES_FILE, Context.MODE_PRIVATE);
-
-                name = preferences.getString(PREFERENCES_USER_NAME, null);*/
-
-                List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-
-                pairs.add(new BasicNameValuePair("year", "2013"));
-                pairs.add(new BasicNameValuePair("country", "es"));
-
-                HttpClient client = new DefaultHttpClient();
-
-                HttpGet request = new HttpGet(
-                        "http://meetup.apiary.io/holidays?"
-                                + URLEncodedUtils.format(pairs, "utf-8"));
-
-                HttpResponse response = client.execute(request);
-
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    InputStream stream = entity.getContent();
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(stream));
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line).append("\n");
-                    }
-                    stream.close();
-                    String responseString = sb.toString();
-                    System.out.println(responseString);
-                }
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            /*catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
-
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            // TODO Auto-generated method stub
-        }
-
     }
 
 }
