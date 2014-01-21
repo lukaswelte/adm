@@ -1,10 +1,12 @@
 package com.adm.meetup;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adm.meetup.event.Event;
@@ -47,8 +49,21 @@ public class EventListAdapter extends BaseAdapter {
 
         if (itemView != null) {
             Event event = eventList.get(i);
+
+            ImageView EventImage = (ImageView) itemView.findViewById(R.id.EventImage);
+            String uri = "drawable/ic_event_list";
+            int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+            Drawable image = context.getResources().getDrawable(imageResource);
+            EventImage.setImageDrawable(image);
+
             TextView eventName = (TextView) itemView.findViewById(R.id.eventNameTextView);
             eventName.setText(event.getName());
+
+            TextView eventLocation = (TextView) itemView.findViewById(R.id.eventLocationTextView);
+            eventLocation.setText(event.getLocation()+",");
+
+            TextView eventDate = (TextView) itemView.findViewById(R.id.eventAtendeeTextView);
+            eventDate.setText(""+event.getAttendee()+" Attendees");
         }
 
         return itemView;
