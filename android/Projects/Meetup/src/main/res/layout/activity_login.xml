@@ -88,11 +88,11 @@
                 android:text="@string/login_login"
                 android:paddingTop="4dp"
                 android:layout_above="@+id/login_signup_button"
-                android:layout_marginBottom="87dp"
+                android:layout_marginBottom="45dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/button_normal"
-                android:textColor="#1C1C1C"
+                android:textColor="@android:color/white"
                 />
 
 
@@ -112,28 +112,25 @@
                 android:layout_marginTop="30dp"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_up"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:layout_marginBottom="10dp"/>
-
-            <Button
-                android:id="@+id/login_signup_button"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login_signup"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/button_normal"
-                android:layout_gravity="center"
-                android:textColor="#1C1C1C"/>
+                android:layout_height="match_parent">
 
 
+
+                <Button
+                    android:id="@+id/login_signup_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_signup"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center"
+                    android:textColor="#1C1C1C"
+                    android:textSize="14dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
         <!-- Login Form Ends -->
