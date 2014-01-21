@@ -1,6 +1,5 @@
 package com.adm.meetup.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.google.gson.JsonArray;
@@ -136,12 +135,12 @@ public class NetworkHelper {
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void createExamRequest(Context context, String token, String date, String notifyDate,
-                                         String name, FutureCallback<JsonObject> callback) {
+                                         String name, FutureCallback<JsonElement> callback) {
         JsonObject postedJsonObject = new JsonObject();
         postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("date", "14.12.2013 14:30");
-        postedJsonObject.addProperty("notifydate", "14.12.2013 12:30");
-        postedJsonObject.addProperty("name", "English Exam");
+        postedJsonObject.addProperty("date", date);
+        postedJsonObject.addProperty("notifydate", notifyDate);
+        postedJsonObject.addProperty("name", name);
 
         NetworkHelper.requestBackend(context, "/exam/create", postedJsonObject, callback);
     }

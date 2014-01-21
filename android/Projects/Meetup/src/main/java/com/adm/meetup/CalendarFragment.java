@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.adm.meetup.helpers.NetworkHelper;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
@@ -53,6 +55,13 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         cal = (CalendarView) getView().findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
+        Button bAddExam = (Button) getView().findViewById(R.id.calendar_add_exam);
+        bAddExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createExam();
+            }
+        });
 
 
     }
@@ -178,6 +187,24 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         details.setAdapter(mSchedule);
     }
 
+    private void createExam() {
+        FutureCallback<JsonElement> callback = new FutureCallback<JsonElement>() {
+            @Override
+            public void onCompleted(Exception e, JsonElement jsonElement) {
+                try {
+                    if (e != null) throw e;
+                    JsonObject element = (JsonObject) jsonElement.getAsJsonObject();
+                } catch (Exception ex) {
+
+                }
+            }
+        };
+        /*
+        NetworkHelper.createExamRequest(getActivity(), SharedApplication.testUserToken,
+                "14.12.2013 14:30", "14.12.2013 12:30", "English Exam", callback);
+                */
+    }
+
     public void onAttachedToWindow() {
         //super.onAttachedToWindow();
         getActivity().getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
@@ -196,6 +223,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     @Override
     public void onDispatchDateSelect(Date date) {
+        Button bAddExam = (Button) getView().findViewById(R.id.calendar_add_exam);
+        bAddExam.setVisibility(View.VISIBLE);
         ArrayList<String> list_names = new ArrayList<String>();
         majHolidays(list_names);
         mTextDate.setText(mFormat.format(date));
