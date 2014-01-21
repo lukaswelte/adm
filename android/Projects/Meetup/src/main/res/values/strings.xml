@@ -2,46 +2,61 @@
 <resources>
 
     <string name="app_name">Meetup</string>
-    <string name="logout">Log out</string>
     <string name="app_id">200155020171205</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="event_type_sport">Sport</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="title_activity_register">RegisterActivity</string>
+
+    <!-- action -->
+    <string name="action_settings">Settings</string>
+    <string name="action_main_account">Account</string>
+    <string name="action_main_friends">Friends</string>
+    <string name="action_main_logout">Logout</string>
+
+    <!-- title -->
+    <string name="title_activity_profile">Login</string>
+    <string name="title_activity_register">Register</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="title_activity_friends">Friends</string>
-    <string name="profile_email">E-Mail</string>
-    <string name="profile_password">Password</string>
-    <string name="profile_login">Log in</string>
-    <string name="profile_signup">Sign up</string>
+    <string name="title_activity_register_confirmation">RegisterConfirmationActivity</string>
+    <string name="title_activity_profile_fragment">ProfileFragment</string>
+
+
+    <!-- Login/Sign up Activity -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Log in</string>
+    <string name="login_signup">Sign up</string>
+    <string name="logout">Log out</string>
+    <string name="sign_up">Here you can create an account!</string>
+    <string name="welcome">Welcome to ErasmusEvents!</string>
+    <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
+    <string name="enter_info">Please fill in your E-Mail address and a Password.</string>
+    <string name="progressBar_message">Please wait</string>
+
+
+    <!-- Register Activity -->
     <string name="register_email">Email</string>
     <string name="register_password">Password</string>
     <string name="register_registerNewAccount">Register New Account</string>
-    <string name="register_linkToLogin">Account exists! Login here</string>
-    <string name="action_main_account">Account</string>
-    <string name="action_main_friends">Friends</string>
-    <string name="action_main_logout">Logout</string>
+    <string name="register_linkToLogin">Already has account! Login here</string>
     <string name="tab_friends">Friends</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_register_confirmation">RegisterConfirmationActivity</string>
     <string name="register_confirmation_text">Thank you for your registration.\nYour account has been successfully registered.\nDo you want to modify you profile?</string>
     <string name="register_confirmation_main_button">I will do it later</string>
     <string name="register_confirmation_profile_button">Yes</string>
     <string name="token_not_found_error">Error. Please retry</string>
 
-    <!-- Profile Activity -->
-    <string name="sign_up">Here you can create an account!</string>
-    <string name="welcome">Welcome to ErasmusEvents!</string>
-    <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
-    <string name="enter_info">Please fill in your E-Mail adress and a Password.</string>
+
+    <!-- Profile Fragment -->
+    <string name="profile_button_text">Edit your profile</string>
+
 
     <!-- Calendar Activity -->
     <string name="calendar_title_activity">CalendarActivity</string>
     <string name="calendar_title_activity_view">CalendarView</string>
-    <string name="calendar_servor_error">The servor can\'t be access. You may check your connection</string>
+    <string name="calendar_servor_error">The server can\'t be access. You may check your connection</string>
     <string name="calendar_select_date">Select a date</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
@@ -62,6 +77,27 @@
 
     <!-- TeamFragment Strings -->
     <string name="team_text">Our international Team:</string>
+
+    <!-- Account Strings -->
+    <string name="single">Single</string>
+    <string name="inRelationship">In a relationship</string>
+    <string name="engaged">Engaged</string>
+    <string name="married">Married</string>
+    <string name="complicated">It\'s complicated</string>
+    <string name="openRelationship">In an open relationship</string>
+    <string name="separated">Separated</string>
+    <string name="divorced">Divorced</string>
+    <string name="widowed">Widowed</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="dateOfBirth">Date of Birth</string>
+    <string name="relationshipStatus">Relationship status</string>
+    <string name="homeUniversity">Home University</string>
+    <string name="ErasmusUniversity">Erasmus University</string>
+    <string name="email">Email</string>
+    <string name="disableLocationServices">Disable location services</string>
+    <string name="status">Status</string>
+
     <string-array name="members">
         <item>Maela</item>
         <item>Lukas</item>
@@ -71,6 +107,12 @@
         <item>Timo</item>
         <item>Andreas</item>
     </string-array>
+
+    <!-- General Strings -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+
 
 
 </resources>

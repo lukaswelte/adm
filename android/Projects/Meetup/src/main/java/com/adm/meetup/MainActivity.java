@@ -125,8 +125,8 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_logout:
-                ProfileActivity.onClickLogout();
-                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
+                LoginActivity.onClickLogout();
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
@@ -172,6 +172,10 @@ public class MainActivity extends ActionBarActivity {
             case 2:
                 Fragment fragment = new CalendarFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                break;
+            case 3:
+                Fragment fragmentProfile = new ProfileFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentProfile).commit();
                 break;
 
             case 5:

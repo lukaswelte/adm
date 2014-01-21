@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:fb="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    tools:context=".ProfileActivity"
+    tools:context=".LoginActivity"
     android:background="#CEECF5"
     style="@style/AppThemeProfile"
     >
@@ -57,41 +56,39 @@
 
             <!--  Email Label -->
             <EditText
-                android:id="@+id/profile_email_field"
+                android:id="@+id/login_email_field"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/profile_email"
+                android:hint="@string/login_email"
                 android:gravity="center"
-                android:layout_above="@+id/profile_password_field"
+                android:layout_above="@+id/login_password_field"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentLeft="true"
                 android:background="@android:color/white"/>
             <!--  Password Label -->
             <EditText
-                android:id="@+id/profile_password_field"
+                android:id="@+id/login_password_field"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/profile_password"
+                android:hint="@string/login_password"
                 android:gravity="center"
-                android:layout_above="@+id/profile_login_button"
+                android:layout_above="@+id/login_login_button"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/white"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"/>
             <!-- Login button -->
-
-
-
             <Button
-                android:id="@+id/profile_login_button"
+                android:id="@+id/login_login_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_login"
-                android:layout_above="@+id/profile_signup_button"
+                android:text="@string/login_login"
                 android:paddingTop="4dp"
+                android:layout_above="@+id/login_signup_button"
+                android:layout_marginBottom="87dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/button_normal"
@@ -125,10 +122,10 @@
                 android:layout_marginBottom="10dp"/>
 
             <Button
-                android:id="@+id/profile_signup_button"
+                android:id="@+id/login_signup_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_signup"
+                android:text="@string/login_signup"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"

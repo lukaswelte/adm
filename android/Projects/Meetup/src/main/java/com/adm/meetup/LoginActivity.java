@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +33,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
 
-public class ProfileActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity {
 
     private EditText emailText,passwordText;
     private Button loginButton;
@@ -48,11 +48,7 @@ public class ProfileActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_login);
 
         buttonLoginLogout = (Button)findViewById(R.id.buttonLoginLogout);
 
@@ -74,13 +70,13 @@ public class ProfileActivity extends ActionBarActivity {
         updateView();
 //END OF FACEBOOK INTEGRATION (INSIDE ON CREATE)
 
-        emailText=(EditText)findViewById(R.id.profile_email_field);
-        passwordText=(EditText)findViewById(R.id.profile_password_field);
-        loginButton=(Button)findViewById(R.id.profile_login_button);
+        emailText=(EditText)findViewById(R.id.login_email_field);
+        passwordText=(EditText)findViewById(R.id.login_password_field);
+        loginButton=(Button)findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(loginListener);
 
-        registerScreen = (TextView) findViewById(R.id.profile_signup_button);
+        registerScreen = (TextView) findViewById(R.id.login_signup_button);
 
         // Listening to register new account link
         registerScreen.setOnClickListener(new OnClickListener() {
@@ -192,9 +188,15 @@ public class ProfileActivity extends ActionBarActivity {
                                 editor.putString(Util.PREFERENCES_FIRSTNAME,user.getFirstName());
                                 editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
-                                NetworkHelper.facebookAuthRequest(ProfileActivity.this, session.getAccessToken(), new FutureCallback<JsonObject>() {
+                                final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
+                                progressBar.setCancelable(true);
+                                progressBar.setMessage(getString(R.string.progressBar_message));
+                                progressBar.setProgress(20000);
+                                progressBar.show();
+                                NetworkHelper.facebookAuthRequest(LoginActivity.this, session.getAccessToken(), new FutureCallback<JsonObject>() {
                                     @Override
                                     public void onCompleted(Exception e, JsonObject jsonObject) {
+                                        progressBar.hide();
                                         JsonElement error = jsonObject.get("error");
                                         Log.d("facebook auth", jsonObject.toString());
                                         if(error != null)
@@ -210,6 +212,7 @@ public class ProfileActivity extends ActionBarActivity {
                                                 SharedApplication.getInstance().setUserToken(token);
                                                 Intent mainview = new Intent(getApplicationContext(), MainActivity.class);
                                                 startActivity(mainview);
+                                                finish();
                                             }
                                             else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
                                         }
@@ -249,7 +252,7 @@ public class ProfileActivity extends ActionBarActivity {
         public void onClick(View v) {
             progressBar = new ProgressDialog(v.getContext());
             progressBar.setCancelable(true);
-            progressBar.setMessage("Please wait");
+            progressBar.setMessage(getString(R.string.progressBar_message));
             progressBar.setProgress(20000);
             progressBar.show();
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
@@ -271,14 +274,15 @@ public class ProfileActivity extends ActionBarActivity {
                                 editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
                                 editor.commit();
                                 SharedApplication.getInstance().setUserToken(token);
-                                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                             else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
                         }
                     }
                 };
-                NetworkHelper.loginRequest(ProfileActivity.this, emailText.getText().toString(), passwordText.getText().toString(), callback);
+                NetworkHelper.loginRequest(LoginActivity.this, emailText.getText().toString(), passwordText.getText().toString(), callback);
 
         }
     };

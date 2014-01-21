@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,7 +55,7 @@ public class RegisterActivity extends ActionBarActivity {
 
                 progressBar = new ProgressDialog(view.getContext());
                 progressBar.setCancelable(true);
-                progressBar.setMessage("Please wait");
+                progressBar.setMessage(getString(R.string.progressBar_message));
                 progressBar.setProgress(20000);
                 progressBar.show();
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
@@ -79,6 +79,7 @@ public class RegisterActivity extends ActionBarActivity {
                                 SharedApplication.getInstance().setUserToken(token);
                                 Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                             else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
                         }
@@ -93,7 +94,7 @@ public class RegisterActivity extends ActionBarActivity {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        ProfileActivity.class);
+                        LoginActivity.class);
                 startActivity(i);
                 // Close Registration View
                 finish();
