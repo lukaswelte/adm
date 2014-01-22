@@ -61,27 +61,35 @@ public class RegisterActivity extends ActionBarActivity {
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
-                        progressBar.hide();
-                        JsonElement error = jsonObject.get("error");
-                        Log.d("register", jsonObject.toString());
-                        if(error != null)
-                        {
-                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            String token = jsonObject.get("token").getAsString();
-                            if (token != null) {
-                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
-                                editor.commit();
-                                SharedApplication.getInstance().setUserToken(token);
-                                Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
-                                startActivity(intent);
-                                finish();
+                        try {
+                            if(e!=null){
+                                Toast.makeText(getApplicationContext(),"Connection Error", Toast.LENGTH_SHORT).show();
+                                throw e;
                             }
-                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            progressBar.hide();
+                            JsonElement error = jsonObject.get("error");
+                            Log.d("register", jsonObject.toString());
+                            if(error != null)
+                            {
+                                Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                String token = jsonObject.get("token").getAsString();
+                                if (token != null) {
+                                    SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                                    editor.commit();
+                                    SharedApplication.getInstance().setUserToken(token);
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
                 };
