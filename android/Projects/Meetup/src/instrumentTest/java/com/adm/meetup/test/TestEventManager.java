@@ -3,9 +3,11 @@ package com.adm.meetup.test;
 import android.content.Context;
 import android.os.SystemClock;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventComment;
+import com.adm.meetup.event.EventDatabase;
 import com.adm.meetup.event.EventManager;
 
 import java.sql.SQLException;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 abstract public class TestEventManager extends AndroidTestCase {
     protected EventManager manager;
     protected Long userId = Long.valueOf(1);
+    protected EventDatabase db;
 
     @Override
     public void setContext(Context context) {
@@ -70,6 +73,26 @@ abstract public class TestEventManager extends AndroidTestCase {
         assertDeepEquals(event, result);
     }
 
+    /**
+     * Test of getEventCommentById method, of class EventManagerImpl.
+     */
+    public void testGetEventCommentById() {
+        manager.deleteEvents();
+        manager.deleteEventComments();
+
+        EventComment comment = new EventComment();
+        comment.setId(Long.valueOf(1));
+        comment.setEventId(Long.valueOf(1));
+        comment.setUserId(userId);
+        comment.setDate(new Date(2014,12,12));
+        comment.setComment("comment");
+
+        manager.createEventComment(comment);
+        EventComment result = manager.getEventCommentById(comment.getId());
+
+        assertDeepCommentEquals(comment, result);
+    }
+
 
     /**
      * Test of findAllEvents method, of class EventManagerImpl.
@@ -112,6 +135,7 @@ abstract public class TestEventManager extends AndroidTestCase {
 
     public void testUpdateEvent() {
         manager.deleteEvents();
+
         Event event = new Event();
         event.setId(Long.valueOf(1));
         event.setName("Event name");
@@ -121,37 +145,184 @@ abstract public class TestEventManager extends AndroidTestCase {
         event.setDescription("description");
 
         Event event2 = new Event();
-        event2.setId((Long.valueOf(1)) + 1);
+        event2.setId((Long.valueOf(2)));
         event2.setName("Event name 2");
         event2.setLocation("location 2");
         event2.setDate(new Date(2015, 11, 25));
         event2.setDueDate(new Date(2015, 11, 27));
-        event.setDescription("description 2");
+        event2.setDescription("description 2");
 
         manager.createEvent(event);
         manager.createEvent(event2);
 
         Long eventId = event.getId();
 
+        // test setName
         event = manager.getEventById(eventId);
         event.setName("Updated event");
         manager.updateEvent(event);
-        event = manager.getEventById(eventId);
+        Event result = manager.getEventById(eventId);
+        assertDeepEquals(event, result);
 
-        assertEquals("Updated event", event.getName());
-        assertEquals("location",event.getLocation());
-
-
+        // test setLocation
         event = manager.getEventById(eventId);
         event.setLocation("Vymyšlená ulice 300/4, 625 00 Brno");
         manager.updateEvent(event);
+        result = manager.getEventById(eventId);
+        assertDeepEquals(event, result);
 
+        // test setDate
         event = manager.getEventById(eventId);
-        assertEquals("Updated event", event.getName());
-        assertEquals("Vymyšlená ulice 300/4, 625 00 Brno", event.getLocation());
+        event.setDate(new Date(2010, 5, 5));
+        manager.updateEvent(event);
+        result = manager.getEventById(eventId);
+        assertDeepEquals(event, result);
+
+        // test setDueDate
+        event = manager.getEventById(eventId);
+        event.setDueDate(new Date(2002, 5, 5));
+        manager.updateEvent(event);
+        result = manager.getEventById(eventId);
+        assertDeepEquals(event, result);
+
+        // test setDescription
+        event = manager.getEventById(eventId);
+        event.setDescription("new description");
+        manager.updateEvent(event);
+        result = manager.getEventById(eventId);
+        assertDeepEquals(event, result);
 
         // Check if updates didn't affected other records
         assertDeepEquals(event2, manager.getEventById(event2.getId()));
+    }
+
+    /**
+     * Test of createEventComment method, of class EventManagerImpl.
+     */
+
+    public void  testCreateEventComment() {
+        manager.deleteEvents();
+        manager.deleteEventComments();
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("event name");
+        event.setLocation("location");
+        event.setDate(new Date(12, 12, 2014));
+        event.setDueDate(new Date(12, 10, 2014));
+        event.setDescription("description");
+        manager.createEvent(event);
+
+        EventComment comment = new EventComment();
+        comment.setId(Long.valueOf(1));
+        comment.setEventId(event.getId());
+        comment.setUserId(userId);
+        comment.setDate(new Date(12,12,2014));
+        comment.setComment("comment");
+
+        manager.createEventComment(comment);
+        EventComment result = manager.getEventCommentById(comment.getId());
+
+        Log.i("eventcommenttest", result.getUserId().toString());
+        Log.i("eventcommenttest", comment.getUserId().toString());
+
+        assertNotSame(comment, result);
+        assertDeepCommentEquals(comment, result);
+    }
+
+    /**
+     * Test of createEvent method, of class EventManagerImpl.
+     */
+
+    public void testCreateEvent() {
+        manager.deleteEvents();
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("event name");
+        event.setLocation("location");
+        event.setDate(new Date(12, 12, 2014));
+        event.setDueDate(new Date(12, 10, 2014));
+        event.setDescription("description");
+
+        manager.createEvent(event);
+
+        Event result = manager.getEventById(event.getId());
+
+        assertNotSame(event, result);
+        assertDeepEquals(event, result);
+    }
+
+    /**
+     * Test of updateEvent method, of class EventManagerImpl.
+     */
+
+   public void testUpdateEventComment() {
+        manager.deleteEvents();
+        manager.deleteEventComments();
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("Event name");
+        event.setLocation("location");
+        event.setDate(new Date(2013, 11, 25));
+        event.setDueDate(new Date(2013, 11, 27));
+        event.setDescription("description");
+
+        manager.createEvent(event);
+
+        EventComment comment = new EventComment();
+        comment.setId(Long.valueOf(1));
+        comment.setEventId(event.getId());
+        comment.setUserId(userId);
+        comment.setDate(new Date(2013, 12, 12));
+        comment.setComment("comment");
+
+        manager.createEventComment(comment);
+
+        EventComment comment2 = new EventComment();
+        comment2.setId(Long.valueOf(2));
+        comment2.setEventId(event.getId());
+        comment2.setUserId(userId);
+        comment2.setDate(new Date(2014,12,12));
+        comment2.setComment("comment 2");
+
+        manager.createEventComment(comment2);
+
+        Long commentId = comment.getId();
+
+        comment = manager.getEventCommentById(commentId);
+        comment.setEventId(Long.valueOf(2));
+        manager.updateEventComment(comment);
+        EventComment result = manager.getEventCommentById(commentId);
+
+        Log.i("eventcommenttest", result.getEventId().toString());
+        Log.i("eventcommenttest", comment.getEventId().toString());
+        assertDeepCommentEquals(comment, result);
+
+        // test setUserId
+        comment = manager.getEventCommentById(commentId);
+        comment.setUserId(3l);
+        manager.updateEventComment(comment);
+        result = manager.getEventCommentById(commentId);
+        assertDeepCommentEquals(comment, result);
+
+        // test setDate
+        comment = manager.getEventCommentById(commentId);
+        comment.setDate(new Date(2012,10,10));
+        manager.updateEventComment(comment);
+        result = manager.getEventCommentById(commentId);
+        assertDeepCommentEquals(comment, result);
+
+        // test setComment
+        comment = manager.getEventCommentById(commentId);
+        comment.setComment("comment update");
+        manager.updateEventComment(comment);
+        result = manager.getEventCommentById(commentId);
+        assertDeepCommentEquals(comment, result);
+
+
+        // Check if updates didn't affected other records
+        assertDeepCommentEquals(comment2, manager.getEventCommentById(comment2.getId()));
+
+
     }
 
     public void updateEventWithWrongAttributes() {
@@ -222,38 +393,25 @@ abstract public class TestEventManager extends AndroidTestCase {
 
     }
 
-    /**
-     * Test of createEvent method, of class EventManagerImpl.
-     */
 
-    public void testCreateEvent() {
+
+    private static Comparator<Event> idComparator = new Comparator<Event>() {
+
+        @Override
+        public int compare(Event c1, Event c2) {
+            return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
+        }
+    };
+
+    /**
+     * Test of deleteEventComment method, of class EventManagerImpl.
+     */
+    public void testDeleteEventComment() {
         manager.deleteEvents();
         Event event = new Event();
         event.setId(Long.valueOf(1));
-        event.setName("event name");
-        event.setLocation("location");
-        event.setDate(new Date(12, 12, 2014));
-        event.setDueDate(new Date(12, 10, 2014));
-        event.setDescription("description");
-
-        manager.createEvent(event);
-
-        Event result = manager.getEventById(event.getId());
-
-        assertNotSame(event, result);
-        assertDeepEquals(event, result);
-    }
-
-    /**
-     * Test of createEventComment method, of class EventManagerImpl.
-     */
-
-    public void testCreateEventComment() {
-        manager.deleteEvents();
-        Event event = new Event();
-        event.setId(Long.valueOf(1));
-        event.setName("event name");
-        event.setLocation("location");
+        event.setName("Jan Jílek");
+        event.setLocation("Fleischnerova, 635 00 Brno");
         event.setDate(new Date(12, 12, 2014));
         event.setDueDate(new Date(12, 10, 2014));
         event.setDescription("description");
@@ -267,19 +425,21 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment.setComment("comment");
 
         manager.createEventComment(comment);
-        EventComment result = manager.getEventCommentById(comment.getId());
 
-        assertNotSame(comment, result);
-        assertDeepCommentEquals(comment, result);
+        EventComment comment2 = new EventComment();
+        comment2.setId(Long.valueOf(2));
+        comment2.setEventId(event.getId());
+        comment2.setUserId(userId);
+        comment2.setDate(new Date(12,12,2014));
+        comment2.setComment("comment");
+
+        manager.createEventComment(comment2);
+
+        manager.deleteEventComment(comment);
+
+        assertNull(manager.getEventCommentById(comment.getId()));
+        assertNotNull(manager.getEventCommentById(comment2.getId()));
     }
-
-    private static Comparator<Event> idComparator = new Comparator<Event>() {
-
-        @Override
-        public int compare(Event c1, Event c2) {
-            return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
-        }
-    };
 
     /**
      * Test of deleteEvent method, of class EventManagerImpl.

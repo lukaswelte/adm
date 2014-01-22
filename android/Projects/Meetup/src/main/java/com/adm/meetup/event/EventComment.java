@@ -9,7 +9,7 @@ public class EventComment {
     private Long eventId;
     private Long id;
 
-    public long getUserId() {
+    public Long getUserId() {
         return this.userId;
     }
 
@@ -41,7 +41,7 @@ public class EventComment {
         return this.eventId;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

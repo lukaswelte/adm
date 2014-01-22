@@ -5,11 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import com.adm.meetup.helpers.DateHelper;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -18,7 +16,7 @@ public class EventManager implements IEventManager {
     private ContentProvider contentProvider = null;
 
     public EventManager(Context context) {
-        contentProvider = new EventDbContentProvider(context);
+        contentProvider = new EventRestContentProvider(context);
     }
 
     public EventManager(ContentProvider contentProvider) {
@@ -115,12 +113,21 @@ public class EventManager implements IEventManager {
         content.put(EventDatabase.Tables.Events.Columns.LOCATION, event.getLocation());
         content.put(EventDatabase.Tables.Events.Columns.DATE, DateHelper.format(event.getDate()));
         content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, DateHelper.format(event.getDueDate()));
-
         this.contentProvider.update(uri, content, selection, null);
     }
 
+    // only for testing
     public void deleteEvents() {
         Uri uri = Uri.parse(EventDbContentProvider.EVENTS_URI);
+        String selection = null;
+        String[] selectionArgs = null;
+
+        this.contentProvider.delete(uri, selection, selectionArgs);
+    }
+
+    // only for testing
+    public void deleteEventComments() {
+        Uri uri = Uri.parse(EventDbContentProvider.COMMENTS_URI);
         String selection = null;
         String[] selectionArgs = null;
 
@@ -156,6 +163,11 @@ public class EventManager implements IEventManager {
         String selection = EventDatabase.Tables.Events.Columns.ID + "='" + comment.getId().toString() + "'";
         ContentValues content = new ContentValues();
         content.put(EventDatabase.Tables.Comments.Columns.COMMENT, comment.getComment());
+        content.put(EventDatabase.Tables.Comments.Columns.EVENT_ID, comment.getEventId());
+        content.put(EventDatabase.Tables.Comments.Columns.USER_ID, comment.getUserId());
+        content.put(EventDatabase.Tables.Comments.Columns.COMMENT, comment.getComment());
+        content.put(EventDatabase.Tables.Comments.Columns.DATE, DateHelper.format(comment.getDate()));
+
         this.contentProvider.update(uri, content, selection, null);
     }
 

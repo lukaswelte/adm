@@ -9,6 +9,6 @@ public class TestEventManagerWithRest extends TestCase {
     //Don't call it every time.. but works
     /*public void setUp() throws SQLException {
         SharedApplication.getInstance().setUserToken(SharedApplication.testUserToken);
-        manager = new EventManager(new EventRestContentProvider(getContext()));
+        manager = new EventManager(getContext());
     }*/
 }
