@@ -9,12 +9,15 @@ import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventComment;
 import com.adm.meetup.event.EventDatabase;
 import com.adm.meetup.event.EventManager;
+import com.adm.meetup.event.EventType;
+import com.adm.meetup.event.FacebookEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -252,6 +255,30 @@ abstract public class TestEventManager extends AndroidTestCase {
     }
 
     /**
+     * Test of createEvent method, of class EventManagerImpl.
+     */
+
+    public void testCreateEventWithType() {
+        manager.deleteEvents();
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("event name");
+        event.setLocation("location");
+        event.setDate(new Date(12, 12, 2014));
+        event.setDueDate(new Date(12, 10, 2014));
+        event.setDescription("description");
+        event.addType(EventType.SPORT);
+        event.addType(EventType.DEFAULT);
+
+        manager.createEvent(event);
+
+        Event result = manager.getEventById(event.getId());
+
+        assertNotSame(event, result);
+        assertDeepEquals(event, result);
+    }
+
+    /**
      * Test of updateEvent method, of class EventManagerImpl.
      */
 
@@ -478,6 +505,9 @@ abstract public class TestEventManager extends AndroidTestCase {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getLocation(), actual.getLocation());
+        assertEquals(expected.getDate(), actual.getDate());
+        assertEquals(expected.getDueDate(), actual.getDueDate());
+        assertEquals(expected.getDescription(), actual.getDescription());
     }
 
     private void assertDeepCommentEquals(EventComment expected, EventComment actual) {

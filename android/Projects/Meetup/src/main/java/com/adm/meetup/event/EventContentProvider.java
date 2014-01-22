@@ -17,11 +17,11 @@ abstract public class EventContentProvider extends ContentProvider {
     public static final int COMMENTS = 200;
     public static final int COMMENTS_ID = 201;
 
-    public static final String EVENTS_URI = "content://" + EventDbContentProvider.AUTHORITY + "/event";
-    public static final String EVENTS_ID_URI = "content://" + EventDbContentProvider.AUTHORITY + "/event/";
+    public static final String EVENTS_URI = "content://" + EventContentProvider.AUTHORITY + "/event";
+    public static final String EVENTS_ID_URI = "content://" + EventContentProvider.AUTHORITY + "/event/";
 
-    public static final String COMMENTS_URI = "content://" + EventDbContentProvider.AUTHORITY + "/comment";
-    public static final String COMMENTS_ID_URI = "content://" + EventDbContentProvider.AUTHORITY + "/comment/";
+    public static final String COMMENTS_URI = "content://" + EventContentProvider.AUTHORITY + "/comment";
+    public static final String COMMENTS_ID_URI = "content://" + EventContentProvider.AUTHORITY + "/comment/";
 
     protected static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 

@@ -5,11 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import com.adm.meetup.helpers.DateHelper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class EventManager implements IEventManager {
@@ -25,7 +27,7 @@ public class EventManager implements IEventManager {
 
     public Event getEventById(Long id) {
         Event event = null;
-        Uri uri = Uri.parse(EventDbContentProvider.EVENTS_ID_URI + id.toString());
+        Uri uri = Uri.parse(EventContentProvider.EVENTS_ID_URI + id.toString());
         String[] projection = new String[]{
                 EventDatabase.Tables.Events.Columns.ID,
                 EventDatabase.Tables.Events.Columns.DESCRIPTION,
@@ -40,7 +42,9 @@ public class EventManager implements IEventManager {
 
         Cursor result = this.contentProvider.query(uri, projection, selection, selectionArgs, sortOrder);
         if (result != null) {
+
             if (result.moveToFirst()) {
+                Log.i("textnull", "vysledky jsou");
                 event = new Event();
                 event.setId(result.getLong(result.getColumnIndex(EventDatabase.Tables.Events.Columns.ID)));
                 event.setName(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.NAME)));
@@ -110,6 +114,7 @@ public class EventManager implements IEventManager {
         String selection = EventDatabase.Tables.Events.Columns.ID + "='" + event.getId().toString() + "'";
         ContentValues content = new ContentValues();
         content.put(EventDatabase.Tables.Events.Columns.NAME, event.getName());
+        content.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, event.getDescription());
         content.put(EventDatabase.Tables.Events.Columns.LOCATION, event.getLocation());
         content.put(EventDatabase.Tables.Events.Columns.DATE, DateHelper.format(event.getDate()));
         content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, DateHelper.format(event.getDueDate()));
@@ -135,18 +140,27 @@ public class EventManager implements IEventManager {
     }
 
     public void createEvent(Event event) {
-        Uri uri = Uri.parse(EventDbContentProvider.EVENTS_URI);
+        Uri uri = Uri.parse(EventContentProvider.EVENTS_URI);
         ContentValues content = new ContentValues();
         content.put(EventDatabase.Tables.Events.Columns.ID, event.getId());
         content.put(EventDatabase.Tables.Events.Columns.NAME, event.getName());
+        content.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, event.getDescription());
         content.put(EventDatabase.Tables.Events.Columns.LOCATION, event.getLocation());
         content.put(EventDatabase.Tables.Events.Columns.DATE, DateHelper.format(event.getDate()));
         content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, DateHelper.format(event.getDueDate()));
+        byte[] types = new byte[event.getTypes().size()];
+        Vector<EventType> vec = event.getTypes();
+        int i = 0;
+        for(EventType type : vec) {
+            types[i++] = type.getId();
+        }
+        content.put(EventDatabase.Tables.Events.Columns.TYPE, types);
+
         this.contentProvider.insert(uri, content);
     }
 
     public void createEventComment(EventComment comment) {
-        Uri uri = Uri.parse(EventDbContentProvider.COMMENTS_URI);
+        Uri uri = Uri.parse(EventContentProvider.COMMENTS_URI);
         ContentValues content = new ContentValues();
         content.put(EventDatabase.Tables.Comments.Columns.ID, comment.getId());
         content.put(EventDatabase.Tables.Comments.Columns.EVENT_ID, comment.getEventId());
@@ -159,7 +173,7 @@ public class EventManager implements IEventManager {
 
     @Override
     public void updateEventComment(EventComment comment) {
-        Uri uri = Uri.parse(EventDbContentProvider.COMMENTS_ID_URI + comment.getId().toString());
+        Uri uri = Uri.parse(EventContentProvider.COMMENTS_ID_URI + comment.getId().toString());
         String selection = EventDatabase.Tables.Events.Columns.ID + "='" + comment.getId().toString() + "'";
         ContentValues content = new ContentValues();
         content.put(EventDatabase.Tables.Comments.Columns.COMMENT, comment.getComment());
@@ -172,7 +186,7 @@ public class EventManager implements IEventManager {
     }
 
     public void deleteEvent(Event event) {
-        Uri uri = Uri.parse(EventDbContentProvider.EVENTS_ID_URI + event.getId().toString());
+        Uri uri = Uri.parse(EventContentProvider.EVENTS_ID_URI + event.getId().toString());
         String selection = EventDatabase.Tables.Events.Columns.ID + "='" + event.getId().toString() + "'";
         String[] selectionArgs = null;
 
@@ -182,7 +196,7 @@ public class EventManager implements IEventManager {
     @Override
     public EventComment getEventCommentById(Long id) {
         EventComment comment = null;
-        Uri uri = Uri.parse(EventDbContentProvider.COMMENTS_ID_URI + id.toString());
+        Uri uri = Uri.parse(EventContentProvider.COMMENTS_ID_URI + id.toString());
         String[] projection = new String[]{
                 EventDatabase.Tables.Comments.Columns.ID,
                 EventDatabase.Tables.Comments.Columns.EVENT_ID,
@@ -215,7 +229,7 @@ public class EventManager implements IEventManager {
 
     @Override
     public ArrayList<EventComment> getEventComments(Long eventId) {
-        Uri uri = Uri.parse(EventDbContentProvider.COMMENTS_URI);
+        Uri uri = Uri.parse(EventContentProvider.COMMENTS_URI);
         String[] projection = new String[]{
                 EventDatabase.Tables.Comments.Columns.ID,
                 EventDatabase.Tables.Comments.Columns.EVENT_ID,
@@ -223,7 +237,7 @@ public class EventManager implements IEventManager {
                 EventDatabase.Tables.Comments.Columns.DATE,
                 EventDatabase.Tables.Comments.Columns.COMMENT,
         };
-        String selection = EventDatabase.Tables.Comments.Columns.ID + "='" + eventId.toString() + "'";
+        String selection = EventDatabase.Tables.Comments.Columns.EVENT_ID + "='" + eventId.toString() + "'";
         String[] selectionArgs = null;
         String sortOrder = "";
 

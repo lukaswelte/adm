@@ -33,9 +33,8 @@ public class Event extends BaseEvent {
     private Long attendee = 0l;
     private String description;
     private Hashtable<IFields, String> fields = new Hashtable<IFields, String>();
-    public Vector<EventType> eventTypeList = new Vector<EventType>();
-    public Vector<EventComment> eventCommentList = new Vector<EventComment>();
-    public Vector<EventConstraintType> eventConstraintList = new Vector<EventConstraintType>();
+    private Vector<EventType> eventTypeList = new Vector<EventType>();
+    private Vector<EventConstraintType> eventConstraintList = new Vector<EventConstraintType>();
 
     public Event() {
         this.addField(Event.Fields.DUEDATE, null);
@@ -76,6 +75,12 @@ public class Event extends BaseEvent {
         this.fields.put(name, value);
     }
 
+    public Vector<EventType> getTypes() {
+        return this.eventTypeList;
+    }
+    public void addType(EventType type) {
+        this.eventTypeList.add(type);
+    }
     public Long getAttendee() {
         return this.attendee;
     }
