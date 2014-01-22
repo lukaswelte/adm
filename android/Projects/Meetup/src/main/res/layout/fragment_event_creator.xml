@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creation of a new Event"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/eventCreatorTextView1"
+        android:textColor="#000066"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:hint="Name of the event"
+        android:id="@+id/eventCreatorNameTextField"
+         />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="Location"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/eventCreatorLocationTextField"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date : "
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#040404"
+        android:id="@+id/eventCreatorTextView2"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#D4D4D8"
+        android:layout_marginLeft="5dp"
+        android:text="Set Time"
+        android:id="@+id/eventCreatorDateBtnTime" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Set Date"
+            android:background="#D4D4D8"
+            android:id="@+id/eventCreatorDateBtnDate" />
+
+
+        </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Due Date : "
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#040404"
+        android:id="@+id/eventCreatorTextView3"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#D4D4D8"
+                android:layout_marginLeft="5dp"
+                android:text="Set Time"
+                android:id="@+id/eventCreatorDueDateBtnTime" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Set Date"
+                android:background="#D4D4D8"
+                android:id="@+id/eventCreatorDueDateBtnDate" />
+
+        </LinearLayout>
+
+
+</LinearLayout>

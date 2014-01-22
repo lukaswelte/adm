@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -92,7 +91,10 @@ public class EventListFragment extends Fragment {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_create_event:
-                Toast.makeText(getActivity().getApplicationContext(), "Create new event ", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Fragment fragmentCreatorEvent = new EventCreatorFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentCreatorEvent).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -102,7 +104,7 @@ public class EventListFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         DrawerLayout dr =(DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        ListView dl= (ListView) getActivity().findViewById(R.id.drawer_layout);
+        ListView dl= (ListView) getActivity().findViewById(R.id.left_drawer);
         if(dr.isDrawerOpen(dl)){
             menu.findItem(R.id.action_create_event).setVisible(false);
         }

@@ -167,20 +167,27 @@ public class MainActivity extends ActionBarActivity {
             case 1:
                 Fragment fragmentEvent = new EventListFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvent).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
                 break;
             case 2:
                 Fragment fragment = new CalendarFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
                 break;
 
             case 5:
                 Fragment fragmentTeam = new TeamFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
                 break;
 
             default:
                 Fragment emptyFragment = new Fragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
                 break;
 
         }
