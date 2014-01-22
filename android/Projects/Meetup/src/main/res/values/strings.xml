@@ -112,7 +112,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">Ok</string>
-
+    <string name="advice_status">You can update your status by clicking on it.</string>
+    <string name="welcome_message">\n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Welcome to \n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Erasmus - Events!</string>
+    <string name="upcoming_events">Upcoming Erasmus-Events:</string>
+    <string name="welcome_smiley">Welcome-Smiley</string>
 
 
 </resources>
