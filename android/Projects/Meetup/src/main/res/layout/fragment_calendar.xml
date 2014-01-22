@@ -23,6 +23,20 @@
         android:background="#fff"
         android:id="@+id/display_date" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:id="@+id/calendar_add_exam"
+        android:background="#DEDEDE"
+        android:layout_gravity="right"
+        android:text="@string/calendar_add_exam" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/examListView" />
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
