@@ -42,7 +42,6 @@ abstract public class TestEventManager extends AndroidTestCase {
     public static void tearDownClass() throws Exception {
     }
 
-
     abstract public void setUp() throws SQLException;
 
     public void tearDown() {

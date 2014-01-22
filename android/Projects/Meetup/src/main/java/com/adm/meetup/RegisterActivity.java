@@ -13,8 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +36,10 @@ public class RegisterActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_register);
 
         emailText = (EditText) findViewById(R.id.register_email_field);
@@ -52,32 +55,41 @@ public class RegisterActivity extends ActionBarActivity {
 
                 progressBar = new ProgressDialog(view.getContext());
                 progressBar.setCancelable(true);
-                progressBar.setMessage("Please wait");
+                progressBar.setMessage(getString(R.string.progressBar_message));
                 progressBar.setProgress(20000);
                 progressBar.show();
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
-                        progressBar.hide();
-                        JsonElement error = jsonObject.get("error");
-                        Log.d("register", jsonObject.toString());
-                        if(error != null)
-                        {
-                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            String token = jsonObject.get("token").getAsString();
-                            if (token != null) {
-                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
-                                editor.commit();
-                                SharedApplication.getInstance().setUserToken(token);
-                                Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
-                                startActivity(intent);
+                        try {
+                            if(e!=null){
+                                Toast.makeText(getApplicationContext(),"Connection Error", Toast.LENGTH_SHORT).show();
+                                throw e;
                             }
-                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            progressBar.hide();
+                            JsonElement error = jsonObject.get("error");
+                            Log.d("register", jsonObject.toString());
+                            if(error != null)
+                            {
+                                Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                String token = jsonObject.get("token").getAsString();
+                                if (token != null) {
+                                    SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                                    editor.commit();
+                                    SharedApplication.getInstance().setUserToken(token);
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
                 };
@@ -90,7 +102,7 @@ public class RegisterActivity extends ActionBarActivity {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        ProfileActivity.class);
+                        LoginActivity.class);
                 startActivity(i);
                 // Close Registration View
                 finish();
