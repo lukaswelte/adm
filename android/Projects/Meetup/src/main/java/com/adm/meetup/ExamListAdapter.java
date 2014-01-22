@@ -44,7 +44,7 @@ public class ExamListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.exam_list_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_exam_list, viewGroup, false);
 
         TextView examName = (TextView) itemView.findViewById(R.id.examName);
 

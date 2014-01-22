@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:id="@+id/layoutItemScore"
-    android:padding="5dip">
+    android:padding="5dip"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/item_detail"

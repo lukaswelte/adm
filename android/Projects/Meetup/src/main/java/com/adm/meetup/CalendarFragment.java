@@ -228,7 +228,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                 list_names.add(holiday.getName());
             }
         }
-        if (list_names.isEmpty())
+
+        if (list_names.isEmpty() && exams.isEmpty() )
             list_names.add(getString(R.string.calendar_no_detail));
 
         return list_names;
