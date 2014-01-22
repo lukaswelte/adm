@@ -22,7 +22,6 @@
     <string name="title_activity_register_confirmation">RegisterConfirmationActivity</string>
     <string name="title_activity_profile_fragment">ProfileFragment</string>
 
-
     <!-- Login/Sign up Activity -->
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
@@ -34,7 +33,6 @@
     <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
     <string name="enter_info">Please fill in your E-Mail address and a Password.</string>
     <string name="progressBar_message">Please wait</string>
-
 
     <!-- Register Activity -->
     <string name="register_email">Email</string>
@@ -48,10 +46,8 @@
     <string name="register_confirmation_profile_button">Yes</string>
     <string name="token_not_found_error">Error. Please retry</string>
 
-
     <!-- Profile Fragment -->
     <string name="profile_button_text">Edit your profile</string>
-
 
     <!-- Calendar Activity -->
     <string name="calendar_title_activity">CalendarActivity</string>
@@ -115,7 +111,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">Ok</string>
-
-
+    <string name="title_activity_create_exam">CreateExamActivity</string>
 
 </resources>

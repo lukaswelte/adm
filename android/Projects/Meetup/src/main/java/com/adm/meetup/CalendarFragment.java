@@ -5,22 +5,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.adm.meetup.calendar.Exam;
 import com.adm.meetup.calendar.Holiday;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
@@ -40,6 +37,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private ListView details;
 
     HashMap<String, ArrayList<Holiday>> holidaysCache = new HashMap<String,ArrayList<Holiday>>();
+    HashMap<Date, ArrayList<Exam>> exams = new HashMap<Date, ArrayList<Exam>>();
 
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
@@ -47,6 +45,28 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_calendar, container, false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 20: {
+                if (resultCode == 200) { //successful
+
+                    Exam exam = data.getParcelableExtra("exam");
+                    ArrayList<Exam> examsOnDate = exams.get(exam.getDate());
+                    if (examsOnDate == null) {
+                        examsOnDate = new ArrayList<Exam>();
+                    }
+                    examsOnDate.add(exam);
+                    exams.put(exam.getDate(), examsOnDate);
+
+                } else { //canceled
+
+                }
+                break;
+            }
+        }
     }
 
     @Override
@@ -62,7 +82,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         bAddExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createExam();
+                Intent intent = new Intent(getActivity(), CreateExamActivity.class);
+                startActivityForResult(intent, 20);
             }
         });
 
@@ -196,39 +217,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         details.setAdapter(mSchedule);
     }
 
-    private void createExam() {
-        FutureCallback<JsonElement> callback = new FutureCallback<JsonElement>() {
-            @Override
-            public void onCompleted(Exception e, JsonElement jsonElement) {
-                try {
-                    if (e != null) throw e;
-                    JsonObject element = (JsonObject) jsonElement.getAsJsonObject();
-                } catch (Exception ex) {
-
-                }
-            }
-        };
-        /*
-        NetworkHelper.createExamRequest(getActivity(), SharedApplication.testUserToken,
-                "14.12.2013 14:30", "14.12.2013 12:30", "English Exam", callback);
-                */
-    }
-
-    public void onAttachedToWindow() {
-        //super.onAttachedToWindow();
-        getActivity().getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            resettingCalendar();
-            //Normal home button action
-            Intent showOptions = new Intent(Intent.ACTION_MAIN);
-            showOptions.addCategory(Intent.CATEGORY_HOME);
-            startActivity(showOptions);
-        }
-        return true; //super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void onDispatchDateSelect(Date date) {
