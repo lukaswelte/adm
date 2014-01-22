@@ -2,6 +2,7 @@ package com.adm.meetup.helpers;
 
 import android.content.Context;
 
+import com.adm.meetup.calendar.Exam;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -89,8 +90,8 @@ public class NetworkHelper {
      */
     public static void loginRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
         JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("email", "test@test.com");
-        postedJsonObject.addProperty("password", "pass");
+        postedJsonObject.addProperty("email", email);
+        postedJsonObject.addProperty("password", password);
 
         NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback);
     }
@@ -99,8 +100,8 @@ public class NetworkHelper {
      * Method to trigger holidays on the backend
      *
      * @param context  The applications context interested in the request
-     * @param year    The year we want the holidays of
-     * @param country The country we want the holidays of
+     * @param year     The year we want the holidays of
+     * @param country  The country we want the holidays of
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void holidaysRequest(Context context, String year, String country,
@@ -109,78 +110,70 @@ public class NetworkHelper {
         postedJsonObject.addProperty("year", year);
         postedJsonObject.addProperty("country", country);
 
-        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback, true);
     }
 
     /**
      * Method to trigger list of exams on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
+     *
+     * @param context  The applications context interested in the request
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void examsRequest(Context context, String token, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-
-        NetworkHelper.requestBackend(context, "/exam", postedJsonObject, callback);
+    public static void examsRequest(Context context, FutureCallback<JsonArray> callback) {
+        NetworkHelper.requestBackend(context, "/exam", null, callback, true);
     }
 
     /**
      * Method to add an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param date The date of the exam
-     * @param notifyDate The date of notification of the exam
-     * @param name The name of the exam
+     *
+     * @param context  The applications context interested in the request
+     * @param exam     The exam to create
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void createExamRequest(Context context, String token, String date, String notifyDate,
-                                         String name, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("date", "14.12.2013 14:30");
-        postedJsonObject.addProperty("notifydate", "14.12.2013 12:30");
-        postedJsonObject.addProperty("name", "English Exam");
+    public static void createExamRequest(Context context,
+                                         Exam exam, FutureCallback<JsonObject> callback) {
 
-        NetworkHelper.requestBackend(context, "/exam/create", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/exam/create", exam.asJsonObject(), callback, true);
     }
 
     /**
      * Method to update an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param id The id of the exam to be updated
-     * @param date The date of the exam
-     * @param notifyDate The date of notification of the exam
-     * @param name The name of the exam
+     *
+     * @param context  The applications context interested in the request
+     * @param id       The id of the exam to be updated
+     * @param exam     The exam to update
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void updateExamRequest(Context context, String token, int id, String date,
-                                         String notifyDate, String name, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("id", 3123);
-        postedJsonObject.addProperty("date", "14.12.2013 14:30");
-        postedJsonObject.addProperty("notifydate", "14.12.2013 12:30");
-        postedJsonObject.addProperty("name", "English Exam");
-
-        NetworkHelper.requestBackend(context, "/exam/update", postedJsonObject, callback);
+    public static void updateExamRequest(Context context, int id,
+                                         Exam exam, FutureCallback<JsonObject> callback) {
+        NetworkHelper.requestBackend(context, "/exam/update", exam.asJsonObject(), callback, true);
     }
 
     /**
      * Method to delete an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param id The id of the exam to be deleted
+     *
+     * @param context  The applications context interested in the request
+     * @param exam     The exam to be deleted
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void deleteExamRequest(Context context, String token, int id, FutureCallback<JsonObject> callback) {
+    public static void deleteExamRequest(Context context, Exam exam, FutureCallback<JsonObject> callback) {
+        NetworkHelper.requestBackend(context, "/exam/delete", exam.asJsonObject(), callback, true);
+    }
+
+    /**
+     * Method to Register new user via email
+     *
+     * @param context  The applications context interested in the request
+     * @param email    The users email address
+     * @param password The users password
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void registerRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
         JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("id", 3123);
+        postedJsonObject.addProperty("email", email);
+        postedJsonObject.addProperty("password", password);
 
-        NetworkHelper.requestBackend(context, "/exam/delete", postedJsonObject, callback);
-
+        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback);
     }
 
         /**
@@ -201,4 +194,17 @@ public class NetworkHelper {
             NetworkHelper.requestBackend(context, "/profiles/nearyou/", postedJsonObject, callback);
         }
 
+    /**
+     * Method to Authenticate the user from facebook
+     *
+     * @param context           The applications context interested in the request
+     * @param facebookAuthToken facebook auth token
+     * @param callback          The Response JsonObject Handler dealing with the result
+     */
+    public static void facebookAuthRequest(Context context, String facebookAuthToken, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("facebookToken", facebookAuthToken);
+
+        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback);
+    }
 }

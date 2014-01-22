@@ -1,0 +1,182 @@
+{
+  "data": {
+    "exam": [
+      {
+        "name": "blabla",
+        "date": "1002.11.20",
+        "createdAt": "2013-12-04T16:01:50.933Z",
+        "updatedAt": "2013-12-04T16:01:50.933Z",
+        "id": 2
+      },
+      {
+        "name": "blabla",
+        "date": "11",
+        "createdAt": "2013-12-04T16:02:46.915Z",
+        "updatedAt": "2013-12-04T16:02:46.915Z",
+        "id": 3
+      },
+      {
+        "name": "blabla",
+        "date": "11.12.2013",
+        "userid": 3,
+        "notifydate": null,
+        "createdAt": "2013-12-07T17:26:22.464Z",
+        "updatedAt": "2013-12-07T17:26:22.464Z",
+        "id": 4
+      },
+      {
+        "name": "blabla",
+        "date": "11.12.2013",
+        "userid": 3,
+        "notifydate": null,
+        "createdAt": "2013-12-07T17:26:25.452Z",
+        "updatedAt": "2013-12-07T17:26:25.452Z",
+        "id": 5
+      },
+      {
+        "name": "blabla",
+        "date": "11.12.2013",
+        "userid": 3,
+        "notifydate": null,
+        "createdAt": "2013-12-07T17:26:25.455Z",
+        "updatedAt": "2013-12-07T17:26:25.455Z",
+        "id": 6
+      },
+      {
+        "name": "blabla",
+        "date": "11.12.2013",
+        "userid": 3,
+        "notifydate": null,
+        "createdAt": "2013-12-07T17:26:28.134Z",
+        "updatedAt": "2013-12-07T17:26:28.134Z",
+        "id": 7
+      }
+    ],
+    "user": [
+      {
+        "username": "Bla",
+        "password": "$2a$10$1Msdk.KJ.Z4axNfJOqLcL.b.1w2mbQjcXXuFJj0TTDKSqGv2KfEti",
+        "token": "hzcl161hybny7gb9tm32ox1f106swcdi",
+        "createdAt": "2013-12-07T16:01:44.466Z",
+        "updatedAt": "2013-12-07T16:01:44.466Z",
+        "id": 1
+      },
+      {
+        "username": "Test",
+        "password": "sha1$9a3dfa60$1$70623ca92a6cd95e24b5217f497a3425a60b5aca",
+        "token": "xmu9w0mef561or06s7o22gygfirudi",
+        "createdAt": "2013-12-07T16:17:15.924Z",
+        "updatedAt": "2013-12-07T16:17:15.924Z",
+        "id": 2
+      },
+      {
+        "username": "Test1",
+        "password": "sha1$bab6a7cc$1$74016b4ed5f66d98a53ee288d2066989e7fe34fb",
+        "token": "rlbop49z3vbfn7b9waet9o0g76vo0f6r",
+        "createdAt": "2013-12-07T16:18:51.356Z",
+        "updatedAt": "2013-12-17T08:57:51.024Z",
+        "id": 3,
+        "status": "My Status",
+        "statuslocation": "{\"longitude\":31.31231233,\"latitude\":-2.31234}",
+        "friends": [
+          5
+        ]
+      },
+      {
+        "email": "test@test.de",
+        "password": "sha1$eecf5e56$1$ebe3b72716c102122f9b755104c5f85be3a8b2a5",
+        "token": "5y911vr0tzm8ia4iiw71nwqcgf6o5hfr",
+        "createdAt": "2013-12-17T08:23:39.110Z",
+        "updatedAt": "2013-12-17T08:23:39.110Z",
+        "id": 4
+      },
+      {
+        "email": "test2@test.de",
+        "password": "sha1$b4c3c4d1$1$aabdd1880fe57479433f06270f3479c343108515",
+        "token": "zr84s9n30jinqaorxjyg5l9yb7r5dn29",
+        "createdAt": "2013-12-17T08:48:30.553Z",
+        "updatedAt": "2013-12-17T08:57:51.021Z",
+        "id": 5,
+        "friends": [
+          3
+        ]
+      },
+      {
+        "email": "test3@test.de",
+        "password": "sha1$0ce56449$1$cebe464d4e43d08e7ed04c30c54e7d4a33175dbb",
+        "friends": [],
+        "token": "z4hznayjj43rf6r4l5tirv34n29",
+        "createdAt": "2013-12-17T08:51:21.711Z",
+        "updatedAt": "2013-12-17T08:51:21.711Z",
+        "id": 6
+      }
+    ]
+  },
+  "schema": {
+    "exam": {
+      "name": {
+        "type": "string"
+      },
+      "date": {
+        "type": "string"
+      },
+      "notifydate": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "defaultsTo": "AUTO_INCREMENT",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime",
+        "default": "NOW"
+      },
+      "updatedAt": {
+        "type": "datetime",
+        "default": "NOW"
+      }
+    },
+    "user": {
+      "userid": {
+        "type": "string",
+        "unique": true
+      },
+      "username": {
+        "type": "string",
+        "unique": true
+      },
+      "password": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "defaultsTo": "AUTO_INCREMENT",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime",
+        "default": "NOW"
+      },
+      "updatedAt": {
+        "type": "datetime",
+        "default": "NOW"
+      }
+    }
+  },
+  "counters": {
+    "exam": {
+      "id": 7
+    },
+    "user": {
+      "id": 6
+    }
+  }
+}

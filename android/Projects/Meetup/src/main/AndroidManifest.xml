@@ -17,7 +17,7 @@
         android:targetSdkVersion="19" />
 
     <provider
-        android:name=".provider.EventManager"
+        android:name="com.adm.meetup.provider.EventManager"
         android:authorities="com.adm.meetup.event.EventManager"
         android:exported="true"
         android:grantUriPermissions="true"
@@ -52,7 +52,12 @@
         <activity
             android:name="com.adm.meetup.MainActivity"
             android:label="@string/app_name">
-        <intent-filter>
+        </activity>
+        <activity
+            android:name="com.adm.meetup.LoginActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -71,7 +76,32 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="4030500" />
-    </application>
 
+        <activity
+            android:name="com.adm.meetup.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <activity
+            android:name="com.adm.meetup.AccountActivity"
+            android:label="@string/title_activity_account"></activity>
+        <activity
+            android:name="com.adm.meetup.FriendsActivity"
+            android:label="@string/title_activity_friends"></activity>
+        <activity
+            android:name="com.adm.meetup.RegisterConfirmationActivity"
+            android:label="@string/title_activity_register_confirmation"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name="com.adm.meetup.CreateExamActivity"
+            android:label="@string/title_activity_create_exam"></activity>
+    </application>
 
 </manifest>
