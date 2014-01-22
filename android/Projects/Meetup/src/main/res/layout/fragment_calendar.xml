@@ -33,6 +33,11 @@
         android:text="@string/calendar_add_exam" />
 
     <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/examListView" />
+
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/display_details"

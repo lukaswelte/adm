@@ -110,7 +110,7 @@ public class NetworkHelper {
         postedJsonObject.addProperty("year", year);
         postedJsonObject.addProperty("country", country);
 
-        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback, true);
     }
 
     /**
@@ -119,8 +119,8 @@ public class NetworkHelper {
      * @param context  The applications context interested in the request
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void examsRequest(Context context, FutureCallback<JsonObject> callback) {
-        NetworkHelper.requestBackend(context, "/exam", null, callback);
+    public static void examsRequest(Context context, FutureCallback<JsonArray> callback) {
+        NetworkHelper.requestBackend(context, "/exam", null, callback, true);
     }
 
     /**
@@ -131,7 +131,7 @@ public class NetworkHelper {
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void createExamRequest(Context context,
-                                         Exam exam, FutureCallback<JsonElement> callback) {
+                                         Exam exam, FutureCallback<JsonObject> callback) {
 
         NetworkHelper.requestBackend(context, "/exam/create", exam.asJsonObject(), callback, true);
     }
@@ -146,7 +146,7 @@ public class NetworkHelper {
      */
     public static void updateExamRequest(Context context, int id,
                                          Exam exam, FutureCallback<JsonObject> callback) {
-        NetworkHelper.requestBackend(context, "/exam/update", exam.asJsonObject(), callback);
+        NetworkHelper.requestBackend(context, "/exam/update", exam.asJsonObject(), callback, true);
     }
 
     /**
@@ -157,7 +157,7 @@ public class NetworkHelper {
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void deleteExamRequest(Context context, Exam exam, FutureCallback<JsonObject> callback) {
-        NetworkHelper.requestBackend(context, "/exam/delete", exam.asJsonObject(), callback);
+        NetworkHelper.requestBackend(context, "/exam/delete", exam.asJsonObject(), callback, true);
     }
 
     /**

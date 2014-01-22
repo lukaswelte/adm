@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -27,12 +28,23 @@ public class Exam implements Parcelable {
         this.name = name;
     }
 
+    public Exam(String id, String dateString, String notifyDateString, String name) {
+        this.id = id;
+        this.date = dateFromString(dateString);
+        this.notifyDate = dateFromString(notifyDateString);
+        this.name = name;
+    }
+
     public Exam(JsonObject jsonObject) {
         this.id = jsonObject.get("id").getAsString();
         String dateString = jsonObject.get("date").getAsString();
         this.date = dateFromString(dateString);
-        String notifyDateString = jsonObject.get("notifydate").getAsString();
-        this.notifyDate = dateFromString(notifyDateString);
+        try {
+            String notifyDateString = jsonObject.get("notifydate").getAsString();
+            this.notifyDate = dateFromString(notifyDateString);
+        } catch (Exception e) {
+            this.notifyDate = null;
+        }
         this.name = jsonObject.get("name").getAsString();
     }
 
@@ -62,17 +74,34 @@ public class Exam implements Parcelable {
         return id;
     }
 
+
+    public static String getDateYearIdentifierOfDate(Date date) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date);
+
+        return "year:" + cal1.get(Calendar.YEAR) + "date:" + cal1.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public String getDateYearIdentifier() {
+        return Exam.getDateYearIdentifierOfDate(date);
+    }
+
     private static Date dateFromString(String dateString) {
+        if (dateString == null) return null;
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        Date result;
         try {
-            return format.parse(dateString);
+            result = format.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
-            return null;
+            result = null;
         }
+
+        return result;
     }
 
     private static String stringFromDate(Date date) {
+        if (date == null) return null;
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         return dateFormat.format(date);
     }
