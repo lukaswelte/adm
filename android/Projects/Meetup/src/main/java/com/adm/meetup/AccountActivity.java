@@ -64,7 +64,7 @@ public class AccountActivity extends ActionBarActivity {
                 {
                     HashMap<String, String> map = (HashMap<String, String>)itemAtPosition;
 
-                    if(id==0 || id==1 || id==4 || id==5){
+                    if(id==0 || id==1 || id==5 || id==6 || id==3){
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final EditText input = new EditText(AccountActivity.this);
@@ -88,7 +88,7 @@ public class AccountActivity extends ActionBarActivity {
                         adb.setView(input);
                         adb.show();
                     }
-                    else if(id==3){		//relationship status
+                    else if(id==4){		//relationship status
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final String[] types = {getString(R.string.single), getString(R.string.inRelationship),
@@ -112,7 +112,7 @@ public class AccountActivity extends ActionBarActivity {
 
                         adb.show();
                     }
-                    else if(id==7){		//location services
+                    else if(id==8){		//location services
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final String[] types = {getString(R.string.yes), getString(R.string.no)};
@@ -171,9 +171,11 @@ public class AccountActivity extends ActionBarActivity {
         Editor editor = pref.edit();
         if (id==0) editor.putString(Util.PREFERENCES_FIRSTNAME, input.getText().toString());
         if (id==1) editor.putString(Util.PREFERENCES_LASTNAME, input.getText().toString());
-        if (id==6) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
-        if (id==4) editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, input.getText().toString());
-        if (id==5) editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, input.getText().toString());
+        if (id==7) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
+        if (id==5) editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, input.getText().toString());
+        if (id==6) editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, input.getText().toString());
+        if (id==3) editor.putString(Util.PREFERENCES_NATIONALITY, input.getText().toString());
+
         //if (id==7) editor.putString(Util.PREFERENCES_STATUS, input.getText().toString());
 
         editor.commit();
@@ -211,21 +213,28 @@ public class AccountActivity extends ActionBarActivity {
                     Util.PREFERENCES_DATEOFBIRTH_DEFAULT));
             listItem.add(map);
 
-            //3 relationship
+            //3 nationality
+            map = new HashMap<String, String>();
+            map.put("title", getString(R.string.nationality));
+            map.put("description",preferences.getString(Util.PREFERENCES_NATIONALITY,
+                    Util.PREFERENCES_NATIONALITY_DEFAULT));
+            listItem.add(map);
+
+            //4 relationship
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.relationshipStatus));
             map.put("description",preferences.getString(Util.PREFERENCES_RELATIONSHIPSTATUS,
                     Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT));
             listItem.add(map);
 
-            //4 home university
+            //5 home university
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.homeUniversity));
             map.put("description",preferences.getString(Util.PREFERENCES_HOMEUNIVERSITY,
                     Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT));
             listItem.add(map);
 
-            //5 erasmus university
+            //6 erasmus university
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.ErasmusUniversity));
             map.put("description",preferences.getString(Util.PREFERENCES_ERASMUSUNIVERSITY,
@@ -238,14 +247,14 @@ public class AccountActivity extends ActionBarActivity {
                     Util.PREFERENCES_STATUS_DEFAULT));
             listItem.add(map);*/
 
-            //6 email
+            //7 email
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.email));
             map.put("description",preferences.getString(Util.PREFERENCES_EMAIL,
                     Util.PREFERENCES_EMAIL_DEFAULT));
             listItem.add(map);
 
-            //7 location services
+            //8 location services
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.disableLocationServices));
             map.put("description",preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
@@ -256,10 +265,7 @@ public class AccountActivity extends ActionBarActivity {
                     new String[] {"title", "description"}, new int[] {R.id.item_title, R.id.item_description});
 
             parametersList.setAdapter(mSchedule);
-
-
         }
-
     }
 
 
