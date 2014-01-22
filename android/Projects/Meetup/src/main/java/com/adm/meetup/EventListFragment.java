@@ -12,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
 
-import java.util.Date;
 import java.util.List;
 
-import static junit.framework.Assert.assertNotSame;
 
 /**
  * Created by lukas on 21.01.14.
@@ -41,17 +38,6 @@ public class EventListFragment extends Fragment {
         eventListView = (ListView) getView().findViewById(R.id.eventListView);
         EventManager manager = new EventManager(getActivity());
         List<Event> eventList = manager.getEvents();
-        eventList.clear();
-        /* Test on event */
-        manager.deleteEvents();
-        Event event = new Event();
-        event.setId(Long.valueOf(1));
-        event.setName("Event Name");
-        event.setAttendee(Long.valueOf(232));
-        event.setLocation("Paris");
-        manager.createEvent(event);
-        eventList.add(event);
-
         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), eventList);
         eventListView.setAdapter(eventListAdapter);
 

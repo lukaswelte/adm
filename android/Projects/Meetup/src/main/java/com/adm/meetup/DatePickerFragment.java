@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
@@ -15,6 +16,12 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
+    private Boolean isDueDate;
+    public View view;
+
+    public DatePickerFragment(View view){
+        this.view=view;
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
@@ -28,7 +35,16 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Button dateBtnForDate =  (Button) getActivity().findViewById(R.id.eventCreatorDateBtnDate);
-        dateBtnForDate.setText(""+year+"/"+(month+1)+"/"+day);
+        Button dateBtnForDate;
+        isDueDate();
+        if(!isDueDate) dateBtnForDate=  (Button) getActivity().findViewById(R.id.eventCreatorDateBtnDate);
+        else dateBtnForDate=  (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnDate);
+        if(month<9) dateBtnForDate.setText(""+year+"-0"+(month+1)+"-"+day);
+        else dateBtnForDate.setText(""+year+"-"+(month+1)+"-"+day);
+    }
+
+    void isDueDate(){
+        if(view.getId() == R.id.eventCreatorDateBtnDate) isDueDate=false;
+        else isDueDate =true;
     }
 }

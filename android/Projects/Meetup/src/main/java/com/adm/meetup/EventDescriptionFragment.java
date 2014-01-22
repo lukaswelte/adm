@@ -39,7 +39,6 @@ public class EventDescriptionFragment  extends Fragment  {
         Bundle extras = getArguments();
         EventManager manager = new EventManager(getActivity());
         Event event = manager.getEvents().get(extras.getInt("index"));
-        Log.d("ev", " attendee" + event.toString() + event.getAttendee());
         nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
         nameTexView.setText(event.getName());
 
@@ -50,10 +49,10 @@ public class EventDescriptionFragment  extends Fragment  {
         attenteeTextView.setText(" "+event.getAttendee());
 
         dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
-        dateTexView.setText("22/01/2014 12:23");
+        dateTexView.setText(""+event.getDate().toString());
 
         dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
-        dueDateTexView.setText("25/01/2014 17:45");
+        dueDateTexView.setText(""+event.getDueDate().toString());
 
 
     }
