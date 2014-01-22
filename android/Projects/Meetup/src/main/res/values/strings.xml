@@ -112,6 +112,15 @@
         <item>Andreas</item>
     </string-array>
 
+    <!-- Calendar Activity -->
+    <string name="title_activity_people_near_you">PeopleNearYouActivity</string>
+    <string name="title_activity_map_meetup">Meetup Map</string>
+    <string name="map_meetup_your_position">Your position</string>
+    <string name="map_meetup_party_mode">Party mode</string>
+    <string name="map_meetup_events">Events</string>
+    <string name="map_meetup_whos_partying">Who\'s partying?</string>
+    <string name="map_meetup_friends">Friends</string><string name="map_update_status">Update status</string><string name="map_your_status">Your status</string>
+
     <!-- General Strings -->
     <string name="yes">Yes</string>
     <string name="no">No</string>

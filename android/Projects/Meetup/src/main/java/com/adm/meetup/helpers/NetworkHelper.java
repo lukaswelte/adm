@@ -28,7 +28,7 @@ public class NetworkHelper {
      * @param jsonObjectHandler The Response JsonObject Handler dealing with the result
      */
     public static void requestBackend(Context context, String apiURL, JsonObject postedJsonObject, FutureCallback jsonObjectHandler) {
-        requestBackend(context, apiURL, postedJsonObject, jsonObjectHandler, false);
+        requestBackend(context, apiURL, postedJsonObject, jsonObjectHandler, true);
     }
 
     /**
@@ -78,22 +78,6 @@ public class NetworkHelper {
         }
 
         return requestBuilder.asJsonArray().get();
-    }
-
-    /**
-     * Method to trigger login via email and password on the backend
-     *
-     * @param context  The applications context interested in the request
-     * @param email    The users email address
-     * @param password The users password
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void loginRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("email", email);
-        postedJsonObject.addProperty("password", password);
-
-        NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback);
     }
 
     /**
@@ -161,6 +145,40 @@ public class NetworkHelper {
     }
 
     /**
+     * Method to find the people around you
+     *
+     * @param context  The applications context interested in the request
+     * @param longitude    The users longitude
+     * @param latitude The users latitude
+     * @param distance The max distance between the user and the people he will see
+     * @param callback The Response JsonArray Handler dealing with the result
+     */
+    public static void peopleNearYouRequest(Context context, double longitude, double latitude, float distance, FutureCallback<JsonArray> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("latitude", latitude);
+        postedJsonObject.addProperty("longitude", longitude);
+        postedJsonObject.addProperty("distance", distance);
+
+        NetworkHelper.requestBackend(context, "/profiles/nearyou/", postedJsonObject, callback, true);
+    }
+
+    /**
+     * Method to trigger login via email and password on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param email    The users email address
+     * @param password The users password
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void loginRequest(Context context, String email, String password, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("email", email);
+        postedJsonObject.addProperty("password", password);
+
+        NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback, false);
+    }
+
+    /**
      * Method to Register new user via email
      *
      * @param context  The applications context interested in the request
@@ -173,7 +191,7 @@ public class NetworkHelper {
         postedJsonObject.addProperty("email", email);
         postedJsonObject.addProperty("password", password);
 
-        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback, false);
     }
 
     /**
@@ -187,6 +205,6 @@ public class NetworkHelper {
         JsonObject postedJsonObject = new JsonObject();
         postedJsonObject.addProperty("facebookToken", facebookAuthToken);
 
-        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback, false);
     }
 }
