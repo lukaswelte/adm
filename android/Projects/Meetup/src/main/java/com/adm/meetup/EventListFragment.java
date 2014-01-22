@@ -2,6 +2,9 @@ package com.adm.meetup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,28 +42,32 @@ public class EventListFragment extends Fragment {
         eventListView = (ListView) getView().findViewById(R.id.eventListView);
         EventManager manager = new EventManager(getActivity());
         List<Event> eventList = manager.getEvents();
-
+        eventList.clear();
         /* Test on event */
         manager.deleteEvents();
         Event event = new Event();
         event.setId(Long.valueOf(1));
         event.setName("Event Name");
+        event.setAttendee(Long.valueOf(232));
         event.setLocation("Paris");
-        event.setAttendee((long)231);
         manager.createEvent(event);
         eventList.add(event);
 
         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), eventList);
         eventListView.setAdapter(eventListAdapter);
 
-
         eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity().getApplicationContext(), "You Clicked at event " + position, Toast.LENGTH_SHORT).show();
-
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Bundle data = new Bundle();
+                data.putInt("index", position);
+                Fragment fragmentDescEvent = new EventDescriptionFragment();
+                fragmentDescEvent.setArguments(data);
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDescEvent).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
             }
         });
     }
@@ -90,5 +97,17 @@ public class EventListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        DrawerLayout dr =(DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ListView dl= (ListView) getActivity().findViewById(R.id.drawer_layout);
+        if(dr.isDrawerOpen(dl)){
+            menu.findItem(R.id.action_create_event).setVisible(false);
+        }
+        else  menu.findItem(R.id.action_create_event).setVisible(true);
+
+        super.onPrepareOptionsMenu(menu);
     }
 }
