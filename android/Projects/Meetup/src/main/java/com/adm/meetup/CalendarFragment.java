@@ -38,7 +38,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private ListView details;
     private ListView examListView;
 
-    HashMap<String, ArrayList<Holiday>> holidaysCache = new HashMap<String,ArrayList<Holiday>>();
+    HashMap<String, ArrayList<Holiday>> holidaysCache = new HashMap<String, ArrayList<Holiday>>();
     HashMap<String, ArrayList<Exam>> exams = new HashMap<String, ArrayList<Exam>>();
 
     private final String PREFERENCES_MONTH = "shown_month";
@@ -205,7 +205,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                             holidayList.add(holidayObject);
                         }
 
-                        holidaysCache.put(year,holidayList);
+                        holidaysCache.put(year, holidayList);
                         updateHolidaysInCalendar(holidayNamesOnDay(selectDate, holidayList));
 
                     } catch (Exception ex) {
