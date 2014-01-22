@@ -8,9 +8,8 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:scrollbars="vertical"
-        android:name="com.google.android.gms.maps.MapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         tools:layout="@layout/fragment_people_near_you" />
 
     <RadioGroup
@@ -33,7 +32,6 @@
             <!--android:background="@drawable/shape_radiobutton"-->
             <!--android:textColor="@color/textcolor_radiobutton"-->
         <View
-            android:id="@+id/VerticalLine"
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:background="#aaa" />
@@ -46,13 +44,12 @@
             android:gravity="center_horizontal|center_vertical"
             android:textOff="@string/map_meetup_whos_partying"
             android:textOn="@string/map_meetup_whos_partying"
-            android:layout_weight="1"></ToggleButton>
+            android:layout_weight="1"/>
             <!--android:background="@drawable/shape_radiobutton2"-->
             <!--android:textColor="@color/textcolor_radiobutton" -->
 
 
         <View
-            android:id="@+id/VerticalLine"
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:background="#aaa" />
@@ -66,11 +63,10 @@
             android:text="@string/map_meetup_events"
             android:textOff="@string/map_meetup_events"
             android:textOn="@string/map_meetup_events"
-            android:layout_weight="1"></ToggleButton>
+            android:layout_weight="1"/>
             <!--android:background="@drawable/shape_radiobutton2"-->
             <!--android:textColor="@color/textcolor_radiobutton"-->
         <View
-            android:id="@+id/VerticalLine"
             android:layout_width="1dip"
             android:layout_height="match_parent"
             android:background="#aaa" />
@@ -83,7 +79,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:textOff="@string/map_meetup_friends"
             android:textOn="@string/map_meetup_friends"
-            android:layout_weight="1"></ToggleButton>
+            android:layout_weight="1"/>
     </RadioGroup>
 
     <LinearLayout
