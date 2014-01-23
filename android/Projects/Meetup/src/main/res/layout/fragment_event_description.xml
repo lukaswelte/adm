@@ -103,6 +103,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Type : "
+        android:layout_marginTop="10dp"
+        android:textColor="#040404"
+        android:id="@+id/eventDescTextView6"
+        android:textSize="18dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/eventDescTextView4"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="myTYpe"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#040404"
+        android:id="@+id/eventTypeTextView"
+        android:textSize="18dp"
+        android:layout_below="@+id/eventDescTextView4"
+        android:layout_toRightOf="@+id/eventDescTextView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Due"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
@@ -122,14 +148,12 @@
         android:id="@+id/eventDescTextView5"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView4" />
+        android:layout_below="@+id/eventDescTextView6" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Sed ut perspiciatis unde omnis iste natus error sab illo inventore verit architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit "
+        android:text="Lorem ipsum"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="7dp"
         android:textColor="#040404"

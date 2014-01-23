@@ -42,12 +42,12 @@ public class DatePickerFragment extends DialogFragment
             dateBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDateBtnDate);
         else dateBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnDate);
         if (month < 9 && day < 10)
-            dateBtnForDate.setText("0" + day + ".0" + (month + 1) + "." + year);
+            dateBtnForDate.setText("0" + (month + 1)+"/0" + day + "/" + year);
         else if (month < 9 && day > 9)
-            dateBtnForDate.setText("" + day + ".0" + (month + 1) + "." + year);
+            dateBtnForDate.setText("0" + (month + 1)+"/" + day + "/" + year);
         else if (month > 9 && day < 10)
-            dateBtnForDate.setText("0" + day + "." + (month + 1) + "." + year);
-        else dateBtnForDate.setText("" + day + "." + (month + 1) + "." + year);
+            dateBtnForDate.setText("" + (month + 1)+"/0" + day + "/" + year);
+        else dateBtnForDate.setText("" + (month + 1) + "/"+day   + "/" + year);
     }
 
     void isDueDate() {

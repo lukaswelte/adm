@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
+import com.adm.meetup.helpers.DateHelper;
 
 import java.text.SimpleDateFormat;
 
@@ -23,6 +24,8 @@ public class EventDescriptionFragment extends Fragment {
     private TextView nameTexView;
     private TextView attenteeTextView;
     private TextView locationTexView;
+    private TextView descriptionTextView;
+    private TextView typeTextView;
 
 
     @Override
@@ -33,7 +36,6 @@ public class EventDescriptionFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        SimpleDateFormat sd = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
         Bundle extras = getArguments();
         EventManager manager = new EventManager(getActivity());
@@ -49,10 +51,16 @@ public class EventDescriptionFragment extends Fragment {
         attenteeTextView.setText(" " + event.getAttendee());
 
         dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
-        dateTexView.setText("" + sd.format(event.getDate()));
+        dateTexView.setText("" + DateHelper.format(event.getDate()));
 
         dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
-        dueDateTexView.setText("" + sd.format(event.getDueDate()));
+        dueDateTexView.setText("" + DateHelper.format(event.getDueDate()));
+
+        descriptionTextView = (TextView) getView().findViewById(R.id.eventDescriptionTextView);
+        descriptionTextView.setText(event.getDescription());
+
+        typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
+        typeTextView.setText(event.getTypes().get(0).getName());
 
     }
 
