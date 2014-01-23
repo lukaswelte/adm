@@ -12,9 +12,11 @@
         android:textSize="@dimen/abc_action_bar_title_text_size"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:text="Our international Team of Developers:"
+        android:text="@string/developers"
         android:layout_marginBottom="20dp"/>
 
 
