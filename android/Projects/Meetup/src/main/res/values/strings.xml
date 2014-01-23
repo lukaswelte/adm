@@ -22,6 +22,7 @@
     <string name="title_activity_register_confirmation">RegisterConfirmationActivity</string>
     <string name="title_activity_profile_fragment">ProfileFragment</string>
 
+
     <!-- Login/Sign up Activity -->
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
@@ -33,6 +34,7 @@
     <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
     <string name="enter_info">Please fill in your E-Mail address and a Password.</string>
     <string name="progressBar_message">Please wait</string>
+
 
     <!-- Register Activity -->
     <string name="register_email">Email</string>
@@ -46,8 +48,10 @@
     <string name="register_confirmation_profile_button">Yes</string>
     <string name="token_not_found_error">Error. Please retry</string>
 
+
     <!-- Profile Fragment -->
     <string name="profile_button_text">Edit your profile</string>
+
 
     <!-- Calendar Activity -->
     <string name="calendar_title_activity">CalendarActivity</string>
@@ -136,6 +140,14 @@
     <string name="advice_date_exam_missing">You have to specify a date for the exam</string>
     <string name="advice_time_exam_missing">You have to specify a time for the exam</string>
     <string name="advice_wrong_format">Exam date in wrong format. Should be dd.MM.yyyy HH:mm</string>
+
+    <string-array name="types_arrays">
+        <item>Default</item>
+        <item>Sport</item>
+        <item>Dance</item>
+        <item>Trip</item>
+    </string-array>
+
     <string name="advice_events_day">Events for this day:</string>
     <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
     <string name="map_load">...loading map</string>

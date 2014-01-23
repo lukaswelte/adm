@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by root on 21.1.14.
  */
 public class DateHelper {
-    public static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    public static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
     public static String format(Date date) {
         return dateFormat.format(date);
