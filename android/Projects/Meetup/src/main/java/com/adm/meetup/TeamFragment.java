@@ -35,7 +35,7 @@ public class TeamFragment extends Fragment {
 
 
         // Create and set MenuListAdapter
-        MenuListAdapter mMenuAdapter = new MenuListAdapter(getActivity(), mMember, mCountry);
+        TeamListAdapter mMenuAdapter = new TeamListAdapter(getActivity(), mMember, mCountry);
         mList.setAdapter(mMenuAdapter);
 
     }
