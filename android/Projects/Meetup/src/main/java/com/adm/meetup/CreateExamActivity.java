@@ -27,7 +27,6 @@ import java.util.Calendar;
 public class CreateExamActivity extends ActionBarActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class CreateExamActivity extends ActionBarActivity {
         Button examNotifyTime;
 
         // declare  the variables to Show/Set the date and time when Time and  Date Picker Dialog first appears
-        private int mYear, mMonth, mDay,mHour,mMinute;
+        private int mYear, mMonth, mDay, mHour, mMinute;
         private int year;
         private String hour, minute, month, day;
 
@@ -62,8 +61,7 @@ public class CreateExamActivity extends ActionBarActivity {
 
         // constructor
 
-        public PlaceholderFragment()
-        {
+        public PlaceholderFragment() {
 
         }
 
@@ -180,10 +178,6 @@ public class CreateExamActivity extends ActionBarActivity {
 
 
             final EditText nameTextView = (EditText) rootView.findViewById(R.id.examName);
-            final Button dateTextView = (Button) rootView.findViewById(R.id.examDate);
-            final Button timeTextView = (Button) rootView.findViewById(R.id.examTime);
-            final Button notifyDateTextView = (Button) rootView.findViewById(R.id.examNotifyDate);
-            final Button notifyTimeTextView = (Button) rootView.findViewById(R.id.examNotifyTime);
 
             Button saveButton = (Button) rootView.findViewById(R.id.saveButton);
             saveButton.setOnClickListener(new View.OnClickListener() {
@@ -198,21 +192,19 @@ public class CreateExamActivity extends ActionBarActivity {
                         return;
                     }
 
-                    String dateString = dateTextView.getText().toString();
+                    String dateString = examDate.getText().toString();
                     if (dateString == null || dateString.length() < 1) {
                         Toast.makeText(context, context.getString(R.string.advice_date_exam_missing), Toast.LENGTH_LONG).show();
                         return;
                     }
 
-                    String timeString = timeTextView.getText().toString();
+                    String timeString = examTime.getText().toString();
                     if (dateString == null || dateString.length() < 1) {
                         Toast.makeText(context, context.getString(R.string.advice_time_exam_missing), Toast.LENGTH_LONG).show();
                     }
 
 
-
-
-                    String notifyDateString = notifyDateTextView.getText().toString() + " " + notifyTimeTextView.getText().toString();
+                    String notifyDateString = examNotifyDate.getText().toString() + " " + examNotifyTime.getText().toString();
                     String examDateString = dateString + " " + timeString;
 
                     Exam exam = new Exam(null, examDateString, notifyDateString, examName);
@@ -256,14 +248,12 @@ public class CreateExamActivity extends ActionBarActivity {
                     public void onDateSet(DatePicker view, int yearSelected,
                                           int monthOfYear, int dayOfMonth) {
                         year = yearSelected;
-                        month = checkValue(monthOfYear +1);
+                        month = checkValue(monthOfYear + 1);
                         day = checkValue(dayOfMonth);
                         // Set the Selected Date in Select date Button
-                        examDate.setText(day+"."+month+"."+year);
+                        examDate.setText(day + "." + month + "." + year);
                     }
                 };
-
-
 
 
         // Register  TimePickerDialog listener
@@ -274,7 +264,7 @@ public class CreateExamActivity extends ActionBarActivity {
                         hour = checkValue(hourOfDay);
                         minute = checkValue(min);
                         // Set the Selected Date in Select date Button
-                        examTime.setText(hour+":"+minute);
+                        examTime.setText(hour + ":" + minute);
                     }
                 };
 
@@ -289,7 +279,7 @@ public class CreateExamActivity extends ActionBarActivity {
                         month = checkValue(monthOfYear + 1);
                         day = checkValue(dayOfMonth);
                         // Set the Selected Date in Select date Button
-                        examNotifyDate.setText(day+"."+month+"."+year);
+                        examNotifyDate.setText(day + "." + month + "." + year);
                     }
                 };
 
@@ -301,10 +291,9 @@ public class CreateExamActivity extends ActionBarActivity {
                         hour = checkValue(hourOfDay);
                         minute = checkValue(min);
                         // Set the Selected Date in Select date Button
-                        examNotifyTime.setText(hour+":"+minute);
+                        examNotifyTime.setText(hour + ":" + minute);
                     }
                 };
-
 
 
         private static String checkValue(int input) {
@@ -328,7 +317,6 @@ public class CreateExamActivity extends ActionBarActivity {
         setResult(403, intent);
         finish();
     }
-
 
 
 }

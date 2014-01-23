@@ -1,20 +1,19 @@
 package com.adm.meetup;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FriendsActivity extends ActionBarActivity {
 
@@ -35,32 +34,30 @@ public class FriendsActivity extends ActionBarActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
             public void onTabChanged(String arg0) {
-                SimpleAdapter mSchedule=null;
+                SimpleAdapter mSchedule;
 
-                if (tabHost.getCurrentTabTag()=="tab_local"){
+                if ("tab_local".equals(tabHost.getCurrentTabTag())) {
 
-                    parametersListFriends = (ListView)findViewById(R.id.listView_friends);
+                    parametersListFriends = (ListView) findViewById(R.id.listView_friends);
 
                     ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
                     HashMap<String, String> map = new HashMap<String, String>();
 
-                    if(mSchedule==null){
-                        map.put("friendname", "Friend Name 1");
-                        listItem.add(map);
+                    map.put("friendname", "Friend Name 1");
+                    listItem.add(map);
 
-                        map = new HashMap<String, String>();
-                        map.put("friendname", "Friend Name 2");
-                        listItem.add(map);
+                    map = new HashMap<String, String>();
+                    map.put("friendname", "Friend Name 2");
+                    listItem.add(map);
 
-                        map = new HashMap<String, String>();
-                        map.put("friendname", "Friend Name 3");
-                        listItem.add(map);
+                    map = new HashMap<String, String>();
+                    map.put("friendname", "Friend Name 3");
+                    listItem.add(map);
 
-                        mSchedule = new SimpleAdapter (FriendsActivity.this.getBaseContext(), listItem, R.layout.item_friends,
-                                new String[] {"friendname"}, new int[] {R.id.item_friendname});
+                    mSchedule = new SimpleAdapter(FriendsActivity.this.getBaseContext(), listItem, R.layout.item_friends,
+                            new String[]{"friendname"}, new int[]{R.id.item_friendname});
 
-                    }
                     parametersListFriends.setAdapter(mSchedule);
                 }
             }
@@ -75,7 +72,7 @@ public class FriendsActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.friends, menu);
         return true;
@@ -87,10 +84,7 @@ public class FriendsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -103,9 +97,8 @@ public class FriendsActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
-            return rootView;
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_friends, container, false);
         }
     }
 

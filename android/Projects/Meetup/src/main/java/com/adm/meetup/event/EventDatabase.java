@@ -73,13 +73,13 @@ public class EventDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion<newVersion){
-        Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.Events.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.Comments.TABLE);
+        if (oldVersion < newVersion) {
+            Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.Events.TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.Comments.TABLE);
 
-        // create tables
-        onCreate(db);
+            // create tables
+            onCreate(db);
         }
 
     }

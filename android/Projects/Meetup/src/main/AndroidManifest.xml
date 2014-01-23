@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adm.meetup"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
      
      
     <permission
@@ -10,10 +10,6 @@
         android:protectionLevel="signature" />
      
      
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
-
     <provider
         android:name="com.adm.meetup.provider.EventManager"
         android:authorities="com.adm.meetup.event.EventManager"
@@ -45,14 +41,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.adm.meetup.MainActivity"
             android:label="@string/app_name" />
         <activity
             android:name="com.adm.meetup.LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -98,8 +94,7 @@
             android:label="@string/title_activity_create_exam" />
         <activity
             android:name="com.adm.meetup.LoadmapFragment"
-            android:label="@string/title_activity_loadmap_fragment" >
-        </activity>
+            android:label="@string/title_activity_loadmap_fragment"></activity>
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create a new Event :"
+        android:text="@string/create_new_event"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:hint="Name of the event"
+        android:hint="@string/name_of_event"
         android:gravity="center"
         android:id="@+id/eventCreatorNameTextField" />
 
@@ -34,16 +34,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Location"
+        android:hint="@string/location"
         android:gravity="center"
         android:layout_marginLeft="5dp"
         android:id="@+id/eventCreatorLocationTextField" />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:inputType="textMultiLine"
-        android:hint="Description"
+        android:hint="@string/description"
         android:gravity="center"
         android:ems="10"
         android:id="@+id/eventCreatorDescription"
@@ -60,7 +60,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date : "
+        android:text="@string/date_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:textColor="#2E2E2E"
@@ -80,7 +80,7 @@
             android:paddingTop="4dp"
             android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
-            android:text="Set Time"
+            android:text="@string/set_time"
             android:id="@+id/eventCreatorDateBtnTime" />
 
         <Button
@@ -90,7 +90,7 @@
             android:paddingTop="4dp"
             android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
-            android:text="Set Date"
+            android:text="@string/set_date"
             android:id="@+id/eventCreatorDateBtnDate" />
 
 
@@ -99,7 +99,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Due Date : "
+        android:text="@string/due_date_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:textColor="#2E2E2E"
@@ -119,14 +119,14 @@
             android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
             android:layout_marginLeft="5dp"
-            android:text="Set Time"
+            android:text="@string/set_time"
             android:id="@+id/eventCreatorDueDateBtnTime" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Set Date"
+            android:text="@string/set_date"
             android:paddingTop="4dp"
             android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
@@ -140,7 +140,7 @@
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:padding="5dp"
-        android:text="Save Event"
+        android:text="@string/save_event"
         android:background="@drawable/button_normal"
         android:id="@+id/eventCreatorSaveBtn"
         android:textColor="@android:color/white"/>

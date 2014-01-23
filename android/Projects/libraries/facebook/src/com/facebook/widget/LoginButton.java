@@ -31,13 +31,21 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import com.facebook.*;
+
+import com.facebook.AppEventsLogger;
+import com.facebook.FacebookException;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionDefaultAudience;
+import com.facebook.SessionLoginBehavior;
+import com.facebook.SessionState;
 import com.facebook.android.R;
 import com.facebook.internal.AnalyticsEvents;
-import com.facebook.model.GraphUser;
 import com.facebook.internal.SessionAuthorizationType;
 import com.facebook.internal.SessionTracker;
 import com.facebook.internal.Utility;
+import com.facebook.model.GraphUser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -72,7 +80,7 @@ public class LoginButton extends Button {
 
     static class LoginButtonProperties {
         private SessionDefaultAudience defaultAudience = SessionDefaultAudience.FRIENDS;
-        private List<String> permissions = Collections.<String>emptyList();
+        private List<String> permissions = Collections.emptyList();
         private SessionAuthorizationType authorizationType = null;
         private OnErrorListener onErrorListener;
         private SessionLoginBehavior loginBehavior = SessionLoginBehavior.SSO_WITH_FALLBACK;
@@ -117,7 +125,7 @@ public class LoginButton extends Button {
         }
 
         private boolean validatePermissions(List<String> permissions,
-                SessionAuthorizationType authType, Session currentSession) {
+                                            SessionAuthorizationType authType, Session currentSession) {
             if (SessionAuthorizationType.PUBLISH.equals(authType)) {
                 if (Utility.isNullOrEmpty(permissions)) {
                     throw new IllegalArgumentException("Permissions for publish actions cannot be null or empty.");
@@ -165,7 +173,8 @@ public class LoginButton extends Button {
     public interface UserInfoChangedCallback {
         /**
          * Called when the current user changes.
-         * @param user  the current user, or null if there is no user
+         *
+         * @param user the current user, or null if there is no user
          */
         void onUserInfoFetched(GraphUser user);
     }
@@ -177,7 +186,8 @@ public class LoginButton extends Button {
     public interface OnErrorListener {
         /**
          * Called when a network or other error is encountered.
-         * @param error     a FacebookException representing the error that was encountered.
+         *
+         * @param error a FacebookException representing the error that was encountered.
          */
         void onError(FacebookException error);
     }
@@ -231,7 +241,7 @@ public class LoginButton extends Button {
         parseAttributes(attrs);
         if (!isInEditMode()) {
             initializeActiveSessionWithCachedToken(context);
-        }        
+        }
     }
 
     /**
@@ -304,7 +314,6 @@ public class LoginButton extends Button {
      * (by managing the session explicitly).
      *
      * @param permissions the read permissions to use
-     *
      * @throws UnsupportedOperationException if setPublishPermissions has been called
      */
     public void setReadPermissions(List<String> permissions) {
@@ -329,7 +338,6 @@ public class LoginButton extends Button {
      * (by managing the session explicitly).
      *
      * @param permissions the read permissions to use
-     *
      * @throws UnsupportedOperationException if setPublishPermissions has been called
      */
     public void setReadPermissions(String... permissions) {
@@ -355,9 +363,8 @@ public class LoginButton extends Button {
      * (by managing the session explicitly).
      *
      * @param permissions the read permissions to use
-     *
      * @throws UnsupportedOperationException if setReadPermissions has been called
-     * @throws IllegalArgumentException if permissions is null or empty
+     * @throws IllegalArgumentException      if permissions is null or empty
      */
     public void setPublishPermissions(List<String> permissions) {
         properties.setPublishPermissions(permissions, sessionTracker.getSession());
@@ -381,9 +388,8 @@ public class LoginButton extends Button {
      * (by managing the session explicitly).
      *
      * @param permissions the read permissions to use
-     *
      * @throws UnsupportedOperationException if setReadPermissions has been called
-     * @throws IllegalArgumentException if permissions is null or empty
+     * @throws IllegalArgumentException      if permissions is null or empty
      */
     public void setPublishPermissions(String... permissions) {
         properties.setPublishPermissions(Arrays.asList(permissions), sessionTracker.getSession());
@@ -416,8 +422,8 @@ public class LoginButton extends Button {
      * will be used.
      *
      * @return loginBehavior The {@link SessionLoginBehavior SessionLoginBehavior} that
-     *                      specifies what behaviors should be attempted during
-     *                      authorization.
+     * specifies what behaviors should be attempted during
+     * authorization.
      */
     public SessionLoginBehavior getLoginBehavior() {
         return properties.getLoginBehavior();
@@ -434,6 +440,7 @@ public class LoginButton extends Button {
 
     /**
      * Gets the callback interface that will be called when the current user changes.
+     *
      * @return the callback interface
      */
     public UserInfoChangedCallback getUserInfoChangedCallback() {
@@ -443,7 +450,7 @@ public class LoginButton extends Button {
     /**
      * Sets the callback interface that will be called when the current user changes.
      *
-     * @param userInfoChangedCallback   the callback interface
+     * @param userInfoChangedCallback the callback interface
      */
     public void setUserInfoChangedCallback(UserInfoChangedCallback userInfoChangedCallback) {
         this.userInfoChangedCallback = userInfoChangedCallback;
@@ -463,7 +470,7 @@ public class LoginButton extends Button {
     /**
      * Sets the callback interface that will be called whenever the status of the Session
      * associated with this LoginButton changes.
-
+     *
      * @return the callback interface
      */
     public Session.StatusCallback getSessionStatusCallback() {
@@ -478,25 +485,22 @@ public class LoginButton extends Button {
      * update the Session state based on the contents of the resultCode and
      * data.
      *
-     * @param requestCode
-     *            The requestCode parameter from the forwarded call. When this
-     *            onActivityResult occurs as part of Facebook authorization
-     *            flow, this value is the activityCode passed to open or
-     *            authorize.
-     * @param resultCode
-     *            An int containing the resultCode parameter from the forwarded
-     *            call.
-     * @param data
-     *            The Intent passed as the data parameter from the forwarded
-     *            call.
+     * @param requestCode The requestCode parameter from the forwarded call. When this
+     *                    onActivityResult occurs as part of Facebook authorization
+     *                    flow, this value is the activityCode passed to open or
+     *                    authorize.
+     * @param resultCode  An int containing the resultCode parameter from the forwarded
+     *                    call.
+     * @param data        The Intent passed as the data parameter from the forwarded
+     *                    call.
      * @return A boolean indicating whether the requestCode matched a pending
-     *         authorization request for this Session.
+     * authorization request for this Session.
      * @see Session#onActivityResult(Activity, int, int, Intent)
      */
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         Session session = sessionTracker.getSession();
         if (session != null) {
-            return session.onActivityResult((Activity)getContext(), requestCode,
+            return session.onActivityResult((Activity) getContext(), requestCode,
                     resultCode, data);
         } else {
             return false;
@@ -622,7 +626,7 @@ public class LoginButton extends Button {
                 if (currentSession != userInfoSession) {
                     Request request = Request.newMeRequest(currentSession, new Request.GraphUserCallback() {
                         @Override
-                        public void onCompleted(GraphUser me,  Response response) {
+                        public void onCompleted(GraphUser me, Response response) {
                             if (currentSession == sessionTracker.getOpenSession()) {
                                 user = me;
                                 if (userInfoChangedCallback != null) {
@@ -667,13 +671,13 @@ public class LoginButton extends Button {
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setMessage(message)
-                           .setCancelable(true)
-                           .setPositiveButton(logout, new DialogInterface.OnClickListener() {
-                               public void onClick(DialogInterface dialog, int which) {
-                                   openSession.closeAndClearTokenInformation();
-                               }
-                           })
-                           .setNegativeButton(cancel, null);
+                            .setCancelable(true)
+                            .setPositiveButton(logout, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    openSession.closeAndClearTokenInformation();
+                                }
+                            })
+                            .setNegativeButton(cancel, null);
                     builder.create().show();
                 } else {
                     openSession.closeAndClearTokenInformation();
@@ -691,7 +695,7 @@ public class LoginButton extends Button {
                     if (parentFragment != null) {
                         openRequest = new Session.OpenRequest(parentFragment);
                     } else if (context instanceof Activity) {
-                        openRequest = new Session.OpenRequest((Activity)context);
+                        openRequest = new Session.OpenRequest((Activity) context);
                     }
 
                     if (openRequest != null) {
@@ -732,12 +736,14 @@ public class LoginButton extends Button {
                 handleError(exception);
             }
         }
-    };
+    }
+
+    ;
 
     void handleError(Exception exception) {
         if (properties.onErrorListener != null) {
             if (exception instanceof FacebookException) {
-                properties.onErrorListener.onError((FacebookException)exception);
+                properties.onErrorListener.onError((FacebookException) exception);
             } else {
                 properties.onErrorListener.onError(new FacebookException(exception));
             }

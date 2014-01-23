@@ -52,7 +52,6 @@ public class TestEventDecorator extends TestCase {
         assertEquals(e.getLocation(), location);
         assertEquals(e.getDate(), date);
         assertEquals(e.getDueDate(), dueDate);
-        this.event = event;
     }
 
     public void testSportEventDecorator() throws Exception {
