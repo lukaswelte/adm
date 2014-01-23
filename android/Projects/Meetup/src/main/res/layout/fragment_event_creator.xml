@@ -4,7 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:gravity="center"
+    style="@style/AppThemeBg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,9 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:id="@+id/eventCreatorTextView1"
-        android:textColor="#000066"
-        android:textSize="23dp"
-        android:textStyle="bold" />
+        android:textColor="#2E2E2E"
+        android:textSize="23dp" />
 
 
     <EditText
@@ -25,6 +26,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:hint="@string/name_of_event"
+        android:gravity="center"
         android:id="@+id/eventCreatorNameTextField" />
 
 
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:hint="@string/location"
+        android:gravity="center"
         android:layout_marginLeft="5dp"
         android:id="@+id/eventCreatorLocationTextField" />
 
@@ -41,6 +44,7 @@
         android:layout_height="0dp"
         android:inputType="textMultiLine"
         android:hint="@string/description"
+        android:gravity="center"
         android:ems="10"
         android:id="@+id/eventCreatorDescription"
         android:layout_weight="0.33" />
@@ -49,7 +53,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/types_arrays"
-        android:id="@+id/eventCreatorType" />
+        android:id="@+id/eventCreatorType"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,22 +63,22 @@
         android:text="@string/date_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:textColor="#040404"
+        android:textColor="#2E2E2E"
         android:id="@+id/eventCreatorTextView2"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:textSize="18dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:paddingTop="4dp"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
             android:text="@string/set_time"
             android:id="@+id/eventCreatorDateBtnTime" />
@@ -82,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:paddingTop="4dp"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
             android:text="@string/set_date"
             android:id="@+id/eventCreatorDateBtnDate" />
@@ -96,21 +102,21 @@
         android:text="@string/due_date_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:textColor="#040404"
+        android:textColor="#2E2E2E"
         android:id="@+id/eventCreatorTextView3"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:textSize="18dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
             android:layout_marginLeft="5dp"
             android:text="@string/set_time"
@@ -122,7 +128,7 @@
             android:layout_marginLeft="5dp"
             android:text="@string/set_date"
             android:paddingTop="4dp"
-            android:background="@drawable/button_normal"
+            android:background="@drawable/button_alternative"
             android:textColor="@android:color/white"
             android:id="@+id/eventCreatorDueDateBtnDate" />
 
@@ -135,8 +141,9 @@
         android:layout_gravity="center"
         android:padding="5dp"
         android:text="@string/save_event"
-        android:background="@drawable/gradient_bg_list_event"
-        android:id="@+id/eventCreatorSaveBtn" />
+        android:background="@drawable/button_normal"
+        android:id="@+id/eventCreatorSaveBtn"
+        android:textColor="@android:color/white"/>
 
 
 </LinearLayout>
