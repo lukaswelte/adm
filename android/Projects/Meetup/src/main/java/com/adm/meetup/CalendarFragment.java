@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.adm.meetup.calendar.Exam;
 import com.adm.meetup.calendar.Holiday;
+import com.adm.meetup.event.Event;
+import com.adm.meetup.event.EventManager;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,7 +41,9 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private ListView examListView;
 
     HashMap<String, ArrayList<Holiday>> holidaysCache = new HashMap<String, ArrayList<Holiday>>();
+    HashMap<String, ArrayList<Event>> eventCache = new HashMap<String, ArrayList<Event>>();
     HashMap<String, ArrayList<Exam>> exams = new HashMap<String, ArrayList<Exam>>();
+    ArrayList<String> details_name = new ArrayList<String>();
 
     private final String PREFERENCES_MONTH = "shown_month";
     private final String PREFERENCES_FILE = "calendar_preferences";
@@ -186,9 +190,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         ArrayList<Holiday> holidaysOfYear = holidaysCache.get(year);
 
         if (holidaysOfYear != null) {
-
-            updateHolidaysInCalendar(holidayNamesOnDay(selectDate, holidaysOfYear));
-
+            details_name.addAll(holidayNamesOnDay(selectDate, holidaysOfYear));
         } else {  //fetch new dates from the backend
             FutureCallback<JsonArray> callback = new FutureCallback<JsonArray>() {
                 @Override
@@ -206,7 +208,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                         }
 
                         holidaysCache.put(year, holidayList);
-                        updateHolidaysInCalendar(holidayNamesOnDay(selectDate, holidayList));
+                        details_name.addAll(holidayNamesOnDay(selectDate, holidayList));
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -216,8 +218,22 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
             NetworkHelper.holidaysRequest(getActivity(), year, "es", callback);
         }
+    }
 
+    private void getEvents(final Date selectDate) {
+        SimpleDateFormat postFormatter = new SimpleDateFormat("yyyy");
+        final String year = postFormatter.format(selectDate);
 
+        //try retrieving from local cache
+        ArrayList<Event> eventsOfYear = eventCache.get(year);
+
+        if (eventsOfYear != null) {
+            details_name.addAll(eventsNamesOnDay(selectDate, eventsOfYear));
+        } else {  //fetch new dates from the backend
+            EventManager eventManager = new EventManager(getActivity());
+            ArrayList<Event> eventList = eventManager.getEvents();
+            details_name.addAll(eventsNamesOnDay(selectDate, eventList));
+        }
     }
 
     private ArrayList<String> holidayNamesOnDay(final Date date, ArrayList<Holiday> holidayDateList) {
@@ -228,31 +244,32 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                 list_names.add(holiday.getName());
             }
         }
+        return list_names;
+    }
 
-        if (list_names.isEmpty()  )
-            list_names.add("");
+    private ArrayList<String> eventsNamesOnDay(final Date date, ArrayList<Event> eventDateList) {
+        ArrayList<String> list_names = new ArrayList<String>();
 
+        for (Event event : eventDateList) {
+            if (event.isOnTheSameDay(date)) {
+                list_names.add(event.getName());
+            }
+        }
         return list_names;
     }
 
 
-    private void updateHolidaysInCalendar(ArrayList<String> details_names) {
+    private void updateDetailsInCalendar(ArrayList<String> details_names) {
         SimpleAdapter mSchedule;
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
         HashMap<String, String> map;
-        if (details_names.isEmpty()) {
-            map = new HashMap<String, String>();
-            map.put("detail", getString(R.string.calendar_loading));
-            listItem.add(map);
-        } else {
 
-            Iterator<String> iterator = details_names.iterator();
-            while (iterator.hasNext()) {
-                map = new HashMap<String, String>();
-                map.put("detail", iterator.next());
-                listItem.add(map);
-            }
+        Iterator<String> iterator = details_names.iterator();
+        while (iterator.hasNext()) {
+            map = new HashMap<String, String>();
+            map.put("detail", iterator.next());
+            listItem.add(map);
         }
 
         mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_calendar_detail,
@@ -261,18 +278,19 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         details.setAdapter(mSchedule);
     }
 
-
     @Override
     public void onDispatchDateSelect(Date date) {
         Button bAddExam = (Button) getView().findViewById(R.id.calendar_add_exam);
         bAddExam.setVisibility(View.VISIBLE);
-
-        updateExamListForDate(date);
-
-        ArrayList<String> list_names = new ArrayList<String>();
-        updateHolidaysInCalendar(list_names);
+        details_name = new ArrayList<String>();
         mTextDate.setText(mFormat.format(date));
+
+        //Fetching details
+        updateExamListForDate(date);
         getHolidays(date);
+        getEvents(date);
+        if (details_name.isEmpty()) details_name.add("");
+        updateDetailsInCalendar(details_name);
     }
 
     private void updateExamListForDate(Date date) {
