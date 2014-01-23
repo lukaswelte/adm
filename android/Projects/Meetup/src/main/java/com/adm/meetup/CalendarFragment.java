@@ -108,7 +108,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
             public void onCompleted(Exception e, JsonArray jsonArray) {
                 try {
                     if (e != null) throw e;
-
+                    exams.clear();
                     Iterator<JsonElement> iterator = jsonArray.iterator();
                     JsonElement element;
                     Exam exam;
@@ -228,8 +228,9 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                 list_names.add(holiday.getName());
             }
         }
-        if (list_names.isEmpty())
-            list_names.add(getString(R.string.calendar_no_detail));
+
+        if (list_names.isEmpty()  )
+            list_names.add("");
 
         return list_names;
     }

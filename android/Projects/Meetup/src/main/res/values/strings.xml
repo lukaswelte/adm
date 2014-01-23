@@ -131,6 +131,16 @@
     <string name="welcome_message">\n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Welcome to \n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Erasmus - Events!</string>
     <string name="upcoming_events">Upcoming Erasmus-Events:</string>
     <string name="welcome_smiley">Welcome-Smiley</string>
+    <string name="exam_date">Exam Date</string>
+    <string name="exam_time">Exam Time</string>
+    <string name="exam_notify_date">Notify Date</string>
+    <string name="exam_notify_time">Notify Time</string>
+    <string name="advice_name_exam_missing">You have to name the exam</string>
+    <string name="advice_date_exam_missing">You have to specify a date for the exam</string>
+    <string name="advice_time_exam_missing">You have to specify a time for the exam</string>
+    <string name="advice_wrong_format">Exam date in wrong format. Should be dd.MM.yyyy HH:mm</string>
+
+
 
 
 </resources>
