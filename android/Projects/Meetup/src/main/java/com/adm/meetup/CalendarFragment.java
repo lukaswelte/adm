@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -90,6 +91,17 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         details = (ListView) view.findViewById(R.id.display_details);
         examListView = (ListView) view.findViewById(R.id.examListView);
 
+        examListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object obj = examListView.getAdapter().getItem(i);
+                if (obj instanceof Exam) {
+                    Intent intent = new Intent(getActivity(), ViewExamActivity.class);
+                    intent.putExtra("exam", (Exam) obj);
+                    startActivityForResult(intent, 32);
+                }
+            }
+        });
         fetchExamList();
 
         cal = (CalendarView) view.findViewById(R.id.calendar);

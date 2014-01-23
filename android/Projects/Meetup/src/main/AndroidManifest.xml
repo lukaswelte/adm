@@ -66,6 +66,9 @@
         <activity
             android:name="com.adm.meetup.MapMeetupActivity"
             android:label="@string/title_activity_map_meetup"></activity>
+        <activity
+            android:name="com.adm.meetup.ViewExamActivity"
+            android:label="@string/exam_title_view"></activity>
 
         <!-- Goolge Maps API Key -->
         <meta-data
