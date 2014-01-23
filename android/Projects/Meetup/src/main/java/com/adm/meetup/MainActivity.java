@@ -177,11 +177,11 @@ public class MainActivity extends ActionBarActivity {
             case 3:
                 fragment = new ProfileFragment();
                 break;
-            case 5:
-                fragment = new TeamFragment();
+            case 4:
+                fragment = new FriendsFragment();
                 break;
             case 6:
-                fragment = new FriendsFragment();
+                fragment = new TeamFragment();
                 break;
             default:
                 fragment = new Fragment();

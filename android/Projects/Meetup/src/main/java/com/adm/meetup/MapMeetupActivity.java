@@ -1,7 +1,9 @@
 package com.adm.meetup;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -9,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +22,7 @@ import android.widget.ToggleButton;
 
 import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
+import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -30,6 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
@@ -56,7 +61,8 @@ public class MapMeetupActivity extends ActionBarActivity {
     private GoogleMap map;
 
     private HashMap<Marker, User> personNearYouHashMap = new HashMap<Marker, User>();
-    private Marker markerUser;
+
+    private User friendNew;
 
     protected LocationManager locationManager;
     protected Context context;
@@ -161,9 +167,33 @@ public class MapMeetupActivity extends ActionBarActivity {
 
                 for (Map.Entry<Marker, User> entry : personNearYouHashMap.entrySet()) {
                     Marker nearYouMarker = entry.getKey();
-                    User user = entry.getValue();
+                    User nearYouUser = entry.getValue();
                     if (nearYouMarker.equals(marker)) {
-
+                        User user = SharedApplication.getInstance().getUser();
+                        if (!nearYouUser.isFriendWithUser(user)) {
+                            friendNew = nearYouUser;
+                            AlertDialog.Builder adb = new AlertDialog.Builder(MapMeetupActivity.this);
+                            adb.setTitle(getString(R.string.map_add_friend_title));
+                            adb.setMessage(R.string.map_question_add_friend);
+                            adb.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    User user1 = SharedApplication.getInstance().getUser();
+                                    user1.addFriend(friendNew);
+                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonObject>() {
+                                        @Override
+                                        public void onCompleted(Exception e, JsonObject jsonObject) {
+                                            if (jsonObject != null) {
+                                                Log.d("MAAAP", jsonObject.toString());
+                                            }
+                                        }
+                                    });
+                                    NetworkHelper.updateProfile(getApplicationContext(), friendNew, null);
+                                }
+                            });
+                            adb.setNegativeButton(R.string.cancel, null);
+                            adb.show();
+                        }
                     }
                 }
                 marker.hideInfoWindow();

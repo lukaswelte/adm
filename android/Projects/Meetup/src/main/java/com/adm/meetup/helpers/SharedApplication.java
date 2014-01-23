@@ -2,6 +2,8 @@ package com.adm.meetup.helpers;
 
 import android.app.Application;
 
+import com.adm.meetup.User.User;
+
 /**
  * Created by lukas on 19.01.14.
  */
@@ -10,6 +12,8 @@ public class SharedApplication extends Application {
     public static final String testUserToken = "yv362uyjecplow29nuto16imuklkrzfr";
 
     private static SharedApplication sharedApplication;
+
+    private User user;
 
     private String token = null;
 
@@ -34,5 +38,13 @@ public class SharedApplication extends Application {
 
     protected void initializeInstance() {
 
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

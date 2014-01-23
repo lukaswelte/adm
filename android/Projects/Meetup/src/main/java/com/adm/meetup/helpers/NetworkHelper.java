@@ -217,8 +217,7 @@ public class NetworkHelper {
      */
     public static void getUserProfile(Context context, FutureCallback<JsonObject> callback) {
         JsonObject postedJsonObject = new JsonObject();
-
-        NetworkHelper.requestBackend(context, "/profile/me", postedJsonObject, callback, true);
+        NetworkHelper.requestBackend(context, "/profiles/me", postedJsonObject, callback, true);
     }
 
     /**
@@ -229,7 +228,20 @@ public class NetworkHelper {
      * @param callback The Response JsonObject Handler dealing with the result
      */
     public static void updateProfile(Context context, User user, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = user.getJsonObject();
+        NetworkHelper.requestBackend(context, "/profiles/updateme", postedJsonObject, callback, true);
+    }
+
+    /**
+     * Method to get someone s profile
+     *
+     * @param context  The applications context interested in the request
+     * @param id       the id og the user to get
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void getProfile(Context context, String id, FutureCallback<JsonElement> callback) {
         JsonObject postedJsonObject = new JsonObject();
-        NetworkHelper.requestBackend(context, "/update/me", postedJsonObject, callback, true);
+        postedJsonObject.addProperty("id", id);
+        NetworkHelper.requestBackend(context, "/profiles", postedJsonObject, callback, true);
     }
 }

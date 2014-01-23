@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
@@ -278,6 +279,7 @@ public class LoginActivity extends ActionBarActivity {
                         if (error != null) {
                             Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
                         } else {
+                            SharedApplication.getInstance().setUser(new User(jsonObject));
                             String token = jsonObject.get("token").getAsString();
                             if (token != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
