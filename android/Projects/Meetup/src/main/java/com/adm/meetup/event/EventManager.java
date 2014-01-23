@@ -184,7 +184,6 @@ public class EventManager implements IEventManager {
             types[i++] = type.getId();
         }
         content.put(EventDatabase.Tables.Events.Columns.TYPE, types);
-
         this.contentProvider.insert(uri, content);
     }
 

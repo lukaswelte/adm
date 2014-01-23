@@ -140,7 +140,12 @@
     <string name="advice_time_exam_missing">You have to specify a time for the exam</string>
     <string name="advice_wrong_format">Exam date in wrong format. Should be dd.MM.yyyy HH:mm</string>
 
-
+    <string-array name="types_arrays">
+        <item>Default</item>
+        <item>Sport</item>
+        <item>Dance</item>
+        <item>Trip</item>
+    </string-array>
 
 
 </resources>
