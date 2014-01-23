@@ -2,26 +2,104 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adm.meetup"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
+     
+     
+    <permission
+        android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+     
+     
+
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
+    <provider
+        android:name="com.adm.meetup.provider.EventManager"
+        android:authorities="com.adm.meetup.event.EventManager"
+        android:exported="true"
+        android:grantUriPermissions="true"
+        android:label="LentItemsProvider"
+        android:readPermission="com.adm.meetup.event.EventManager.READ"
+        android:writePermission="com.adm.meetup.event.EventManager.WRITE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Required to show current location -->
+    <uses-permission android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Required OpenGL ES 2.0. for Maps V2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <application
+        android:name="com.adm.meetup.helpers.SharedApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.adm.meetup.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name="com.adm.meetup.LoginActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.adm.meetup.MapMeetupActivity"
+            android:label="@string/title_activity_map_meetup"></activity>
+
+        <!-- Goolge Maps API Key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCTekibRADOC5-ZWMUKhn1VlYQnuhQvDyw" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="4030500" />
+
+        <activity
+            android:name="com.adm.meetup.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <activity
+            android:name="com.adm.meetup.AccountActivity"
+            android:label="@string/title_activity_account"></activity>
+        <activity
+            android:name="com.adm.meetup.FriendsActivity"
+            android:label="@string/title_activity_friends"></activity>
+        <activity
+            android:name="com.adm.meetup.RegisterConfirmationActivity"
+            android:label="@string/title_activity_register_confirmation"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name="com.adm.meetup.CreateExamActivity"
+            android:label="@string/title_activity_create_exam"></activity>
     </application>
 
 </manifest>
