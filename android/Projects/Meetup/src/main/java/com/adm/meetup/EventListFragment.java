@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,8 +27,6 @@ import java.util.List;
  */
 public class EventListFragment extends Fragment {
 
-    private ListView eventListView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_event_list, container, false);
@@ -39,7 +36,7 @@ public class EventListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        eventListView = (ListView) getView().findViewById(R.id.eventListView);
+        ListView eventListView = (ListView) getView().findViewById(R.id.eventListView);
         EventManager manager = new EventManager(getActivity());
         Event event = new Event();
         event.setId(Long.valueOf(1));

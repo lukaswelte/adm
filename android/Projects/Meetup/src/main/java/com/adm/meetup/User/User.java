@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Andreas on 1/23/14.
@@ -37,9 +36,8 @@ public class User {
         JsonObject latLngJsonObject = (JsonObject) parser.parse(jsonObject.get("statuslocation").getAsString());
         this.latLng = new LatLng(latLngJsonObject.get("latitude").getAsDouble(),
                 latLngJsonObject.get("longitude").getAsDouble());
-        Iterator<JsonElement> it = jsonObject.get("friends").getAsJsonArray().iterator();
-        while (it.hasNext()) {
-            friends.add(it.next().getAsString());
+        for (JsonElement element : jsonObject.get("friends").getAsJsonArray()) {
+            friends.add(element.getAsString());
         }
     }
 

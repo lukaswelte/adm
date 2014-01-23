@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mMenuTitles;
-    private int[] mIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
         mMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mIcon = new int[]{
+        int[] mIcon = new int[]{
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
@@ -76,7 +75,6 @@ public class MainActivity extends ActionBarActivity {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu();
-                ; // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {

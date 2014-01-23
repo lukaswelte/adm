@@ -7,13 +7,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/name"
         android:id="@+id/eventDescNameTextView"
         android:textColor="#2E2E2E"
         android:textSize="@dimen/abc_action_bar_title_text_size"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,141 +25,121 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/location_doublepoint"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescTextView1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescLocationTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attendee_doublepoint"
+            android:id="@+id/eventDescTextView2"
+            android:textStyle="bold"
+            android:textColor="#2E2E2E" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nb"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescAttendeeTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_doublepoint"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescTextView3"
+            android:textStyle="bold" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location : "
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescTextView1"
-        android:textStyle="bold"
-        android:layout_below="@+id/eventDescNameTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VDate"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescDateTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loc"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescLocationTextView"
-        android:layout_below="@+id/eventDescNameTextView"
-        android:layout_toRightOf="@+id/eventDescTextView1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/due_date_doublepoint"
+            android:layout_marginTop="10dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescTextView4"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attendee : "
-        android:id="@+id/eventDescTextView2"
-        android:textStyle="bold"
-        android:textColor="#2E2E2E"
-        android:layout_alignTop="@+id/eventDescAttendeeTextView"
-        android:layout_toRightOf="@+id/eventDescNameTextView" />
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nb"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescAttendeeTextView"
-        android:layout_below="@+id/eventDescNameTextView"
-        android:layout_toRightOf="@+id/eventDescTextView2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/due"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescDueDateTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date : "
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescTextView3"
-        android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type_doublepoint"
+            android:layout_marginTop="10dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescTextView6"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
 
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VDate"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescDateTextView"
-        android:layout_below="@+id/eventDescTextView1"
-        android:layout_toRightOf="@+id/eventDescTextView3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="myTYpe"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventTypeTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Due Date : "
-        android:layout_marginTop="10dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescTextView4"
-        android:layout_marginLeft="5dp"
-        android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView3"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_doublepoint"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescTextView5"
+            android:textStyle="bold" />
 
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Due"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescDueDateTextView"
-        android:layout_below="@+id/eventDescTextView3"
-        android:layout_toRightOf="@+id/eventDescTextView4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type : "
-        android:layout_marginTop="10dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescTextView6"
-        android:layout_marginLeft="5dp"
-        android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView4"
-
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="myTYpe"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventTypeTextView"
-        android:layout_below="@+id/eventDescTextView4"
-        android:layout_toRightOf="@+id/eventDescTextView6" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description : "
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescTextView5"
-        android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView6" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lorem ipsum"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="7dp"
-        android:textColor="#2E2E2E"
-        android:id="@+id/eventDescriptionTextView"
-        android:layout_below="@+id/eventDescTextView5" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:textColor="#2E2E2E"
+            android:id="@+id/eventDescriptionTextView" />
     </LinearLayout>
 </LinearLayout>

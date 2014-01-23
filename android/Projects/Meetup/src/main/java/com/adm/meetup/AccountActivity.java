@@ -58,8 +58,6 @@ public class AccountActivity extends ActionBarActivity {
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.MATCH_PARENT);
                         input.setLayoutParams(lp);
-                        final AlertDialog.Builder adb2 = adb;
-                        final HashMap<String, String> mapIp = map;
                         adb.setPositiveButton(getString(R.string.ok), new OnClickListener() {
 
                             @Override
@@ -124,8 +122,6 @@ public class AccountActivity extends ActionBarActivity {
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.MATCH_PARENT);
                         input.setLayoutParams(lp);
-                        final AlertDialog.Builder adb2 = adb;
-                        final HashMap<String, String> mapIp = map;
                         adb.setPositiveButton(getString(R.string.ok), new OnClickListener() {
 
                             @Override
@@ -150,6 +146,8 @@ public class AccountActivity extends ActionBarActivity {
     }
 
     private void changevariable(long id, EditText input) {
+        if (input == null) return;
+
         SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
         Editor editor = pref.edit();
         if (id == 0) editor.putString(Util.PREFERENCES_FIRSTNAME, input.getText().toString());
@@ -165,7 +163,6 @@ public class AccountActivity extends ActionBarActivity {
 
     private void majParametersListVAdapter() {
 
-        SimpleAdapter mSchedule = null;
 
         SharedPreferences preferences =
                 getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -174,47 +171,46 @@ public class AccountActivity extends ActionBarActivity {
 
         HashMap<String, String> map = new HashMap<String, String>();
 
-        if (mSchedule == null) {
-            // 0 first name
-            map.put("title", getString(R.string.firstName));
-            map.put("description", preferences.getString(Util.PREFERENCES_FIRSTNAME,
-                    Util.PREFERENCES_FIRSTNAME_DEFAULT));
-            listItem.add(map);
+        // 0 first name
+        map.put("title", getString(R.string.firstName));
+        map.put("description", preferences.getString(Util.PREFERENCES_FIRSTNAME,
+                Util.PREFERENCES_FIRSTNAME_DEFAULT));
+        listItem.add(map);
 
-            //1 last name
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.lastName));
-            map.put("description", preferences.getString(Util.PREFERENCES_LASTNAME,
-                    Util.PREFERENCES_LASTNAME_DEFAULT));
-            listItem.add(map);
+        //1 last name
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.lastName));
+        map.put("description", preferences.getString(Util.PREFERENCES_LASTNAME,
+                Util.PREFERENCES_LASTNAME_DEFAULT));
+        listItem.add(map);
 
-            // 2 date of birth
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.dateOfBirth));
-            map.put("description", preferences.getString(Util.PREFERENCES_DATEOFBIRTH,
-                    Util.PREFERENCES_DATEOFBIRTH_DEFAULT));
-            listItem.add(map);
+        // 2 date of birth
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.dateOfBirth));
+        map.put("description", preferences.getString(Util.PREFERENCES_DATEOFBIRTH,
+                Util.PREFERENCES_DATEOFBIRTH_DEFAULT));
+        listItem.add(map);
 
-            //3 relationship
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.relationshipStatus));
-            map.put("description", preferences.getString(Util.PREFERENCES_RELATIONSHIPSTATUS,
-                    Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT));
-            listItem.add(map);
+        //3 relationship
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.relationshipStatus));
+        map.put("description", preferences.getString(Util.PREFERENCES_RELATIONSHIPSTATUS,
+                Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT));
+        listItem.add(map);
 
-            //4 home university
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.homeUniversity));
-            map.put("description", preferences.getString(Util.PREFERENCES_HOMEUNIVERSITY,
-                    Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT));
-            listItem.add(map);
+        //4 home university
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.homeUniversity));
+        map.put("description", preferences.getString(Util.PREFERENCES_HOMEUNIVERSITY,
+                Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT));
+        listItem.add(map);
 
-            //5 erasmus university
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.ErasmusUniversity));
-            map.put("description", preferences.getString(Util.PREFERENCES_ERASMUSUNIVERSITY,
-                    Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT));
-            listItem.add(map);
+        //5 erasmus university
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.ErasmusUniversity));
+        map.put("description", preferences.getString(Util.PREFERENCES_ERASMUSUNIVERSITY,
+                Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT));
+        listItem.add(map);
 
 /*            map = new HashMap<String, String>();
             map.put("title", "Status");
@@ -222,27 +218,24 @@ public class AccountActivity extends ActionBarActivity {
                     Util.PREFERENCES_STATUS_DEFAULT));
             listItem.add(map);*/
 
-            //6 email
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.email));
-            map.put("description", preferences.getString(Util.PREFERENCES_EMAIL,
-                    Util.PREFERENCES_EMAIL_DEFAULT));
-            listItem.add(map);
+        //6 email
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.email));
+        map.put("description", preferences.getString(Util.PREFERENCES_EMAIL,
+                Util.PREFERENCES_EMAIL_DEFAULT));
+        listItem.add(map);
 
-            //7 location services
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.disableLocationServices));
-            map.put("description", preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
-                    Util.PREFERENCES_LOCATIONSERVICES_DEFAULT));
-            listItem.add(map);
+        //7 location services
+        map = new HashMap<String, String>();
+        map.put("title", getString(R.string.disableLocationServices));
+        map.put("description", preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
+                Util.PREFERENCES_LOCATIONSERVICES_DEFAULT));
+        listItem.add(map);
 
-            mSchedule = new SimpleAdapter(AccountActivity.this.getBaseContext(), listItem, R.layout.item_account,
-                    new String[]{"title", "description"}, new int[]{R.id.item_title, R.id.item_description});
+        SimpleAdapter mSchedule = new SimpleAdapter(AccountActivity.this.getBaseContext(), listItem, R.layout.item_account,
+                new String[]{"title", "description"}, new int[]{R.id.item_title, R.id.item_description});
 
-            parametersList.setAdapter(mSchedule);
-
-
-        }
+        parametersList.setAdapter(mSchedule);
 
     }
 
@@ -261,10 +254,7 @@ public class AccountActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -278,8 +268,7 @@ public class AccountActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_account, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_account, container, false);
         }
     }
 

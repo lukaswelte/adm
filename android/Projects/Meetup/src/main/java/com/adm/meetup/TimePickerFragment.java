@@ -50,8 +50,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     void isDueDate() {
-        if (view.getId() == R.id.eventCreatorDateBtnTime) isDueDate = false;
-        else isDueDate = true;
+        isDueDate = view.getId() != R.id.eventCreatorDateBtnTime;
     }
 
 

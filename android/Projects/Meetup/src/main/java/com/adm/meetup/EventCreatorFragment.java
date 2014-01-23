@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,10 +17,7 @@ import com.adm.meetup.event.EventManager;
 import com.adm.meetup.event.EventType;
 import com.adm.meetup.helpers.DateHelper;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -35,13 +30,11 @@ public class EventCreatorFragment extends Fragment {
     private Button dateBtn;
     private Button timeBtnForDueDate;
     private Button dueDateBtn;
-    private Button saveBtn;
 
     private EditText nameEditText;
     private EditText locationEditText;
     private EditText descriptionEditText;
 
-    private Spinner typeSpinner;
     private EventType evType;
 
     @Override
@@ -57,27 +50,27 @@ public class EventCreatorFragment extends Fragment {
         dateBtn = (Button) getView().findViewById(R.id.eventCreatorDateBtnDate);
         timeBtnForDueDate = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnTime);
         dueDateBtn = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnDate);
-        saveBtn = (Button) getView().findViewById(R.id.eventCreatorSaveBtn);
+        Button saveBtn = (Button) getView().findViewById(R.id.eventCreatorSaveBtn);
         nameEditText = (EditText) getView().findViewById(R.id.eventCreatorNameTextField);
         locationEditText = (EditText) getView().findViewById(R.id.eventCreatorLocationTextField);
         descriptionEditText = (EditText) getView().findViewById(R.id.eventCreatorDescription);
-        typeSpinner= (Spinner) getView().findViewById(R.id.eventCreatorType);
+        Spinner typeSpinner = (Spinner) getView().findViewById(R.id.eventCreatorType);
 
 
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 
         {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)  {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 int index = arg0.getSelectedItemPosition();
-                switch (index){
-                    case 1 :
+                switch (index) {
+                    case 1:
                         evType = EventType.SPORT;
                         break;
-                    case 2 :
+                    case 2:
                         evType = EventType.DANCE;
                         break;
-                    case 3 :
+                    case 3:
                         evType = EventType.TRIP;
                         break;
                     default:

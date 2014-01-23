@@ -95,7 +95,7 @@ public class EventDbContentProvider extends EventContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = this.db.getWritableDatabase();
-        int delCount = 0;
+        int delCount;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
@@ -121,7 +121,7 @@ public class EventDbContentProvider extends EventContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = this.db.getWritableDatabase();
-        int updateCount = 0;
+        int updateCount;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);

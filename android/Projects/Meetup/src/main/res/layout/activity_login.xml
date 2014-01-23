@@ -59,9 +59,6 @@
                 android:inputType="textEmailAddress"
                 android:hint="@string/login_email"
                 android:gravity="center"
-                android:layout_above="@+id/login_password_field"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="true"
                 android:background="@android:color/white" />
             <!--  Password Label -->
             <EditText
@@ -71,9 +68,6 @@
                 android:inputType="textPassword"
                 android:hint="@string/login_password"
                 android:gravity="center"
-                android:layout_above="@+id/login_login_button"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
                 android:background="@android:color/white"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp" />
@@ -84,10 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_login"
                 android:paddingTop="4dp"
-                android:layout_above="@+id/login_signup_button"
                 android:layout_marginBottom="45dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
                 android:background="@drawable/button_normal"
                 android:textColor="@android:color/white" />
 
@@ -117,8 +108,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/login_signup"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
                     android:background="@android:color/transparent"
                     android:layout_gravity="center"
                     android:textColor="#1C1C1C"

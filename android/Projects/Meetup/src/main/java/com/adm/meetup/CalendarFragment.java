@@ -104,8 +104,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                     Exam exam = data.getParcelableExtra("exam");
                     addToExamList(exam);
 
-                } else { //canceled
-
                 }
                 break;
             }
@@ -136,7 +134,6 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         cal = (CalendarView) view.findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
-
 
 
     }
@@ -300,10 +297,9 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         HashMap<String, String> map;
 
-        Iterator<String> iterator = details_names.iterator();
-        while (iterator.hasNext()) {
+        for (String details_name1 : details_names) {
             map = new HashMap<String, String>();
-            map.put("detail", iterator.next());
+            map.put("detail", details_name1);
             listItem.add(map);
         }
 
@@ -331,7 +327,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         ArrayList<Exam> examsOnDay = exams.get(Exam.getDateYearIdentifierOfDate(date));
 
         TextView tv = (TextView) getView().findViewById(R.id.exam_overview);
-        if(examsOnDay!=null) tv.setVisibility(View.VISIBLE);
+        if (examsOnDay != null) tv.setVisibility(View.VISIBLE);
         else tv.setVisibility(View.GONE);
 
         examListView.setAdapter(new ExamListAdapter(getActivity(), examsOnDay));
