@@ -71,7 +71,7 @@ public class LoadMapFragment extends Fragment {
                 while(jumpTime < totalProgressTime){
                     try {
                         sleep(200);
-                        jumpTime += 5;
+                        jumpTime += 20;
                         progress.setProgress(jumpTime);
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
