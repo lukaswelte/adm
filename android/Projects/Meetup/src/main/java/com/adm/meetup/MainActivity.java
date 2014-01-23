@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -161,45 +162,31 @@ public class MainActivity extends ActionBarActivity {
         // update the main content by replacing fragments
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment;
         switch (position) {
-
             case 0:
-                Fragment homeFragment = new HomeFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, homeFragment).commit();
+                fragment = new HomeFragment();
                 break;
-
-
             case 1:
-                Fragment fragmentEvent = new EventListFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvent).commit();
-                fragmentManager.beginTransaction().addToBackStack(null);
+                fragment = new EventListFragment();
                 break;
             case 2:
-                Fragment fragment = new CalendarFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                fragmentManager.beginTransaction().addToBackStack(null);
-
+                fragment = new CalendarFragment();
                 break;
             case 3:
-                Fragment fragmentProfile = new ProfileFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentProfile).commit();
+                fragment = new ProfileFragment();
                 break;
-
             case 5:
-                Fragment fragmentTeam = new TeamFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
-                fragmentManager.beginTransaction().addToBackStack(null);
-
+                fragment = new TeamFragment();
                 break;
-
             default:
-                Fragment emptyFragment = new Fragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
-                fragmentManager.beginTransaction().addToBackStack(null);
-
+                fragment = new Fragment();
                 break;
-
         }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction().replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
