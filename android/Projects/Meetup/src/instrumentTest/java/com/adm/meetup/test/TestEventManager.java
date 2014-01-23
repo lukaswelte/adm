@@ -10,7 +10,6 @@ import com.adm.meetup.event.EventComment;
 import com.adm.meetup.event.EventDatabase;
 import com.adm.meetup.event.EventManager;
 import com.adm.meetup.event.EventType;
-import com.adm.meetup.event.FacebookEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -274,6 +273,7 @@ abstract public class TestEventManager extends AndroidTestCase {
 
         Event result = manager.getEventById(event.getId());
 
+        assertEquals(event.getTypes().size(), result.getTypes().size());
         assertNotSame(event, result);
         assertDeepEquals(event, result);
     }
@@ -320,8 +320,6 @@ abstract public class TestEventManager extends AndroidTestCase {
         manager.updateEventComment(comment);
         EventComment result = manager.getEventCommentById(commentId);
 
-        Log.i("eventcommenttest", result.getEventId().toString());
-        Log.i("eventcommenttest", comment.getEventId().toString());
         assertDeepCommentEquals(comment, result);
 
         // test setUserId

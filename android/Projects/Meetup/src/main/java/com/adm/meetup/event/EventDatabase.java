@@ -9,7 +9,7 @@ public class EventDatabase extends SQLiteOpenHelper {
     private static final String TAG = "EventDatabase";
 
     private static final String DATABASE_NAME = "event.db";
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
 
     public EventDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,7 +26,7 @@ public class EventDatabase extends SQLiteOpenHelper {
                 final static String DESCRIPTION = "description";
                 final static String LOCATION = "location";
                 final static String DATE = "date";
-                final static String DUE_DATE = "dueDate";
+                final static String DUE_DATE = "due_date";
                 final static String SOURCE = "source";
                 final static String TYPE = "type";
             }
