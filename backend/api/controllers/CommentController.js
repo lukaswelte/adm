@@ -1,5 +1,5 @@
 /**
- * EventController
+ * CommentController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -22,37 +22,23 @@ module.exports = {
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to EventController)
+   * (specific to CommentController)
    */
   _config: {},
 
-  query: function (req,res) {  
-    var body = req.body;
-  	if (body) {
-      var requestID = body.id;
-      if (requestID) {
-        body.id = Number(requestID);
-      }
-  		Event.find(body).done(function(err, events) { 
-  			if (err) res.send(500, {error: err});
-  			else res.send(events);
-  		 });
-  	} else {
-      var requestID = req.param("id");
-      if (requestID) {
-        Event.find({ id: requestID }).done(function(err, ev) { 
-        if (err) res.send(500, {error: err});
-        else res.send(ev);
-       });
-      } else {
-        Event.find().done(function(err, events) { 
-        if (err) res.send(500, {error: err});
-        else res.send(events);
-       });
-      }
-  		
-  	}
-  }
-
+  index: function(req, resource) {
+    var eventID = req.param("eventID");
+    if (eventID == null) {
+    	res.send({"error":"need to specify eventID"});
+    	return;
+    }
+    	Comment.find({"eventID":eventID}).done(function(err,comments){
+		  if (err){
+			  res.json(err);
+		  } else {
+			  res.json(comments);
+		  }
+  		});
+	}
   
 };

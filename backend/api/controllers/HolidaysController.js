@@ -1,5 +1,5 @@
 /**
- * EventController
+ * HolidaysController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -22,36 +22,25 @@ module.exports = {
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to EventController)
+   * (specific to HolidaysController)
    */
   _config: {},
 
-  query: function (req,res) {  
-    var body = req.body;
-  	if (body) {
-      var requestID = body.id;
-      if (requestID) {
-        body.id = Number(requestID);
-      }
-  		Event.find(body).done(function(err, events) { 
-  			if (err) res.send(500, {error: err});
-  			else res.send(events);
-  		 });
-  	} else {
-      var requestID = req.param("id");
-      if (requestID) {
-        Event.find({ id: requestID }).done(function(err, ev) { 
-        if (err) res.send(500, {error: err});
-        else res.send(ev);
-       });
-      } else {
-        Event.find().done(function(err, events) { 
-        if (err) res.send(500, {error: err});
-        else res.send(events);
-       });
-      }
-  		
-  	}
+  // GET
+  index: function(req, resource) {
+    var year = req.param("year");
+
+    var request = require("request");
+    request.get("http://kayaposoft.com/enrico/json/v1.0/index.php?country=ger&action=getPublicHolidaysForYear&year="+year, function (err, res, body) {
+        if (!err) {
+            var resultsObj = JSON.parse(body);
+            //Just an example of how to access properties:
+            console.log(resultsObj.MRData);
+            resource.send(resultsObj);
+        } else {
+          resource.err(500);
+        }
+    });
   }
 
   

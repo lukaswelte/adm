@@ -30,7 +30,7 @@ module.exports = {
   },
   
   updateme : function (req,res) {
-	  User.update({id:req.user.id},req.query,function (err,user) {
+	  User.update({id:req.user.id},req.body,function (err,user) {
 		  if (err) {
 			  res.json(err);
 		  } else {
@@ -46,7 +46,7 @@ module.exports = {
 		  } else {
 			  users = users.filter(function (user) {
 			    return user.status != null &&
-			           user.statuslocation != null;
+			           user.statuslocation != null && user.id != null;
 			  });
 
               var geopoints = {};
@@ -59,26 +59,48 @@ module.exports = {
 
               var latitude = req.param("latitude");
               var longitude = req.param("longitude");
-              console.log(latitude);
-              console.log(longitude);
+              if (latitude == null || longitude == null) {
+                res.json({"error":"need to specify latitude and longitude"});
+              } else {                  
+                  geopoints = geolib.orderByDistance({"latitude": latitude, "longitude": longitude}, geopoints);
+                  
+                  var points = [];
+                  for (var i = users.length - 1; i >= 0; i--) {
+                    var usr = users[i];
+                    for(var i=0;i<geopoints.length;i++){
+                      var obj = geopoints[i];
+                      if (usr.id == obj["key"]) {
+                        points.push({"user":usr,"latitude":obj["latitude"],"longitude":obj["longitude"],"distance":obj["distance"]});
+                        break;
+                      }
+                    }
+                  }
 
-              console.log(geopoints);
-              
-              geopoints = geolib.orderByDistance({"latitude": latitude, "longitude": longitude}, geopoints);
-
-			  res.json(geopoints);
+                  res.json(points);
+              }
 		  }
 	  });
   },
   
   profiles: function (req,res) {
-	  User.find().done(function (err,users) {
-		  if (err) {
-			  res.json(err);
-		  } else {
-			  res.json(users);
-		  }
-	  });
+    if (req.body != null) {
+      User.find(req.body).done(function (err,users) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(users);
+      }
+    });
+    } else {
+      User.find().done(function (err,users) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(users);
+      }
+    });
+    }
+	  
   },
 
   friends: function(req,res) {
@@ -87,6 +109,10 @@ module.exports = {
 
   addfriend: function(req,res) {
     var friendId = req.param("friendid");
+    if (friendid == null) {
+      res.send({"error":"need to specifiy friend id to addfriend"});
+      return;
+    }
     User.findOneById(friendId).done(function (err,user){
         if (err) {
             res.json(err);
