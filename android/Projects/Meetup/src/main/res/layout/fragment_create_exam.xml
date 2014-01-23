@@ -20,21 +20,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/examDate"
+            style="@android:style/Widget.EditText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/examDate"
-            android:hint="@string/exam_date"
-            />
+            android:hint="@string/exam_date"/>
 
 
-        <EditText
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/examTime"
             android:hint="@string/exam_time"
+            style="@android:style/Widget.EditText"
             />
 
     </LinearLayout>
@@ -43,22 +47,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/examNotifyDate"
             android:hint="@string/exam_notify_date"
             android:layout_marginBottom="10dp"
+            style="@android:style/Widget.EditText"
             />
 
-        <EditText
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/examNotifyTime"
             android:hint="@string/exam_notify_time"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            style="@android:style/Widget.EditText"/>
 
     </LinearLayout>
 
@@ -68,7 +76,8 @@
         android:layout_gravity="center_horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/cancelButton"
@@ -77,7 +86,8 @@
             android:layout_marginRight="30dp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Save"
             android:id="@+id/saveButton"

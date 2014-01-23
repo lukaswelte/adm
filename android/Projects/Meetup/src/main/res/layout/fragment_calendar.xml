@@ -37,13 +37,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/examListView"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/transparent"/>
 
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/display_details"
-        android:background="@android:color/white">
+        android:background="@android:color/transparent">
 
     </ListView>
 </LinearLayout>

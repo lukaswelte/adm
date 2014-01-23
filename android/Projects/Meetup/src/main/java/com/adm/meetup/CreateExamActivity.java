@@ -47,10 +47,10 @@ public class CreateExamActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        EditText examDate;
-        EditText examTime;
-        EditText examNotifyDate;
-        EditText examNotifyTime;
+        Button examDate;
+        Button examTime;
+        Button examNotifyDate;
+        Button examNotifyTime;
 
         // declare  the variables to Show/Set the date and time when Time and  Date Picker Dialog first appears
         private int mYear, mMonth, mDay,mHour,mMinute;
@@ -77,10 +77,10 @@ public class CreateExamActivity extends ActionBarActivity {
              * Date and Time Picker
              */
 
-            examDate = (EditText) rootView.findViewById(R.id.examDate);
-            examTime = (EditText) rootView.findViewById(R.id.examTime);
-            examNotifyDate = (EditText) rootView.findViewById(R.id.examNotifyDate);
-            examNotifyTime = (EditText) rootView.findViewById(R.id.examNotifyTime);
+            examDate = (Button) rootView.findViewById(R.id.examDate);
+            examTime = (Button) rootView.findViewById(R.id.examTime);
+            examNotifyDate = (Button) rootView.findViewById(R.id.examNotifyDate);
+            examNotifyTime = (Button) rootView.findViewById(R.id.examNotifyTime);
 
             // Date Picker Exam
 
@@ -180,10 +180,10 @@ public class CreateExamActivity extends ActionBarActivity {
 
 
             final EditText nameTextView = (EditText) rootView.findViewById(R.id.examName);
-            final EditText dateTextView = (EditText) rootView.findViewById(R.id.examDate);
-            final EditText timeTextView = (EditText) rootView.findViewById(R.id.examTime);
-            final EditText notifyDateTextView = (EditText) rootView.findViewById(R.id.examNotifyDate);
-            final EditText notifyTimeTextView = (EditText) rootView.findViewById(R.id.examNotifyTime);
+            final Button dateTextView = (Button) rootView.findViewById(R.id.examDate);
+            final Button timeTextView = (Button) rootView.findViewById(R.id.examTime);
+            final Button notifyDateTextView = (Button) rootView.findViewById(R.id.examNotifyDate);
+            final Button notifyTimeTextView = (Button) rootView.findViewById(R.id.examNotifyTime);
 
             Button saveButton = (Button) rootView.findViewById(R.id.saveButton);
             saveButton.setOnClickListener(new View.OnClickListener() {
