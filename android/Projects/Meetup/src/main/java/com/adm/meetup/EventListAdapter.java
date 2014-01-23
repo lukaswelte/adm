@@ -64,7 +64,7 @@ public class EventListAdapter extends BaseAdapter {
             eventLocation.setText(event.getLocation() + ",");
 
             //TextView eventDate = (TextView) itemView.findViewById(R.id.eventAtendeeTextView);
-            //eventDate.setText(""+sd.format(event.getDate()));
+            //eventDate.setText(""+sd.format(ic_event_sidebar.getDate()));
         }
 
         return itemView;

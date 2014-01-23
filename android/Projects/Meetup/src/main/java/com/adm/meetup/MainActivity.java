@@ -43,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
+                R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
                 R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
@@ -180,12 +181,19 @@ public class MainActivity extends ActionBarActivity {
                 fragmentManager.beginTransaction().addToBackStack(null);
 
                 break;
+
             case 3:
+                Fragment fragmentLoadMap = new LoadMapFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentLoadMap).commit();
+                break;
+
+            case 4:
                 Fragment fragmentProfile = new ProfileFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentProfile).commit();
                 break;
 
-            case 5:
+
+            case 6:
                 Fragment fragmentTeam = new TeamFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
                 fragmentManager.beginTransaction().addToBackStack(null);

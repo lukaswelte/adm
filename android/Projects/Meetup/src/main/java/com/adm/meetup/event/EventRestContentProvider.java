@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class EventRestContentProvider extends EventContentProvider {
     private Context context = null;
-    private static final String SERVERAPIPATH = "/event";
+    private static final String SERVERAPIPATH = "/ic_event_sidebar";
     private HttpClient client = new DefaultHttpClient();
 
     public EventRestContentProvider(Context context) {
@@ -56,7 +56,7 @@ public class EventRestContentProvider extends EventContentProvider {
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
 
-        //String s = "{\"id\": 102, \"name\":\"event name\", \"date\":\"27.11.2013 13:20\", \"dueDate\":\"25.11.2013 13:20\", \"source\":\"DEFAULT\",\"types\": [{\"id\":1,\"name\": \"default\"},{\"id\":2,\"name\": \"sport\"}],\"constraints\":[{\"id\":1, \"name\": \"attendee_exact_number\"},{\"id\":2,\"name\": \"nationality_exact_number\"}],\"comments\": [{ \"id\": 1, \"user\": {\"id\":1,\"name\": \"name etc\"}, \"comment\": \"lorem ipsum...\",\"date\":\"27.11.2013 13:20\" }";
+        //String s = "{\"id\": 102, \"name\":\"ic_event_sidebar name\", \"date\":\"27.11.2013 13:20\", \"dueDate\":\"25.11.2013 13:20\", \"source\":\"DEFAULT\",\"types\": [{\"id\":1,\"name\": \"default\"},{\"id\":2,\"name\": \"sport\"}],\"constraints\":[{\"id\":1, \"name\": \"attendee_exact_number\"},{\"id\":2,\"name\": \"nationality_exact_number\"}],\"comments\": [{ \"id\": 1, \"user\": {\"id\":1,\"name\": \"name etc\"}, \"comment\": \"lorem ipsum...\",\"date\":\"27.11.2013 13:20\" }";
 
         JSONObject object;
         MatrixCursor cursor = new MatrixCursor(projection);

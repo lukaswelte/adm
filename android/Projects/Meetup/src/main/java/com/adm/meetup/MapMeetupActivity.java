@@ -73,6 +73,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0,0);
         setContentView(R.layout.activity_map_meetup);
 
         if (savedInstanceState == null) {
@@ -136,7 +137,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        overridePendingTransition(0,0);
         setupMap();
     }
 
