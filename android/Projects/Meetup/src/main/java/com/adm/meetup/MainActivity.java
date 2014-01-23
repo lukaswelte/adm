@@ -45,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
                 R.drawable.ic_profile_sidebar,
+                R.drawable.ic_about_sidebar,
                 R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
         };
@@ -178,6 +179,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 5:
                 fragment = new TeamFragment();
+                break;
+            case 6:
+                fragment = new FriendsFragment();
                 break;
             default:
                 fragment = new Fragment();

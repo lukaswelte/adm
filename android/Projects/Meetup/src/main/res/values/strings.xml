@@ -71,6 +71,7 @@
         <item>Events</item>
         <item>Calendar</item>
         <item>Profile</item>
+        <item>Friends</item>
         <item>Settings</item>
         <item>Team</item>
     </string-array>
@@ -139,8 +140,6 @@
     <string name="advice_date_exam_missing">You have to specify a date for the exam</string>
     <string name="advice_time_exam_missing">You have to specify a time for the exam</string>
     <string name="advice_wrong_format">Exam date in wrong format. Should be dd.MM.yyyy HH:mm</string>
-
-
 
 
 </resources>

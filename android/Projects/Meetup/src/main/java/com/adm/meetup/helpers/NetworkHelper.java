@@ -2,6 +2,7 @@ package com.adm.meetup.helpers;
 
 import android.content.Context;
 
+import com.adm.meetup.User.User;
 import com.adm.meetup.calendar.Exam;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -206,5 +207,29 @@ public class NetworkHelper {
         postedJsonObject.addProperty("facebookToken", facebookAuthToken);
 
         NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback, false);
+    }
+
+    /**
+     * Method to get your profile
+     *
+     * @param context  The applications context interested in the request
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void getUserProfile(Context context, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+
+        NetworkHelper.requestBackend(context, "/profile/me", postedJsonObject, callback, true);
+    }
+
+    /**
+     * Method to update your profile
+     *
+     * @param context  The applications context interested in the request
+     * @param user     the user to update
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void updateProfile(Context context, User user, FutureCallback<JsonObject> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        NetworkHelper.requestBackend(context, "/update/me", postedJsonObject, callback, true);
     }
 }
