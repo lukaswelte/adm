@@ -5,7 +5,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/name"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location : "
+        android:text="@string/location_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:textColor="#040404"
@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loc"
+        android:text="@string/location"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:textColor="#040404"
@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attendee : "
+        android:text="@string/attendee_doublepoint"
         android:id="@+id/eventDescTextView2"
         android:textStyle="bold"
         android:textSize="18dp"
@@ -64,7 +64,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date : "
+        android:text="@string/date_doublepoint"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:textColor="#040404"
@@ -89,7 +89,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Due Date : "
+        android:text="@string/due_date_doublepoint"
         android:layout_marginTop="10dp"
         android:textColor="#040404"
         android:id="@+id/eventDescTextView4"
@@ -103,7 +103,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type : "
+        android:text="@string/type_doublepoint"
         android:layout_marginTop="10dp"
         android:textColor="#040404"
         android:id="@+id/eventDescTextView6"

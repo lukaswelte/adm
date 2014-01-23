@@ -11,21 +11,11 @@ import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
 import com.adm.meetup.helpers.DateHelper;
 
-import java.text.SimpleDateFormat;
-
 
 /**
  * Created by florian on 22/01/2014.
  */
 public class EventDescriptionFragment extends Fragment {
-
-    private TextView dateTexView;
-    private TextView dueDateTexView;
-    private TextView nameTexView;
-    private TextView attenteeTextView;
-    private TextView locationTexView;
-    private TextView descriptionTextView;
-    private TextView typeTextView;
 
 
     @Override
@@ -41,25 +31,25 @@ public class EventDescriptionFragment extends Fragment {
         EventManager manager = new EventManager(getActivity());
         Event event = manager.getEvents().get(extras.getInt("index"));
 
-        nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
+        TextView nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
         nameTexView.setText(event.getName());
 
-        locationTexView = (TextView) getView().findViewById(R.id.eventDescLocationTextView);
+        TextView locationTexView = (TextView) getView().findViewById(R.id.eventDescLocationTextView);
         locationTexView.setText(event.getLocation());
 
-        attenteeTextView = (TextView) getView().findViewById(R.id.eventDescAttendeeTextView);
+        TextView attenteeTextView = (TextView) getView().findViewById(R.id.eventDescAttendeeTextView);
         attenteeTextView.setText(" " + event.getAttendee());
 
-        dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
+        TextView dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
         dateTexView.setText("" + DateHelper.format(event.getDate()));
 
-        dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
+        TextView dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
         dueDateTexView.setText("" + DateHelper.format(event.getDueDate()));
 
-        descriptionTextView = (TextView) getView().findViewById(R.id.eventDescriptionTextView);
+        TextView descriptionTextView = (TextView) getView().findViewById(R.id.eventDescriptionTextView);
         descriptionTextView.setText(event.getDescription());
 
-        typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
+        TextView typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
         typeTextView.setText(event.getTypes().get(0).getName());
 
     }

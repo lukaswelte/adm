@@ -12,8 +12,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:contentDescription="Entry-Icon" />
+        android:paddingTop="4dp" />
 
     <TextView
         android:id="@+id/member"

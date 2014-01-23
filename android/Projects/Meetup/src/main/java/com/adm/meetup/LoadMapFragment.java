@@ -54,7 +54,7 @@ public class LoadMapFragment extends Fragment {
 
     }
 
-    public void startProgress(){
+    public void startProgress() {
         progress.setMessage(getString(R.string.map_load));
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progress.setIndeterminate(true);
@@ -62,13 +62,13 @@ public class LoadMapFragment extends Fragment {
 
         final int totalProgressTime = 100;
 
-        final Thread t = new Thread(){
+        final Thread t = new Thread() {
 
             @Override
-            public void run(){
+            public void run() {
 
                 int jumpTime = 0;
-                while(jumpTime < totalProgressTime){
+                while (jumpTime < totalProgressTime) {
                     try {
                         sleep(200);
                         jumpTime += 5;

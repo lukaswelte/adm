@@ -31,7 +31,7 @@
     <string name="logout">Log out</string>
     <string name="sign_up">Here you can create an account!</string>
     <string name="welcome">Welcome to ErasmusEvents!</string>
-    <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
+    <string name="addinfo">Thank you for your registration! Do you want to add some Information to your Profile now?</string>
     <string name="enter_info">Please fill in your E-Mail address and a Password.</string>
     <string name="progressBar_message">Please wait</string>
 
@@ -61,7 +61,7 @@
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
     <string name="calendar_no_detail">There is no event on this day</string>
-    <string name="calendar_loading">Loading data...</string>
+    <string name="calendar_loading">Loading data…</string>
     <string name="calendar_add_exam">Add an exam</string>
     <string name="title_activity_create_exam">CreateExamActivity</string>
 
@@ -127,7 +127,7 @@
     <!-- General Strings -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="advice_status">You can update your status by clicking on it.</string>
     <string name="welcome_message">\n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Welcome to \n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Erasmus - Events!</string>
     <string name="upcoming_events">Upcoming Erasmus-Events:</string>
@@ -150,6 +150,24 @@
 
     <string name="advice_events_day">Events for this day:</string>
     <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
-    <string name="map_load">...loading map</string>
+    <string name="map_load">…loading map</string>
+    <string name="exam_name">Exam Name</string>
+    <string name="save">Save</string>
+    <string name="create_new_event">Create a new Event:</string>
+    <string name="name_of_event">Name of the event</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="date_doublepoint">Date : </string>
+    <string name="set_time">Set Time</string>
+    <string name="set_date">Set Date</string>
+    <string name="due_date_doublepoint">Due Date : </string>
+    <string name="save_event">Save Event</string>
+    <string name="name">Name</string>
+    <string name="location_doublepoint">Location : </string>
+    <string name="attendee_doublepoint">Attendee : </string>
+    <string name="type_doublepoint">Type : </string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="new_event">New event</string>
 
 </resources>

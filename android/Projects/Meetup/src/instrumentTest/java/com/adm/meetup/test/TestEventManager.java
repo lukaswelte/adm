@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 abstract public class TestEventManager extends AndroidTestCase {
     protected EventManager manager;
-    protected Long userId = Long.valueOf(1);
+    protected Long userId = (long) 1;
     protected EventDatabase db;
 
     @Override
@@ -421,7 +421,7 @@ abstract public class TestEventManager extends AndroidTestCase {
 
         @Override
         public int compare(Event c1, Event c2) {
-            return Long.valueOf(c1.getId()).compareTo(Long.valueOf(c2.getId()));
+            return c1.getId().compareTo(c2.getId());
         }
     };
 

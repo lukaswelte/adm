@@ -16,14 +16,13 @@ public class CalendarAdapter extends BaseAdapter {
 
     public static final int iDaysToCheck = 7;
     public static final int iDaysOfPreviousMonth = 7;
-    private Context mContext;
     private ArrayList<Date> mMonth;
     private SimpleDateFormat mFormatNumber;
     private SimpleDateFormat mFormatDay;
     private LayoutInflater mInflater;
 
     public CalendarAdapter(Context _context, ArrayList<Date> _month) {
-        mContext = _context;
+        Context mContext = _context;
         mMonth = _month;
         mFormatNumber = new SimpleDateFormat("d");
         mFormatDay = new SimpleDateFormat("EEE");
@@ -58,13 +57,16 @@ public class CalendarAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.view_calendar_day, null);
             holder = new ViewHolder();
-            if (convertView.findViewById(R.id.tv_day) != null) {
-                holder.tvDay = (TextView) convertView.findViewById(R.id.tv_day);
+            if (convertView != null) {
+                if (convertView.findViewById(R.id.tv_day) != null) {
+                    holder.tvDay = (TextView) convertView.findViewById(R.id.tv_day);
+                }
+                if (convertView.findViewById(R.id.tv_number) != null) {
+                    holder.tvNumber = (TextView) convertView.findViewById(R.id.tv_number);
+                }
+                convertView.setTag(holder);
             }
-            if (convertView.findViewById(R.id.tv_number) != null) {
-                holder.tvNumber = (TextView) convertView.findViewById(R.id.tv_number);
-            }
-            convertView.setTag(holder);
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

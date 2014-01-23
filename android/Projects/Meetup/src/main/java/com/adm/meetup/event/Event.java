@@ -153,8 +153,7 @@ public class Event extends BaseEvent {
         cal1.setTime(date);
         cal2.setTime(this.getDate());
 
-        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
-        return sameDay;
     }
 }
