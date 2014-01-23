@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
-import com.adm.meetup.map.PersonNearYou;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +34,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class MapMeetupActivity extends ActionBarActivity {
 
@@ -58,14 +59,9 @@ public class MapMeetupActivity extends ActionBarActivity {
     private final static int
             FACTOR_BETWEEN_ZOOM_AND_DISTANCE_TO_MARKERS = 10;
 
-
     private GoogleMap map;
 
-    private ArrayList<Marker> whoPartiesMarkers = new ArrayList<Marker>();
-    private ArrayList<Marker> eventsMarkers = new ArrayList<Marker>();
-    private ArrayList<Marker> friendsMarkers = new ArrayList<Marker>();
-
-    private HashMap<Marker, PersonNearYou> personNearYouHashMap = new HashMap<Marker, PersonNearYou>();
+    private HashMap<Marker, User> personNearYouHashMap = new HashMap<Marker, User>();
 
     protected LocationManager locationManager;
     protected Context context;
@@ -100,19 +96,6 @@ public class MapMeetupActivity extends ActionBarActivity {
 
                 ToggleButton toggleButtonEvents = (ToggleButton) findViewById(R.id.map_meetup_toggle_events);
                 ToggleButton toggleButtonFriends = (ToggleButton) findViewById(R.id.map_meetup_toggle_friends);
-                //unused -- ToggleButton toggleButtonPartyMode = (ToggleButton) findViewById(R.id.map_meetup_toggle_party_mode);
-                ToggleButton toggleButtonWhosPartying = (ToggleButton) findViewById(R.id.map_meetup_toggle_whos_partying);
-
-                toggleButtonWhosPartying.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked) {
-
-                        } else {
-                            removeMarkers(whoPartiesMarkers);
-                        }
-                    }
-                });
 
                 toggleButtonEvents.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -124,7 +107,11 @@ public class MapMeetupActivity extends ActionBarActivity {
                 toggleButtonFriends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
+                        for (Map.Entry<Marker, User> entry : personNearYouHashMap.entrySet()) {
+                            Marker marker = entry.getKey();
+                            User user = entry.getValue();
+                            marker.setVisible(isChecked);
+                        }
                     }
                 });
 
@@ -260,10 +247,10 @@ public class MapMeetupActivity extends ActionBarActivity {
                     while (iterator.hasNext()) {
                         JsonElement element = iterator.next();
                         if (element.isJsonObject()) {
-                            PersonNearYou personNearYou = new PersonNearYou(element.getAsJsonObject());
-                            Marker marker = personNearYou.addToMap(map);
+                            User user = new User(element.getAsJsonObject().getAsJsonObject("user"));
+                            Marker marker = user.addToMap(map);
                             if (marker != null) {
-                                personNearYouHashMap.put(marker, personNearYou);
+                                personNearYouHashMap.put(marker, user);
                             }
                         }
                     }
