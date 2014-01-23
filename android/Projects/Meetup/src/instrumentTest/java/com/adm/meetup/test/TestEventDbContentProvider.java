@@ -16,7 +16,7 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
     }
 
     public TestEventDbContentProvider() {
-        super(EventDbContentProvider.class, "com.adm.meetup.event.EventManager");
+        super(EventDbContentProvider.class, "com.adm.meetup.ic_event_sidebar.EventManager");
     }
 
 

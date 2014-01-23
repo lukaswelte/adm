@@ -23,9 +23,6 @@ public class AttendeeMaxEventConstraint extends EventDecorator implements IEvent
     }
 
     public boolean isValid() throws EventValidationException {
-        if (this.event.getAttendee() <= this.value) {
-            return true;
-        }
-        return false;
+        return this.event.getAttendee() <= this.value;
     }
 }

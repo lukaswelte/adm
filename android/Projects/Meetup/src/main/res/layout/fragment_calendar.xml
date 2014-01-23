@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".CalendarActivity$PlaceholderFragment"
-    android:background="#333">
+    style="@style/AppThemeBg">
 
     <com.adm.meetup.CalendarView
         android:id="@+id/calendar"
@@ -20,12 +20,35 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/calendar_select_date"
-        android:background="#fff"
-        android:id="@+id/display_date" />
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:id="@+id/display_date"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:text="@string/advice_events_day"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/exam_overview"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/examListView"
+        android:background="@android:color/transparent"/>
 
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/display_details"
-        android:background="#666"></ListView>
+        android:background="@android:color/transparent">
+
+    </ListView>
 </LinearLayout>

@@ -62,12 +62,15 @@
     <string name="drawer_close">Slider Menu Closed</string>
     <string name="calendar_no_detail">There is no event on this day</string>
     <string name="calendar_loading">Loading data...</string>
+    <string name="calendar_add_exam">Add an exam</string>
+    <string name="title_activity_create_exam">CreateExamActivity</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item>Home</item>
         <item>Events</item>
         <item>Calendar</item>
+        <item>Map</item>
         <item>Profile</item>
         <item>Settings</item>
         <item>Team</item>
@@ -81,15 +84,15 @@
     <string name="team_text">Our international Team:</string>
 
     <!-- Account Strings -->
-    <string name="single">Single:</string>
-    <string name="inRelationship">In a relationship:</string>
-    <string name="engaged">Engaged:</string>
-    <string name="married">Married:</string>
-    <string name="complicated">It\'s complicated:</string>
-    <string name="openRelationship">In an open relationship:</string>
-    <string name="separated">Separated:</string>
-    <string name="divorced">Divorced:</string>
-    <string name="widowed">Widowed:</string>
+    <string name="single">Single</string>
+    <string name="inRelationship">In a relationship</string>
+    <string name="engaged">Engaged</string>
+    <string name="married">Married</string>
+    <string name="complicated">It\'s complicated</string>
+    <string name="openRelationship">In an open relationship</string>
+    <string name="separated">Separated</string>
+    <string name="divorced">Divorced</string>
+    <string name="widowed">Widowed</string>
     <string name="firstName">First Name:</string>
     <string name="lastName">Last Name:</string>
     <string name="dateOfBirth">Date of Birth:</string>
@@ -99,6 +102,7 @@
     <string name="email">Email:</string>
     <string name="disableLocationServices">Disable location services:</string>
     <string name="status">Status:</string>
+    <string name="nationality">Nationality:</string>
 
     <string-array name="members">
         <item>Maela</item>
@@ -110,11 +114,62 @@
         <item>Andreas</item>
     </string-array>
 
+    <!-- Calendar Activity -->
+    <string name="title_activity_people_near_you">PeopleNearYouActivity</string>
+    <string name="title_activity_map_meetup">Meetup Map</string>
+    <string name="map_meetup_your_position">Your position</string>
+    <string name="map_meetup_party_mode">Party mode</string>
+    <string name="map_meetup_events">Events</string>
+    <string name="map_meetup_whos_partying">Who\'s partying?</string>
+    <string name="map_meetup_friends">Friends</string>
+    <string name="map_update_status">Update status</string>
+    <string name="map_your_status">Your status</string>
+
     <!-- General Strings -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="ok">Ok</string>
-    <string name="nationality">Nationality:</string>
+    <string name="ok">OK</string>
+    <string name="advice_status">You can update your status by clicking on it.</string>
+    <string name="welcome_message">\n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Welcome to \n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Erasmus - Events!</string>
+    <string name="upcoming_events">Upcoming Erasmus-Events:</string>
+    <string name="welcome_smiley">Welcome-Smiley</string>
+    <string name="exam_date">Exam Date</string>
+    <string name="exam_time">Exam Time</string>
+    <string name="exam_notify_date">Notify Date</string>
+    <string name="exam_notify_time">Notify Time</string>
+    <string name="advice_name_exam_missing">You have to name the exam</string>
+    <string name="advice_date_exam_missing">You have to specify a date for the exam</string>
+    <string name="advice_time_exam_missing">You have to specify a time for the exam</string>
+    <string name="advice_wrong_format">Exam date in wrong format. Should be dd.MM.yyyy HH:mm</string>
 
+    <string-array name="types_arrays">
+        <item>Default</item>
+        <item>Sport</item>
+        <item>Dance</item>
+        <item>Trip</item>
+    </string-array>
+
+    <string name="advice_events_day">Events for this day:</string>
+    <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
+    <string name="map_load">...loading map</string>
+    <string name="exam_name">Exam Name</string>
+    <string name="new_text">New Text</string>
+    <string name="save">Save</string>
+    <string name="create_new_event_doublepoint">Create a new Event :</string>
+    <string name="name_of_event">Name of the event</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="date_doublepoint">Date : </string>
+    <string name="set_time">Set Time</string>
+    <string name="set_date">Set Date</string>
+    <string name="due_date_doublepoint">Due Date : </string>
+    <string name="save_event">Save Event</string>
+    <string name="name">Name</string>
+    <string name="location_doublepoint">Location : </string>
+    <string name="attendee_doublepoint">Attendee : </string>
+    <string name="due">Due</string>
+    <string name="type_doublepoint">Type : </string>
+    <string name="description_doublepoint">Description : </string>
+    <string name="new_event">New event</string>
 
 </resources>

@@ -2,9 +2,9 @@ package com.adm.meetup.util;
 
 public class Util {
 
-	public final static String PREFERENCES_FILE = "shared_preferences";
-	public final static String PREFERENCES_FIRSTNAME = "firstname";
-	public final static String PREFERENCES_FIRSTNAME_DEFAULT = "";
+    public final static String PREFERENCES_FILE = "shared_preferences";
+    public final static String PREFERENCES_FIRSTNAME = "firstname";
+    public final static String PREFERENCES_FIRSTNAME_DEFAULT = "";
     public final static String PREFERENCES_LASTNAME = "lastname";
     public final static String PREFERENCES_LASTNAME_DEFAULT = "";
     public final static String PREFERENCES_EMAIL = "email";

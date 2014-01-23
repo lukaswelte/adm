@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,7 +47,7 @@ public class RegisterActivity extends ActionBarActivity {
         registerButton = (Button) findViewById(R.id.register_registerNewAccount_button);
         loginButton = (Button) findViewById(R.id.register_linkToLogin_button);
 
-        // Register Button Click event
+        // Register Button Click ic_event_sidebar
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String email = emailText.getText().toString();
@@ -61,27 +61,32 @@ public class RegisterActivity extends ActionBarActivity {
                 FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
-                        progressBar.hide();
-                        JsonElement error = jsonObject.get("error");
-                        Log.d("register", jsonObject.toString());
-                        if(error != null)
-                        {
-                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            String token = jsonObject.get("token").getAsString();
-                            if (token != null) {
-                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
-                                editor.commit();
-                                SharedApplication.getInstance().setUserToken(token);
-                                Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
-                                startActivity(intent);
-                                finish();
+                        try {
+                            if (e != null) {
+                                Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                                throw e;
                             }
-                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            progressBar.hide();
+                            JsonElement error = jsonObject.get("error");
+                            Log.d("register", jsonObject.toString());
+                            if (error != null) {
+                                Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                String token = jsonObject.get("token").getAsString();
+                                if (token != null) {
+                                    SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Util.PREFERENCES_EMAIL, emailText.getText().toString());
+                                    editor.commit();
+                                    SharedApplication.getInstance().setUserToken(token);
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else
+                                    Toast.makeText(getApplicationContext(), getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
                 };
@@ -105,7 +110,7 @@ public class RegisterActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.register, menu);
         return true;
@@ -117,10 +122,7 @@ public class RegisterActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -133,9 +135,8 @@ public class RegisterActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
-            return rootView;
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_register, container, false);
         }
     }
 

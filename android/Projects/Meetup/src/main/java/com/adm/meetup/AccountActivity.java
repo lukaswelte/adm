@@ -1,5 +1,6 @@
 package com.adm.meetup;
 
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -133,38 +134,34 @@ public class AccountActivity extends ActionBarActivity {
 
                         adb.show();
                     }
-                    else if(id==2){		//date of birth
-                        AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
-                        adb.setTitle(map.get("title"));
-                        final DatePicker input = new DatePicker(AccountActivity.this);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.MATCH_PARENT);
-                        input.setLayoutParams(lp);
-                        final AlertDialog.Builder adb2 = adb;
-                        final HashMap<String, String> mapIp = map;
-                        adb.setPositiveButton(getString(R.string.ok), new OnClickListener() {
+                    else if(id==2){ // date of birth
+                        DatePickerDialog dialog = new DatePickerDialog(AccountActivity.this, date, myCalendar
+                                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                myCalendar.get(Calendar.DAY_OF_MONTH));
+                        dialog.show();
 
+                        //if we click on back button or outside datepicker the date is set to default one (null)
+                        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onCancel(DialogInterface dialog) {
 
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_DATEOFBIRTH, input.getDayOfMonth() + "." + (input.getMonth()+1) + "." + input.getYear() );
-                                editor.commit();
 
+                                editor.putString(Util.PREFERENCES_DATEOFBIRTH, Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+
+                                editor.commit();
                                 majParametersListVAdapter();
+
                             }
                         });
-                        adb.setNegativeButton(R.string.cancel, null);
-                        adb.setView(input);
-                        adb.show();
-                    }
                 }
-            }
-        });
 
-    }
+            }
+        }
+    });
+
+}
 
     private void changevariable(long id,EditText input){
         SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -304,5 +301,30 @@ public class AccountActivity extends ActionBarActivity {
             return rootView;
         }
     }
+
+    Calendar myCalendar = Calendar.getInstance();
+
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+            Editor editor = pref.edit();
+
+            editor.putString(Util.PREFERENCES_DATEOFBIRTH, ""+dayOfMonth + "." + (monthOfYear+1) + "." + year );
+
+            editor.commit();
+
+            majParametersListVAdapter();
+        }
+
+    };
 
 }
