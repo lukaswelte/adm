@@ -21,15 +21,5 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    @Override
-    public void onStart() {
-
-        super.onStart();
-
-        
-
-    }
-
-
 }
 

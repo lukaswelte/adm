@@ -24,7 +24,6 @@ import java.util.HashMap;
 
 public class ProfileFragment extends Fragment {
     private ListView profileList;
-    private Button profileButton, profileButtonLogout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,8 +57,6 @@ public class ProfileFragment extends Fragment {
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.MATCH_PARENT);
                         input.setLayoutParams(lp);
-                        final AlertDialog.Builder adb2 = adb;
-                        final HashMap<String, String> mapIp = map;
                         adb.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 
                             @Override
@@ -79,7 +76,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-        profileButton = (Button) getView().findViewById(R.id.profile_button);
+        Button profileButton = (Button) getView().findViewById(R.id.profile_button);
         profileButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AccountActivity.class);
@@ -87,7 +84,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        profileButtonLogout = (Button) getView().findViewById(R.id.profile_button_logout);
+        Button profileButtonLogout = (Button) getView().findViewById(R.id.profile_button_logout);
         profileButtonLogout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 LoginActivity.onClickLogout();
@@ -115,27 +112,20 @@ public class ProfileFragment extends Fragment {
 
     private void majParametersListVAdapter() {
 
-        SimpleAdapter mSchedule = null;
-
         SharedPreferences preferences =
                 getActivity().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
 
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
         HashMap<String, String> map = new HashMap<String, String>();
+        map.put("title", getString(R.string.status));
+        map.put("description", preferences.getString(Util.PREFERENCES_STATUS,
+                Util.PREFERENCES_STATUS_DEFAULT));
+        listItem.add(map);
 
-        if (mSchedule == null) {
+        SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_account,
+                new String[]{"title", "description"}, new int[]{R.id.item_title, R.id.item_description});
 
-            map = new HashMap<String, String>();
-            map.put("title", getString(R.string.status));
-            map.put("description", preferences.getString(Util.PREFERENCES_STATUS,
-                    Util.PREFERENCES_STATUS_DEFAULT));
-            listItem.add(map);
-
-            mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_account,
-                    new String[]{"title", "description"}, new int[]{R.id.item_title, R.id.item_description});
-
-            profileList.setAdapter(mSchedule);
-        }
+        profileList.setAdapter(mSchedule);
     }
 }

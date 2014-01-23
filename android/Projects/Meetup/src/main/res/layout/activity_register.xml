@@ -88,8 +88,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:layout_below="@+id/linearLayout"
-                android:layout_alignParentLeft="true"
                 android:layout_marginTop="100dp"
                 android:textColor="#1C1C1C"
                 android:textSize="14dp" />

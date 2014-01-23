@@ -9,10 +9,6 @@ import android.widget.ListView;
 
 public class TeamFragment extends Fragment {
 
-    private ListView mList;
-    private String[] mMember;
-    private int[] mCountry;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,9 +21,9 @@ public class TeamFragment extends Fragment {
 
         super.onStart();
 
-        mMember = getResources().getStringArray(R.array.members);
-        mList = (ListView) getView().findViewById(R.id.team_list);
-        mCountry = new int[]{
+        String[] mMember = getResources().getStringArray(R.array.members);
+        ListView mList = (ListView) getView().findViewById(R.id.team_list);
+        int[] mCountry = new int[]{
                 R.drawable.country_fr,
                 R.drawable.country_de,
                 R.drawable.country_mr,

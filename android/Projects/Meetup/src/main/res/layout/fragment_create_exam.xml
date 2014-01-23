@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/examName"
-        android:hint="Exam Name" />
+        android:hint="@string/exam_name" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/exam_date"/>
+            android:hint="@string/exam_date" />
 
 
         <Button
@@ -38,8 +38,7 @@
             android:ems="10"
             android:id="@+id/examTime"
             android:hint="@string/exam_time"
-            style="@android:style/Widget.EditText"
-            />
+            style="@android:style/Widget.EditText" />
 
     </LinearLayout>
 
@@ -55,8 +54,7 @@
             android:id="@+id/examNotifyDate"
             android:hint="@string/exam_notify_date"
             android:layout_marginBottom="10dp"
-            style="@android:style/Widget.EditText"
-            />
+            style="@android:style/Widget.EditText" />
 
         <Button
             android:layout_width="0dp"
@@ -66,7 +64,7 @@
             android:id="@+id/examNotifyTime"
             android:hint="@string/exam_notify_time"
             android:layout_marginBottom="10dp"
-            style="@android:style/Widget.EditText"/>
+            style="@android:style/Widget.EditText" />
 
     </LinearLayout>
 
@@ -79,21 +77,21 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:id="@+id/cancelButton"
             android:background="@drawable/button_normal"
             android:textColor="@android:color/white"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginRight="30dp" />
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/save"
             android:id="@+id/saveButton"
             android:layout_gravity="right"
             android:background="@drawable/button_normal"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

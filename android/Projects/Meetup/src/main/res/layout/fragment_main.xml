@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/upcoming_events"
-        android:layout_alignBottom="@+id/welcome"
         android:textSize="@dimen/abc_action_bar_title_text_size"
         android:layout_marginBottom="10dp" />
 
