@@ -2,15 +2,10 @@ package com.adm.meetup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
@@ -21,7 +16,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by florian on 22/01/2014.
  */
-public class EventDescriptionFragment  extends Fragment  {
+public class EventDescriptionFragment extends Fragment {
 
     private TextView dateTexView;
     private TextView dueDateTexView;
@@ -51,19 +46,19 @@ public class EventDescriptionFragment  extends Fragment  {
         locationTexView.setText(event.getLocation());
 
         attenteeTextView = (TextView) getView().findViewById(R.id.eventDescAttendeeTextView);
-        attenteeTextView.setText(" "+event.getAttendee());
+        attenteeTextView.setText(" " + event.getAttendee());
 
         dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
-        dateTexView.setText(""+sd.format(event.getDate()));
+        dateTexView.setText("" + sd.format(event.getDate()));
 
         dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
-        dueDateTexView.setText(""+sd.format(event.getDueDate()));
+        dueDateTexView.setText("" + sd.format(event.getDueDate()));
 
     }
 
 
     @Override
-    public void onCreate (Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }

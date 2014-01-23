@@ -130,15 +130,15 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(login);
                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
-                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
-                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_EMAIL, Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME, Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME, Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH, Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 finish();

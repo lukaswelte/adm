@@ -1,10 +1,10 @@
-
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".EventActivity" >
+    tools:context=".EventActivity">
 
-    <item android:id="@+id/action_create_event"
+    <item
+        android:id="@+id/action_create_event"
         android:icon="@drawable/ic_create_event"
         android:title="New event"
         android:showAsAction="always"

@@ -5,7 +5,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -22,7 +21,7 @@ public class PersonNearYou {
         this.userID = jsonObject.get("key").getAsString();
         Double latitude = jsonObject.get("latitude").getAsDouble();
         Double longitude = jsonObject.get("longitude").getAsDouble();
-        this.latLng = new LatLng(latitude,longitude);
+        this.latLng = new LatLng(latitude, longitude);
     }
 
     public LatLng getLatLng() {

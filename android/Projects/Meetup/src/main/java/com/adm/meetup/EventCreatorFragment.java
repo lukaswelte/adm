@@ -1,10 +1,9 @@
 package com.adm.meetup;
 
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,7 @@ import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -40,6 +37,7 @@ public class EventCreatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_event_creator, container, false);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -76,8 +74,8 @@ public class EventCreatorFragment extends Fragment {
 
                 int id = manager.getEvents().size();
 
-                String dateString = dateBtn.getText().toString() + " "+timeBtnForDate.getText().toString();
-                String dueDateString = dueDateBtn.getText().toString()+ " " +timeBtnForDueDate.getText().toString();
+                String dateString = dateBtn.getText().toString() + " " + timeBtnForDate.getText().toString();
+                String dueDateString = dueDateBtn.getText().toString() + " " + timeBtnForDueDate.getText().toString();
 
                 DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
@@ -98,7 +96,7 @@ public class EventCreatorFragment extends Fragment {
                 event.setLocation(locationEditText.getText().toString());
 
                 event.setDate(date);
-                event.setDueDate(dueDate) ;
+                event.setDueDate(dueDate);
                 manager.createEvent(event);
 
                 Fragment fragmentListEvent = new EventListFragment();

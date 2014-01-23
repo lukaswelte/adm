@@ -61,7 +61,7 @@ public class EventListAdapter extends BaseAdapter {
             eventName.setText(event.getName());
 
             TextView eventLocation = (TextView) itemView.findViewById(R.id.eventLocationTextView);
-            eventLocation.setText(event.getLocation()+",");
+            eventLocation.setText(event.getLocation() + ",");
 
             //TextView eventDate = (TextView) itemView.findViewById(R.id.eventAtendeeTextView);
             //eventDate.setText(""+sd.format(event.getDate()));

@@ -1,6 +1,5 @@
 package com.adm.meetup.calendar;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Calendar;

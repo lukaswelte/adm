@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +35,7 @@ import com.koushikdutta.async.future.FutureCallback;
 
 public class LoginActivity extends ActionBarActivity {
 
-    private EditText emailText,passwordText;
+    private EditText emailText, passwordText;
     private Button loginButton;
     private TextView registerScreen;
     ProgressDialog progressBar;
@@ -54,7 +54,7 @@ public class LoginActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_login);
 
-        buttonLoginLogout = (Button)findViewById(R.id.buttonLoginLogout);
+        buttonLoginLogout = (Button) findViewById(R.id.buttonLoginLogout);
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         Session session = Session.getActiveSession();
@@ -74,9 +74,9 @@ public class LoginActivity extends ActionBarActivity {
         updateView();
 //END OF FACEBOOK INTEGRATION (INSIDE ON CREATE)
 
-        emailText=(EditText)findViewById(R.id.login_email_field);
-        passwordText=(EditText)findViewById(R.id.login_password_field);
-        loginButton=(Button)findViewById(R.id.login_login_button);
+        emailText = (EditText) findViewById(R.id.login_email_field);
+        passwordText = (EditText) findViewById(R.id.login_password_field);
+        loginButton = (Button) findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(loginListener);
 
@@ -91,7 +91,7 @@ public class LoginActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
-        uiHelper = new UiLifecycleHelper(this,callback);
+        uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
     }
 
@@ -101,14 +101,17 @@ public class LoginActivity extends ActionBarActivity {
             //  textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
             buttonLoginLogout.setText(R.string.logout);
             buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogout(); }
+                public void onClick(View view) {
+                    onClickLogout();
+                }
             });
             // Get the user's data
             makeMeRequest(session);
 
         } else {
             buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogin();
+                public void onClick(View view) {
+                    onClickLogin();
                 }
             });
         }
@@ -119,7 +122,7 @@ public class LoginActivity extends ActionBarActivity {
         if (!session.isOpened() && !session.isClosed()) {
             session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
         } else {
-            Session.openActiveSession(this, true,statusCallback);
+            Session.openActiveSession(this, true, statusCallback);
         }
     }
 
@@ -129,6 +132,7 @@ public class LoginActivity extends ActionBarActivity {
             session.closeAndClearTokenInformation();
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -167,6 +171,7 @@ public class LoginActivity extends ActionBarActivity {
             uiHelper.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
@@ -188,8 +193,8 @@ public class LoginActivity extends ActionBarActivity {
                             if (user != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL,user.asMap().get("email").toString());
-                                editor.putString(Util.PREFERENCES_FIRSTNAME,user.getFirstName());
+                                editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
+                                editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
                                 editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
                                 final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
@@ -203,12 +208,9 @@ public class LoginActivity extends ActionBarActivity {
                                         progressBar.hide();
                                         JsonElement error = jsonObject.get("error");
                                         Log.d("facebook auth", jsonObject.toString());
-                                        if(error != null)
-                                        {
-                                            Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
+                                        if (error != null) {
+                                            Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
+                                        } else {
                                             String token = jsonObject.get("token").getAsString();
                                             if (token != null) {
                                                 Log.d("facebook auth token", token);
@@ -217,8 +219,8 @@ public class LoginActivity extends ActionBarActivity {
                                                 Intent mainview = new Intent(getApplicationContext(), MainActivity.class);
                                                 startActivity(mainview);
                                                 finish();
-                                            }
-                                            else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                                            } else
+                                                Toast.makeText(getApplicationContext(), getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
@@ -238,6 +240,7 @@ public class LoginActivity extends ActionBarActivity {
             makeMeRequest(session);
         }
     }
+
     private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
@@ -252,6 +255,7 @@ public class LoginActivity extends ActionBarActivity {
             updateView();
         }
     }
+
     private OnClickListener loginListener = new OnClickListener() {
         public void onClick(View v) {
             progressBar = new ProgressDialog(v.getContext());
@@ -259,51 +263,48 @@ public class LoginActivity extends ActionBarActivity {
             progressBar.setMessage(getString(R.string.progressBar_message));
             progressBar.setProgress(20000);
             progressBar.show();
-                FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject jsonObject) {
-                        try {
-                            if (e != null){
-                                Toast.makeText(getApplicationContext(),"Connection Error", Toast.LENGTH_SHORT).show();
-                                throw e;
-                            }
-
-                            progressBar.hide();
-                            JsonElement error = jsonObject.get("error");
-                            Log.d("login", jsonObject.toString());
-                            if (error !=null)
-                            {
-                                Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                String token = jsonObject.get("token").getAsString();
-                                if (token != null) {
-                                    SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
-                                    editor.commit();
-                                    SharedApplication.getInstance().setUserToken(token);
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+            FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
+                @Override
+                public void onCompleted(Exception e, JsonObject jsonObject) {
+                    try {
+                        if (e != null) {
+                            Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                            throw e;
                         }
-                    }
-                };
 
-                NetworkHelper.loginRequest(LoginActivity.this, emailText.getText().toString(), passwordText.getText().toString(), callback);
+                        progressBar.hide();
+                        JsonElement error = jsonObject.get("error");
+                        Log.d("login", jsonObject.toString());
+                        if (error != null) {
+                            Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            String token = jsonObject.get("token").getAsString();
+                            if (token != null) {
+                                SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString(Util.PREFERENCES_EMAIL, emailText.getText().toString());
+                                editor.commit();
+                                SharedApplication.getInstance().setUserToken(token);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else
+                                Toast.makeText(getApplicationContext(), getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            };
+
+            NetworkHelper.loginRequest(LoginActivity.this, emailText.getText().toString(), passwordText.getText().toString(), callback);
 
         }
     };
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;

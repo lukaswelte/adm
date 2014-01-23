@@ -64,7 +64,7 @@
     <string name="calendar_loading">Loading data...</string>
     <string name="calendar_add_exam">Add an exam</string>
     <string name="title_activity_create_exam">CreateExamActivity</string>
-    
+
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item>Home</item>
@@ -119,7 +119,9 @@
     <string name="map_meetup_party_mode">Party mode</string>
     <string name="map_meetup_events">Events</string>
     <string name="map_meetup_whos_partying">Who\'s partying?</string>
-    <string name="map_meetup_friends">Friends</string><string name="map_update_status">Update status</string><string name="map_your_status">Your status</string>
+    <string name="map_meetup_friends">Friends</string>
+    <string name="map_update_status">Update status</string>
+    <string name="map_your_status">Your status</string>
 
     <!-- General Strings -->
     <string name="yes">Yes</string>

@@ -109,6 +109,7 @@ public class EventRestContentProvider extends EventContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
 
+        JSONObject object = new JSONObject();
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/create");
         switch (sURIMatcher.match(uri)) {
@@ -116,24 +117,18 @@ public class EventRestContentProvider extends EventContentProvider {
                 break;
             case EVENTS_ID:
                 baseURL.append("/" + uri.getLastPathSegment());
+                object = this.toEvent(values);
+                break;
+            case COMMENTS:
+                break;
+            case COMMENTS_ID:
+                object = this.toComment(values);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
 
-        JSONObject object = new JSONObject();
 
-        try {
-            object.put(EventDatabase.Tables.Events.Columns.ID, values.get(EventDatabase.Tables.Events.Columns.ID));
-            object.put(EventDatabase.Tables.Events.Columns.NAME, values.get(EventDatabase.Tables.Events.Columns.NAME));
-            object.put(EventDatabase.Tables.Events.Columns.LOCATION, values.get(EventDatabase.Tables.Events.Columns.LOCATION));
-            object.put(EventDatabase.Tables.Events.Columns.DATE, values.get(EventDatabase.Tables.Events.Columns.DATE));
-            object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
-            object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
-            object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
         try {
@@ -147,6 +142,38 @@ public class EventRestContentProvider extends EventContentProvider {
         return uri;
     }
 
+    private JSONObject toEvent(ContentValues values) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put(EventDatabase.Tables.Events.Columns.ID, values.get(EventDatabase.Tables.Events.Columns.ID));
+            object.put(EventDatabase.Tables.Events.Columns.NAME, values.get(EventDatabase.Tables.Events.Columns.NAME));
+            object.put(EventDatabase.Tables.Events.Columns.LOCATION, values.get(EventDatabase.Tables.Events.Columns.LOCATION));
+            object.put(EventDatabase.Tables.Events.Columns.DATE, values.get(EventDatabase.Tables.Events.Columns.DATE));
+            object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
+            object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
+            object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
+    private JSONObject toComment(ContentValues values) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put(EventDatabase.Tables.Events.Columns.ID, values.get(EventDatabase.Tables.Events.Columns.ID));
+            object.put(EventDatabase.Tables.Events.Columns.NAME, values.get(EventDatabase.Tables.Events.Columns.NAME));
+            object.put(EventDatabase.Tables.Events.Columns.LOCATION, values.get(EventDatabase.Tables.Events.Columns.LOCATION));
+            object.put(EventDatabase.Tables.Events.Columns.DATE, values.get(EventDatabase.Tables.Events.Columns.DATE));
+            object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
+            object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
+            object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
@@ -155,6 +182,11 @@ public class EventRestContentProvider extends EventContentProvider {
             case EVENTS:
                 break;
             case EVENTS_ID:
+                baseURL.append("/" + uri.getLastPathSegment());
+                break;
+            case COMMENTS:
+                break;
+            case COMMENTS_ID:
                 baseURL.append("/" + uri.getLastPathSegment());
                 break;
             default:
@@ -174,6 +206,7 @@ public class EventRestContentProvider extends EventContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         Uri ret;
+        JSONObject object = new JSONObject();
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
         baseURL.append("/update");
         switch (sURIMatcher.match(uri)) {
@@ -181,23 +214,18 @@ public class EventRestContentProvider extends EventContentProvider {
                 break;
             case EVENTS_ID:
                 baseURL.append("/" + uri.getLastPathSegment());
+                object = this.toEvent(values);
+                break;
+            case COMMENTS:
+                break;
+            case COMMENTS_ID:
+                baseURL.append("/" + uri.getLastPathSegment());
+                object = this.toComment(values);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
 
-        JSONObject object = new JSONObject();
-        try {
-            object.put(EventDatabase.Tables.Events.Columns.ID, values.get(EventDatabase.Tables.Events.Columns.ID));
-            object.put(EventDatabase.Tables.Events.Columns.NAME, values.get(EventDatabase.Tables.Events.Columns.NAME));
-            object.put(EventDatabase.Tables.Events.Columns.LOCATION, values.get(EventDatabase.Tables.Events.Columns.LOCATION));
-            object.put(EventDatabase.Tables.Events.Columns.DATE, values.get(EventDatabase.Tables.Events.Columns.DATE));
-            object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
-            object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
-            object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
-        } catch (JSONException jsonException) {
-            jsonException.printStackTrace();
-        }
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
         JsonElement element = null;
         try {

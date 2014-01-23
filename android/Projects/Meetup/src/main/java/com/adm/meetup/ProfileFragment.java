@@ -47,11 +47,10 @@ public class ProfileFragment extends Fragment {
             public void onItemClick(AdapterView<?> a, View v, int position, final long id) {
 
                 Object itemAtPosition = profileList.getItemAtPosition(position);
-                if(itemAtPosition instanceof HashMap<?, ?>)
-                {
-                    HashMap<String, String> map = (HashMap<String, String>)itemAtPosition;
+                if (itemAtPosition instanceof HashMap<?, ?>) {
+                    HashMap<String, String> map = (HashMap<String, String>) itemAtPosition;
 
-                    if(id==0 ){
+                    if (id == 0) {
                         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
                         adb.setTitle(map.get("title"));
                         final EditText input = new EditText(getActivity());
@@ -96,15 +95,15 @@ public class ProfileFragment extends Fragment {
                 startActivity(login);
                 SharedPreferences pref = getActivity().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
-                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
-                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_EMAIL, Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME, Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME, Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH, Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 getActivity().finish();
@@ -114,9 +113,9 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void majParametersListVAdapter(){
+    private void majParametersListVAdapter() {
 
-        SimpleAdapter mSchedule=null;
+        SimpleAdapter mSchedule = null;
 
         SharedPreferences preferences =
                 getActivity().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -125,16 +124,16 @@ public class ProfileFragment extends Fragment {
 
         HashMap<String, String> map = new HashMap<String, String>();
 
-        if(mSchedule==null){
+        if (mSchedule == null) {
 
             map = new HashMap<String, String>();
-            map.put("title",getString(R.string.status));
-            map.put("description",preferences.getString(Util.PREFERENCES_STATUS,
+            map.put("title", getString(R.string.status));
+            map.put("description", preferences.getString(Util.PREFERENCES_STATUS,
                     Util.PREFERENCES_STATUS_DEFAULT));
             listItem.add(map);
 
             mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_account,
-                    new String[] {"title", "description"}, new int[] {R.id.item_title, R.id.item_description});
+                    new String[]{"title", "description"}, new int[]{R.id.item_title, R.id.item_description});
 
             profileList.setAdapter(mSchedule);
         }

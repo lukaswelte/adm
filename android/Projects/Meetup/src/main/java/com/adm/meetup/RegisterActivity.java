@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,31 +62,28 @@ public class RegisterActivity extends ActionBarActivity {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
                         try {
-                            if(e!=null){
-                                Toast.makeText(getApplicationContext(),"Connection Error", Toast.LENGTH_SHORT).show();
+                            if (e != null) {
+                                Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
                                 throw e;
                             }
                             progressBar.hide();
                             JsonElement error = jsonObject.get("error");
                             Log.d("register", jsonObject.toString());
-                            if(error != null)
-                            {
-                                Toast.makeText(getApplicationContext(),error.getAsString(), Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
+                            if (error != null) {
+                                Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
+                            } else {
                                 String token = jsonObject.get("token").getAsString();
                                 if (token != null) {
                                     SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString(Util.PREFERENCES_EMAIL,emailText.getText().toString());
+                                    editor.putString(Util.PREFERENCES_EMAIL, emailText.getText().toString());
                                     editor.commit();
                                     SharedApplication.getInstance().setUserToken(token);
                                     Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);
                                     startActivity(intent);
                                     finish();
-                                }
-                                else Toast.makeText(getApplicationContext(),getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(getApplicationContext(), getString(R.string.token_not_found_error), Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -113,7 +110,7 @@ public class RegisterActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.register, menu);
         return true;
@@ -141,7 +138,7 @@ public class RegisterActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_register, container, false);
             return rootView;
         }

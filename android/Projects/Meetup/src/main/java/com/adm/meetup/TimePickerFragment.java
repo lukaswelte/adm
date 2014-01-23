@@ -19,9 +19,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     private Boolean isDueDate;
     public View view;
 
-    public TimePickerFragment(View view){
-        this.view=view;
+    public TimePickerFragment(View view) {
+        this.view = view;
     }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -38,20 +39,20 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public void onTimeSet(TimePicker timePicker, int i, int i2) {
         Button timeBtnForDate;
         isDueDate();
-        if (!isDueDate)  timeBtnForDate =  (Button) getActivity().findViewById(R.id.eventCreatorDateBtnTime);
-        else timeBtnForDate =  (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnTime);
-        if(i<10&&i2>9)timeBtnForDate.setText("0"+i+":"+i2);
-        else if(i<10&&i2<10)timeBtnForDate.setText("0"+i+":0"+i2);
-        else if(i>9&&i2<10)timeBtnForDate.setText(""+i+":0"+i2);
-        else timeBtnForDate.setText(""+i+":"+i2);
+        if (!isDueDate)
+            timeBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDateBtnTime);
+        else timeBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnTime);
+        if (i < 10 && i2 > 9) timeBtnForDate.setText("0" + i + ":" + i2);
+        else if (i < 10 && i2 < 10) timeBtnForDate.setText("0" + i + ":0" + i2);
+        else if (i > 9 && i2 < 10) timeBtnForDate.setText("" + i + ":0" + i2);
+        else timeBtnForDate.setText("" + i + ":" + i2);
 
     }
 
-    void isDueDate(){
-        if(view.getId() == R.id.eventCreatorDateBtnTime) isDueDate=false;
-        else isDueDate =true;
+    void isDueDate() {
+        if (view.getId() == R.id.eventCreatorDateBtnTime) isDueDate = false;
+        else isDueDate = true;
     }
-
 
 
 }

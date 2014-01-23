@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapActivity" >
+    tools:context=".MapActivity">
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+    <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_height="48dp"
         android:orientation="horizontal"
         android:background="#80000000"
-        android:padding="4dp" >
+        android:padding="4dp">
 
         <ToggleButton
             android:id="@+id/map_meetup_toggle_party_mode"
@@ -28,9 +28,9 @@
             android:textOff="@string/map_meetup_party_mode"
             android:textOn="@string/map_meetup_party_mode"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_weight="1"/>
-            <!--android:background="@drawable/shape_radiobutton"-->
-            <!--android:textColor="@color/textcolor_radiobutton"-->
+            android:layout_weight="1" />
+        <!--android:background="@drawable/shape_radiobutton"-->
+        <!--android:textColor="@color/textcolor_radiobutton"-->
         <View
             android:layout_width="1dip"
             android:layout_height="match_parent"
@@ -44,9 +44,9 @@
             android:gravity="center_horizontal|center_vertical"
             android:textOff="@string/map_meetup_whos_partying"
             android:textOn="@string/map_meetup_whos_partying"
-            android:layout_weight="1"/>
-            <!--android:background="@drawable/shape_radiobutton2"-->
-            <!--android:textColor="@color/textcolor_radiobutton" -->
+            android:layout_weight="1" />
+        <!--android:background="@drawable/shape_radiobutton2"-->
+        <!--android:textColor="@color/textcolor_radiobutton" -->
 
 
         <View
@@ -63,9 +63,9 @@
             android:text="@string/map_meetup_events"
             android:textOff="@string/map_meetup_events"
             android:textOn="@string/map_meetup_events"
-            android:layout_weight="1"/>
-            <!--android:background="@drawable/shape_radiobutton2"-->
-            <!--android:textColor="@color/textcolor_radiobutton"-->
+            android:layout_weight="1" />
+        <!--android:background="@drawable/shape_radiobutton2"-->
+        <!--android:textColor="@color/textcolor_radiobutton"-->
         <View
             android:layout_width="1dip"
             android:layout_height="match_parent"
@@ -79,7 +79,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:textOff="@string/map_meetup_friends"
             android:textOn="@string/map_meetup_friends"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </RadioGroup>
 
     <LinearLayout

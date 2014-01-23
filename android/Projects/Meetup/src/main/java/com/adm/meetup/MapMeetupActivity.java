@@ -25,7 +25,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.gson.JsonArray;
@@ -66,7 +65,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     private ArrayList<Marker> eventsMarkers = new ArrayList<Marker>();
     private ArrayList<Marker> friendsMarkers = new ArrayList<Marker>();
 
-    private HashMap<Marker,PersonNearYou> personNearYouHashMap = new HashMap<Marker, PersonNearYou>();
+    private HashMap<Marker, PersonNearYou> personNearYouHashMap = new HashMap<Marker, PersonNearYou>();
 
     protected LocationManager locationManager;
     protected Context context;
@@ -78,8 +77,7 @@ public class MapMeetupActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
 
-            if(servicesConnected())
-            {
+            if (servicesConnected()) {
 
                 EditText statusEditText = (EditText) findViewById(R.id.map_status_edit_text);
 
@@ -187,13 +185,13 @@ public class MapMeetupActivity extends ActionBarActivity {
             int requestCode, int resultCode, Intent data) {
         // Decide what to do based on the original request code
         switch (requestCode) {
-            case CONNECTION_FAILURE_RESOLUTION_REQUEST :
+            case CONNECTION_FAILURE_RESOLUTION_REQUEST:
             /*
              * If the result code is Activity.RESULT_OK, try
              * to connect again
              */
                 switch (resultCode) {
-                    case Activity.RESULT_OK :
+                    case Activity.RESULT_OK:
                     /*
                      * Try the request again
                      */
@@ -215,23 +213,23 @@ public class MapMeetupActivity extends ActionBarActivity {
     }
 
     private void zoomToUserLocationAndFetchMarkers() {
-            Location location = map.getMyLocation();
+        Location location = map.getMyLocation();
 
-            if (location != null) {
-                // Move the camera instantly to the current location
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), MAP_DEFAULT_CAMERA_ZOOM));
-                fetchMarkersWithLocation(location);
+        if (location != null) {
+            // Move the camera instantly to the current location
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), MAP_DEFAULT_CAMERA_ZOOM));
+            fetchMarkersWithLocation(location);
 
-            } else {
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        zoomToUserLocationAndFetchMarkers();
-                    }
-                }, 500);
-            }
+        } else {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    zoomToUserLocationAndFetchMarkers();
+                }
+            }, 500);
         }
+    }
 
     private void fetchMarkersWithLocation(Location location) {
         if (location == null) {
@@ -252,7 +250,7 @@ public class MapMeetupActivity extends ActionBarActivity {
 
         float distanceInMeters = farLeft.distanceTo(farRight);
 
-        NetworkHelper.peopleNearYouRequest(this,location.getLongitude(),location.getLatitude(), distanceInMeters, new FutureCallback<JsonArray>() {
+        NetworkHelper.peopleNearYouRequest(this, location.getLongitude(), location.getLatitude(), distanceInMeters, new FutureCallback<JsonArray>() {
             @Override
             public void onCompleted(Exception e, JsonArray jsonElements) {
                 try {
@@ -265,7 +263,7 @@ public class MapMeetupActivity extends ActionBarActivity {
                             PersonNearYou personNearYou = new PersonNearYou(element.getAsJsonObject());
                             Marker marker = personNearYou.addToMap(map);
                             if (marker != null) {
-                                personNearYouHashMap.put(marker,personNearYou);
+                                personNearYouHashMap.put(marker, personNearYou);
                             }
                         }
                     }

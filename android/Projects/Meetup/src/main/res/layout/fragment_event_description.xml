@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,8 +12,7 @@
         android:id="@+id/eventDescNameTextView"
         android:textColor="#000066"
         android:textSize="23dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,8 +24,7 @@
         android:id="@+id/eventDescTextView1"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/eventDescNameTextView"
-         />
+        android:layout_below="@+id/eventDescNameTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,8 +36,7 @@
         android:id="@+id/eventDescLocationTextView"
         android:textSize="18dp"
         android:layout_below="@+id/eventDescNameTextView"
-        android:layout_toRightOf="@+id/eventDescTextView1"
-        />
+        android:layout_toRightOf="@+id/eventDescTextView1" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,8 +59,7 @@
         android:id="@+id/eventDescAttendeeTextView"
         android:textSize="18dp"
         android:layout_below="@+id/eventDescNameTextView"
-        android:layout_toRightOf="@+id/eventDescTextView2"
-        />
+        android:layout_toRightOf="@+id/eventDescTextView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,8 +71,7 @@
         android:id="@+id/eventDescTextView3"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView1"
-        />
+        android:layout_below="@+id/eventDescTextView1" />
 
 
     <TextView
@@ -90,8 +84,7 @@
         android:id="@+id/eventDescDateTextView"
         android:textSize="18dp"
         android:layout_below="@+id/eventDescTextView1"
-        android:layout_toRightOf="@+id/eventDescTextView3"
-        />
+        android:layout_toRightOf="@+id/eventDescTextView3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -105,7 +98,7 @@
         android:textStyle="bold"
         android:layout_below="@+id/eventDescTextView3"
 
-    />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -117,8 +110,7 @@
         android:id="@+id/eventDescDueDateTextView"
         android:textSize="18dp"
         android:layout_below="@+id/eventDescTextView3"
-        android:layout_toRightOf="@+id/eventDescTextView4"
-        />
+        android:layout_toRightOf="@+id/eventDescTextView4" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -130,8 +122,7 @@
         android:id="@+id/eventDescTextView5"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_below="@+id/eventDescTextView4"
-        />
+        android:layout_below="@+id/eventDescTextView4" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,7 +135,6 @@ Sed ut perspiciatis unde omnis iste natus error sab illo inventore verit archite
         android:textColor="#040404"
         android:id="@+id/eventDescriptionTextView"
         android:textSize="18dp"
-        android:layout_below="@+id/eventDescTextView5"
-        />
+        android:layout_below="@+id/eventDescTextView5" />
 
 </RelativeLayout>

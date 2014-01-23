@@ -19,9 +19,10 @@ public class DatePickerFragment extends DialogFragment
     private Boolean isDueDate;
     public View view;
 
-    public DatePickerFragment(View view){
-        this.view=view;
+    public DatePickerFragment(View view) {
+        this.view = view;
     }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
@@ -37,16 +38,20 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Button dateBtnForDate;
         isDueDate();
-        if(!isDueDate) dateBtnForDate=  (Button) getActivity().findViewById(R.id.eventCreatorDateBtnDate);
-        else dateBtnForDate=  (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnDate);
-        if(month<9 && day<10) dateBtnForDate.setText("0"+day+".0"+(month+1)+"."+year);
-        else if(month<9 && day>9)  dateBtnForDate.setText(""+day+".0"+(month+1)+"."+year);
-        else if(month>9 && day <10) dateBtnForDate.setText("0"+day+"."+(month+1)+"."+year);
-        else dateBtnForDate.setText(""+day+"."+(month+1)+"."+year);
+        if (!isDueDate)
+            dateBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDateBtnDate);
+        else dateBtnForDate = (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnDate);
+        if (month < 9 && day < 10)
+            dateBtnForDate.setText("0" + day + ".0" + (month + 1) + "." + year);
+        else if (month < 9 && day > 9)
+            dateBtnForDate.setText("" + day + ".0" + (month + 1) + "." + year);
+        else if (month > 9 && day < 10)
+            dateBtnForDate.setText("0" + day + "." + (month + 1) + "." + year);
+        else dateBtnForDate.setText("" + day + "." + (month + 1) + "." + year);
     }
 
-    void isDueDate(){
-        if(view.getId() == R.id.eventCreatorDateBtnDate) isDueDate=false;
-        else isDueDate =true;
+    void isDueDate() {
+        if (view.getId() == R.id.eventCreatorDateBtnDate) isDueDate = false;
+        else isDueDate = true;
     }
 }

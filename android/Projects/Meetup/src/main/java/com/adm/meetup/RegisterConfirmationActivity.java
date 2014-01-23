@@ -24,8 +24,8 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
         setContentView(R.layout.activity_register_confirmation);
         Button mainButton, profileButton;
 
-        mainButton=(Button)findViewById(R.id.register_confirmation_main_button);
-        profileButton=(Button)findViewById(R.id.register_confirmation_profile_button);
+        mainButton = (Button) findViewById(R.id.register_confirmation_main_button);
+        profileButton = (Button) findViewById(R.id.register_confirmation_profile_button);
 
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.register_confirmation, menu);
         return true;
@@ -76,7 +76,7 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_register_confirmation, container, false);
             return rootView;
         }

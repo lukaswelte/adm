@@ -40,7 +40,7 @@ public class EventListFragment extends Fragment {
         EventManager manager = new EventManager(getActivity());
         manager.deleteEvents();
         List<Event> eventList = manager.getEvents();
-        for(int i=0;i<eventList.size();i++){
+        for (int i = 0; i < eventList.size(); i++) {
             manager.deleteEvent(eventList.get(i));
         }
         Log.d("size : ", " " + manager.getEvents().size());
@@ -65,7 +65,7 @@ public class EventListFragment extends Fragment {
 
 
     @Override
-    public void onCreate (Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -74,7 +74,7 @@ public class EventListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.event_list, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -95,12 +95,11 @@ public class EventListFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        DrawerLayout dr =(DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        ListView dl= (ListView) getActivity().findViewById(R.id.left_drawer);
-        if(dr.isDrawerOpen(dl)){
+        DrawerLayout dr = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ListView dl = (ListView) getActivity().findViewById(R.id.left_drawer);
+        if (dr.isDrawerOpen(dl)) {
             menu.findItem(R.id.action_create_event).setVisible(false);
-        }
-        else  menu.findItem(R.id.action_create_event).setVisible(true);
+        } else menu.findItem(R.id.action_create_event).setVisible(true);
 
         super.onPrepareOptionsMenu(menu);
     }

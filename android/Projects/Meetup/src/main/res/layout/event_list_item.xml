@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/list_event_selector"
-    >
+    android:background="@drawable/list_event_selector">
 
     <LinearLayout
         android:id="@+id/EventListThumbnail"
@@ -30,8 +29,7 @@
         android:textColor="#040404"
         android:id="@+id/eventNameTextView"
         android:textSize="18dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,8 +41,7 @@
         android:layout_below="@+id/eventNameTextView"
         android:layout_toRightOf="@+id/EventListThumbnail"
         android:layout_marginTop="1dp"
-        android:textColor="#343434"
-       />
+        android:textColor="#343434" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,6 +52,6 @@
         android:textColor="#454649"
         android:layout_marginTop="1dp"
         android:layout_toRightOf="@+id/eventLocationTextView"
-        android:layout_below="@+id/eventNameTextView"/>
+        android:layout_below="@+id/eventNameTextView" />
 
 </RelativeLayout>

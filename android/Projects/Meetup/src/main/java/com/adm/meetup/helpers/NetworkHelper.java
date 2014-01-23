@@ -147,11 +147,11 @@ public class NetworkHelper {
     /**
      * Method to find the people around you
      *
-     * @param context  The applications context interested in the request
-     * @param longitude    The users longitude
-     * @param latitude The users latitude
-     * @param distance The max distance between the user and the people he will see
-     * @param callback The Response JsonArray Handler dealing with the result
+     * @param context   The applications context interested in the request
+     * @param longitude The users longitude
+     * @param latitude  The users latitude
+     * @param distance  The max distance between the user and the people he will see
+     * @param callback  The Response JsonArray Handler dealing with the result
      */
     public static void peopleNearYouRequest(Context context, double longitude, double latitude, float distance, FutureCallback<JsonArray> callback) {
         JsonObject postedJsonObject = new JsonObject();

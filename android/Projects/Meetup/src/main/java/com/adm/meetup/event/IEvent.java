@@ -26,4 +26,8 @@ public interface IEvent {
     public Date getDueDate();
 
     public void setDueDate(Date dueDate);
+
+    public String getDescription();
+
+    public void setDescription(String description);
 }
