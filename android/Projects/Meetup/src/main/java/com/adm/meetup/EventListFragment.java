@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +38,12 @@ public class EventListFragment extends Fragment {
 
         eventListView = (ListView) getView().findViewById(R.id.eventListView);
         EventManager manager = new EventManager(getActivity());
+        manager.deleteEvents();
         List<Event> eventList = manager.getEvents();
+        for(int i=0;i<eventList.size();i++){
+            manager.deleteEvent(eventList.get(i));
+        }
+        Log.d("size : ", " " + manager.getEvents().size());
         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), eventList);
         eventListView.setAdapter(eventListAdapter);
 

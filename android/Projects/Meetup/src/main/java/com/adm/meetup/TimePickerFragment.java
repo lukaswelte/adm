@@ -40,7 +40,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         isDueDate();
         if (!isDueDate)  timeBtnForDate =  (Button) getActivity().findViewById(R.id.eventCreatorDateBtnTime);
         else timeBtnForDate =  (Button) getActivity().findViewById(R.id.eventCreatorDueDateBtnTime);
-        timeBtnForDate.setText(""+i+":"+i2);
+        if(i<10&&i2>9)timeBtnForDate.setText("0"+i+":"+i2);
+        else if(i<10&&i2<10)timeBtnForDate.setText("0"+i+":0"+i2);
+        else if(i>9&&i2<10)timeBtnForDate.setText(""+i+":0"+i2);
+        else timeBtnForDate.setText(""+i+":"+i2);
 
     }
 

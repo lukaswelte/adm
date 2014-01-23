@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
 
+import java.text.SimpleDateFormat;
+
 
 /**
  * Created by florian on 22/01/2014.
@@ -36,9 +38,12 @@ public class EventDescriptionFragment  extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        SimpleDateFormat sd = new SimpleDateFormat("dd:MM:yyyy HH:mm");
+
         Bundle extras = getArguments();
         EventManager manager = new EventManager(getActivity());
         Event event = manager.getEvents().get(extras.getInt("index"));
+
         nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
         nameTexView.setText(event.getName());
 
@@ -49,11 +54,10 @@ public class EventDescriptionFragment  extends Fragment  {
         attenteeTextView.setText(" "+event.getAttendee());
 
         dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
-        dateTexView.setText(""+event.getDate().toString());
+        dateTexView.setText(""+sd.format(event.getDate()));
 
         dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
-        dueDateTexView.setText(""+event.getDueDate().toString());
-
+        dueDateTexView.setText(""+sd.format(event.getDueDate()));
 
     }
 
@@ -64,23 +68,4 @@ public class EventDescriptionFragment  extends Fragment  {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.event_list, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_create_event:
-                Toast.makeText(getActivity().getApplicationContext(), "Create new event ", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

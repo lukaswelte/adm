@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Creation of a new Event"
+        android:text="Create a new Event :"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
@@ -57,8 +57,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#D4D4D8"
         android:layout_marginLeft="5dp"
+        android:paddingTop="4dp"
+        android:background="@drawable/button_normal"
+        android:textColor="@android:color/white"
         android:text="Set Time"
         android:id="@+id/eventCreatorDateBtnTime" />
 
@@ -66,8 +68,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:paddingTop="4dp"
+            android:background="@drawable/button_normal"
+            android:textColor="@android:color/white"
             android:text="Set Date"
-            android:background="#D4D4D8"
             android:id="@+id/eventCreatorDateBtnDate" />
 
 
@@ -92,8 +96,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#D4D4D8"
-                android:layout_marginLeft="5dp"
+                android:paddingTop="4dp"
+                android:background="@drawable/button_normal"
+                android:textColor="@android:color/white"                android:layout_marginLeft="5dp"
                 android:text="Set Time"
                 android:id="@+id/eventCreatorDueDateBtnTime" />
 
@@ -102,18 +107,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="Set Date"
-                android:background="#D4D4D8"
-                android:id="@+id/eventCreatorDueDateBtnDate" />
+                android:paddingTop="4dp"
+                android:background="@drawable/button_normal"
+                android:textColor="@android:color/white"                android:id="@+id/eventCreatorDueDateBtnDate" />
 
         </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
+        android:padding="5dp"
         android:text="Save Event"
-        android:background="#D4D4D8"
+        android:background="@drawable/gradient_bg_list_event"
         android:id="@+id/eventCreatorSaveBtn" />
 
 

@@ -43,17 +43,14 @@ public class EventCreatorFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-       timeBtnForDate = (Button) getView().findViewById(R.id.eventCreatorDateBtnTime);
-       dateBtn = (Button) getView().findViewById(R.id.eventCreatorDateBtnDate);
+
+        timeBtnForDate = (Button) getView().findViewById(R.id.eventCreatorDateBtnTime);
+        dateBtn = (Button) getView().findViewById(R.id.eventCreatorDateBtnDate);
         timeBtnForDueDate = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnTime);
         dueDateBtn = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnDate);
         saveBtn = (Button) getView().findViewById(R.id.eventCreatorSaveBtn);
         nameEditText = (EditText) getView().findViewById(R.id.eventCreatorNameTextField);
         locationEditText = (EditText) getView().findViewById(R.id.eventCreatorLocationTextField);
-
-
-
-
 
         View.OnClickListener dateListener = new View.OnClickListener() {
             @Override
@@ -76,11 +73,13 @@ public class EventCreatorFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 EventManager manager = new EventManager(getActivity());
+
                 int id = manager.getEvents().size();
+
                 String dateString = dateBtn.getText().toString() + " "+timeBtnForDate.getText().toString();
                 String dueDateString = dueDateBtn.getText().toString()+ " " +timeBtnForDueDate.getText().toString();
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+                DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
                 Date date = null;
                 Date dueDate = null;
@@ -92,17 +91,14 @@ public class EventCreatorFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-
-
                 Event event = new Event();
-                event.setId(Long.valueOf(id+1));
+                event.setId(Long.valueOf(id + 1));
                 event.setName(nameEditText.getText().toString());
                 event.setAttendee(Long.valueOf(232));
                 event.setLocation(locationEditText.getText().toString());
 
-                if(date !=null) event.setDate(date);
-                if(dueDate !=null) event.setDueDate(dueDate);
-
+                event.setDate(date);
+                event.setDueDate(dueDate) ;
                 manager.createEvent(event);
 
                 Fragment fragmentListEvent = new EventListFragment();
@@ -112,7 +108,7 @@ public class EventCreatorFragment extends Fragment {
         });
 
 
-       timeBtnForDate.setOnClickListener(timeListener);
+        timeBtnForDate.setOnClickListener(timeListener);
         timeBtnForDueDate.setOnClickListener(timeListener);
         dateBtn.setOnClickListener(dateListener);
         dueDateBtn.setOnClickListener(dateListener);

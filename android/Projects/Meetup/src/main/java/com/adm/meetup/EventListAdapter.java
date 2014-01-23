@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.adm.meetup.event.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class EventListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.event_list_item, viewGroup, false);
-
+        SimpleDateFormat sd = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
         if (itemView != null) {
             Event event = eventList.get(i);
@@ -62,8 +63,8 @@ public class EventListAdapter extends BaseAdapter {
             TextView eventLocation = (TextView) itemView.findViewById(R.id.eventLocationTextView);
             eventLocation.setText(event.getLocation()+",");
 
-            TextView eventDate = (TextView) itemView.findViewById(R.id.eventAtendeeTextView);
-            eventDate.setText(""+event.getAttendee()+" Attendees");
+            //TextView eventDate = (TextView) itemView.findViewById(R.id.eventAtendeeTextView);
+            //eventDate.setText(""+sd.format(event.getDate()));
         }
 
         return itemView;
