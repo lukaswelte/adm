@@ -35,7 +35,7 @@ public class TestEventDecorator extends TestCase {
 
     public void testBaseEvent() throws Exception {
         BaseEvent e = new Event();
-        String name = "event";
+        String name = "ic_event_sidebar";
         String location = "Event location";
         Long id = Long.MIN_VALUE;
         Date date = new Date(2013, 12, 28);

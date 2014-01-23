@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
+                R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
                 R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
@@ -174,9 +175,12 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new CalendarFragment();
                 break;
             case 3:
+                fragment = new LoadMapFragment();
+                break;
+            case 4:
                 fragment = new ProfileFragment();
                 break;
-            case 5:
+            case 6:
                 fragment = new TeamFragment();
                 break;
             default:

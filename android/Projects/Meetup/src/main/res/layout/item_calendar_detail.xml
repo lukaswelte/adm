@@ -5,7 +5,8 @@
     android:orientation="horizontal"
     android:id="@+id/layoutItemScore"
     android:padding="5dip"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/item_detail"

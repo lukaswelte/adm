@@ -70,6 +70,7 @@
         <item>Home</item>
         <item>Events</item>
         <item>Calendar</item>
+        <item>Map</item>
         <item>Profile</item>
         <item>Settings</item>
         <item>Team</item>
@@ -147,5 +148,8 @@
         <item>Trip</item>
     </string-array>
 
+    <string name="advice_events_day">Events for this day:</string>
+    <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
+    <string name="map_load">...loading map</string>
 
 </resources>

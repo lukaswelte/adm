@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -49,9 +52,48 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
     private final String PREFERENCES_FILE = "calendar_preferences";
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.event_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // Handle action bar actions click
+        switch (item.getItemId()) {
+            case R.id.action_create_event:
+                Intent intent = new Intent(getActivity(), CreateExamActivity.class);
+                startActivityForResult(intent, 20);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        DrawerLayout dr = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ListView dl = (ListView) getActivity().findViewById(R.id.left_drawer);
+        if (dr.isDrawerOpen(dl)) {
+            menu.findItem(R.id.action_create_event).setVisible(false);
+        } else menu.findItem(R.id.action_create_event).setVisible(true);
+
+        super.onPrepareOptionsMenu(menu);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -94,14 +136,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         cal = (CalendarView) view.findViewById(R.id.calendar);
         cal.setOnDispatchDateSelectListener(this);
-        Button bAddExam = (Button) view.findViewById(R.id.calendar_add_exam);
-        bAddExam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateExamActivity.class);
-                startActivityForResult(intent, 20);
-            }
-        });
+
 
 
     }
@@ -280,8 +315,7 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     @Override
     public void onDispatchDateSelect(Date date) {
-        Button bAddExam = (Button) getView().findViewById(R.id.calendar_add_exam);
-        bAddExam.setVisibility(View.VISIBLE);
+
         details_name = new ArrayList<String>();
         mTextDate.setText(mFormat.format(date));
 
@@ -295,6 +329,10 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
     private void updateExamListForDate(Date date) {
         ArrayList<Exam> examsOnDay = exams.get(Exam.getDateYearIdentifierOfDate(date));
+
+        TextView tv = (TextView) getView().findViewById(R.id.exam_overview);
+        if(examsOnDay!=null) tv.setVisibility(View.VISIBLE);
+        else tv.setVisibility(View.GONE);
 
         examListView.setAdapter(new ExamListAdapter(getActivity(), examsOnDay));
     }

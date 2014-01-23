@@ -47,7 +47,7 @@ public class RegisterActivity extends ActionBarActivity {
         registerButton = (Button) findViewById(R.id.register_registerNewAccount_button);
         loginButton = (Button) findViewById(R.id.register_linkToLogin_button);
 
-        // Register Button Click event
+        // Register Button Click ic_event_sidebar
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String email = emailText.getText().toString();

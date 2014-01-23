@@ -20,18 +20,23 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/calendar_select_date"
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:id="@+id/display_date"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
 
-        android:id="@+id/display_date" />
-
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:id="@+id/calendar_add_exam"
-        android:background="@drawable/button_normal"
-        android:textColor="@android:color/white"
-        android:layout_gravity="left"
-        android:text="@string/calendar_add_exam" />
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:text="@string/advice_events_day"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/exam_overview"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
 
     <ListView
         android:layout_width="match_parent"

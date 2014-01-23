@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.adm.meetup.event.Event;
 import com.adm.meetup.helpers.DateHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
