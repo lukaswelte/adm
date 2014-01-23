@@ -11,6 +11,5 @@ import java.sql.SQLException;
 public class TestEventManagerWithDb extends TestEventManager {
     public void setUp() throws SQLException {
         manager = new EventManager(new EventDbContentProvider(getContext()));
-
     }
 }

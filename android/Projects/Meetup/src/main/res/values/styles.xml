@@ -6,6 +6,25 @@
 
     </style>
 
+    <!-- Color -->
+    <style name="AppColor" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:background">#e2ebf5</item>
+
+    </style>
+
+    <!-- Background theme -->
+    <style name="AppThemeBg" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/background</item>
+    </style>
+
+    <!-- Profile theme-->
+    <style name="AppThemeProfile" parent="android:Theme.Holo.Light.NoActionBar">
+
+    </style>
+
+
 </resources>
 
 

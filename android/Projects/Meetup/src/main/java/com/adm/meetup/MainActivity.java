@@ -125,20 +125,20 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_logout:
-                ProfileActivity.onClickLogout();
-                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
+                LoginActivity.onClickLogout();
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
-                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
-                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_EMAIL, Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME, Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME, Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH, Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 finish();
@@ -163,20 +163,40 @@ public class MainActivity extends ActionBarActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
 
+            case 0:
+                Fragment homeFragment = new HomeFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, homeFragment).commit();
+                break;
 
+
+            case 1:
+                Fragment fragmentEvent = new EventListFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvent).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+                break;
             case 2:
                 Fragment fragment = new CalendarFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
+                break;
+            case 3:
+                Fragment fragmentProfile = new ProfileFragment();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentProfile).commit();
                 break;
 
             case 5:
                 Fragment fragmentTeam = new TeamFragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
                 break;
 
             default:
                 Fragment emptyFragment = new Fragment();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+
                 break;
 
         }

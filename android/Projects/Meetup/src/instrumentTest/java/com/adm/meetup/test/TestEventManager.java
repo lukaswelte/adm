@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,7 +47,6 @@ abstract public class TestEventManager extends AndroidTestCase {
 
     public static void tearDownClass() throws Exception {
     }
-
 
     abstract public void setUp() throws SQLException;
 
@@ -86,7 +84,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment.setId(Long.valueOf(1));
         comment.setEventId(Long.valueOf(1));
         comment.setUserId(userId);
-        comment.setDate(new Date(2014,12,12));
+        comment.setDate(new Date(2014, 12, 12));
         comment.setComment("comment");
 
         manager.createEventComment(comment);
@@ -202,7 +200,7 @@ abstract public class TestEventManager extends AndroidTestCase {
      * Test of createEventComment method, of class EventManagerImpl.
      */
 
-    public void  testCreateEventComment() {
+    public void testCreateEventComment() {
         manager.deleteEvents();
         manager.deleteEventComments();
         Event event = new Event();
@@ -218,7 +216,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment.setId(Long.valueOf(1));
         comment.setEventId(event.getId());
         comment.setUserId(userId);
-        comment.setDate(new Date(12,12,2014));
+        comment.setDate(new Date(12, 12, 2014));
         comment.setComment("comment");
 
         manager.createEventComment(comment);
@@ -282,7 +280,7 @@ abstract public class TestEventManager extends AndroidTestCase {
      * Test of updateEvent method, of class EventManagerImpl.
      */
 
-   public void testUpdateEventComment() {
+    public void testUpdateEventComment() {
         manager.deleteEvents();
         manager.deleteEventComments();
         Event event = new Event();
@@ -308,7 +306,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment2.setId(Long.valueOf(2));
         comment2.setEventId(event.getId());
         comment2.setUserId(userId);
-        comment2.setDate(new Date(2014,12,12));
+        comment2.setDate(new Date(2014, 12, 12));
         comment2.setComment("comment 2");
 
         manager.createEventComment(comment2);
@@ -331,7 +329,7 @@ abstract public class TestEventManager extends AndroidTestCase {
 
         // test setDate
         comment = manager.getEventCommentById(commentId);
-        comment.setDate(new Date(2012,10,10));
+        comment.setDate(new Date(2012, 10, 10));
         manager.updateEventComment(comment);
         result = manager.getEventCommentById(commentId);
         assertDeepCommentEquals(comment, result);
@@ -419,7 +417,6 @@ abstract public class TestEventManager extends AndroidTestCase {
     }
 
 
-
     private static Comparator<Event> idComparator = new Comparator<Event>() {
 
         @Override
@@ -446,7 +443,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment.setId(Long.valueOf(1));
         comment.setEventId(event.getId());
         comment.setUserId(userId);
-        comment.setDate(new Date(12,12,2014));
+        comment.setDate(new Date(12, 12, 2014));
         comment.setComment("comment");
 
         manager.createEventComment(comment);
@@ -455,7 +452,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         comment2.setId(Long.valueOf(2));
         comment2.setEventId(event.getId());
         comment2.setUserId(userId);
-        comment2.setDate(new Date(12,12,2014));
+        comment2.setDate(new Date(12, 12, 2014));
         comment2.setComment("comment");
 
         manager.createEventComment(comment2);

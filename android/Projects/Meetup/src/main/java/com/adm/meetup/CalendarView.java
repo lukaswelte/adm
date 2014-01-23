@@ -47,7 +47,6 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         mFormatYear = new SimpleDateFormat("yyyy");
 
         mConvertView = LayoutInflater.from(context).inflate(R.layout.view_calendar, this);
-        //May produce NullPointerExc !
         mGrid = (GridView) mConvertView.findViewById(R.id.calendar_days);
 
         mGrid.setOnItemClickListener(this);
@@ -88,6 +87,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
         int dateMonth = mCalendar.get(Calendar.MONTH),
                 currentMonth = mCalendar.get(Calendar.MONTH),
                 i = 0;
+        //Initializing to the previous sunday
         mCalendar.add(Calendar.DAY_OF_YEAR, -(mCalendar.get(Calendar.DAY_OF_WEEK) - 1));
         while (dateMonth == currentMonth) {
             mMonthAL.add(mCalendar.getTime());

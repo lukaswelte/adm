@@ -1,8 +1,8 @@
 package com.adm.meetup.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 
+import com.adm.meetup.calendar.Exam;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,7 +28,7 @@ public class NetworkHelper {
      * @param jsonObjectHandler The Response JsonObject Handler dealing with the result
      */
     public static void requestBackend(Context context, String apiURL, JsonObject postedJsonObject, FutureCallback jsonObjectHandler) {
-        requestBackend(context, apiURL, postedJsonObject, jsonObjectHandler, false);
+        requestBackend(context, apiURL, postedJsonObject, jsonObjectHandler, true);
     }
 
     /**
@@ -81,6 +81,88 @@ public class NetworkHelper {
     }
 
     /**
+     * Method to trigger holidays on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param year     The year we want the holidays of
+     * @param country  The country we want the holidays of
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void holidaysRequest(Context context, String year, String country,
+                                       FutureCallback<JsonArray> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("year", year);
+        postedJsonObject.addProperty("country", country);
+
+        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback, true);
+    }
+
+    /**
+     * Method to trigger list of exams on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void examsRequest(Context context, FutureCallback<JsonArray> callback) {
+        NetworkHelper.requestBackend(context, "/exam", null, callback, true);
+    }
+
+    /**
+     * Method to add an exam on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param exam     The exam to create
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void createExamRequest(Context context,
+                                         Exam exam, FutureCallback<JsonObject> callback) {
+
+        NetworkHelper.requestBackend(context, "/exam/create", exam.asJsonObject(), callback, true);
+    }
+
+    /**
+     * Method to update an exam on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param id       The id of the exam to be updated
+     * @param exam     The exam to update
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void updateExamRequest(Context context, int id,
+                                         Exam exam, FutureCallback<JsonObject> callback) {
+        NetworkHelper.requestBackend(context, "/exam/update", exam.asJsonObject(), callback, true);
+    }
+
+    /**
+     * Method to delete an exam on the backend
+     *
+     * @param context  The applications context interested in the request
+     * @param exam     The exam to be deleted
+     * @param callback The Response JsonObject Handler dealing with the result
+     */
+    public static void deleteExamRequest(Context context, Exam exam, FutureCallback<JsonObject> callback) {
+        NetworkHelper.requestBackend(context, "/exam/delete", exam.asJsonObject(), callback, true);
+    }
+
+    /**
+     * Method to find the people around you
+     *
+     * @param context   The applications context interested in the request
+     * @param longitude The users longitude
+     * @param latitude  The users latitude
+     * @param distance  The max distance between the user and the people he will see
+     * @param callback  The Response JsonArray Handler dealing with the result
+     */
+    public static void peopleNearYouRequest(Context context, double longitude, double latitude, float distance, FutureCallback<JsonArray> callback) {
+        JsonObject postedJsonObject = new JsonObject();
+        postedJsonObject.addProperty("latitude", latitude);
+        postedJsonObject.addProperty("longitude", longitude);
+        postedJsonObject.addProperty("distance", distance);
+
+        NetworkHelper.requestBackend(context, "/profiles/nearyou/", postedJsonObject, callback, true);
+    }
+
+    /**
      * Method to trigger login via email and password on the backend
      *
      * @param context  The applications context interested in the request
@@ -93,94 +175,7 @@ public class NetworkHelper {
         postedJsonObject.addProperty("email", email);
         postedJsonObject.addProperty("password", password);
 
-        NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback);
-    }
-
-    /**
-     * Method to trigger holidays on the backend
-     *
-     * @param context  The applications context interested in the request
-     * @param year    The year we want the holidays of
-     * @param country The country we want the holidays of
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void holidaysRequest(Context context, String year, String country,
-                                       FutureCallback<JsonArray> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("year", year);
-        postedJsonObject.addProperty("country", country);
-
-        NetworkHelper.requestBackend(context, "/holidays", postedJsonObject, callback);
-    }
-
-    /**
-     * Method to trigger list of exams on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void examsRequest(Context context, String token, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-
-        NetworkHelper.requestBackend(context, "/exam", postedJsonObject, callback);
-    }
-
-    /**
-     * Method to add an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param date The date of the exam
-     * @param notifyDate The date of notification of the exam
-     * @param name The name of the exam
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void createExamRequest(Context context, String token, String date, String notifyDate,
-                                         String name, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("date", "14.12.2013 14:30");
-        postedJsonObject.addProperty("notifydate", "14.12.2013 12:30");
-        postedJsonObject.addProperty("name", "English Exam");
-
-        NetworkHelper.requestBackend(context, "/exam/create", postedJsonObject, callback);
-    }
-
-    /**
-     * Method to update an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param id The id of the exam to be updated
-     * @param date The date of the exam
-     * @param notifyDate The date of notification of the exam
-     * @param name The name of the exam
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void updateExamRequest(Context context, String token, int id, String date,
-                                         String notifyDate, String name, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("id", 3123);
-        postedJsonObject.addProperty("date", "14.12.2013 14:30");
-        postedJsonObject.addProperty("notifydate", "14.12.2013 12:30");
-        postedJsonObject.addProperty("name", "English Exam");
-
-        NetworkHelper.requestBackend(context, "/exam/update", postedJsonObject, callback);
-    }
-
-    /**
-     * Method to delete an exam on the backend
-     * @param context The applications context interested in the request
-     * @param token The token of the user we want the list of exams
-     * @param id The id of the exam to be deleted
-     * @param callback The Response JsonObject Handler dealing with the result
-     */
-    public static void deleteExamRequest(Context context, String token, int id, FutureCallback<JsonObject> callback) {
-        JsonObject postedJsonObject = new JsonObject();
-        postedJsonObject.addProperty("token", token);
-        postedJsonObject.addProperty("id", 3123);
-
-        NetworkHelper.requestBackend(context, "/exam/delete", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/auth/login", postedJsonObject, callback, false);
     }
 
     /**
@@ -196,18 +191,20 @@ public class NetworkHelper {
         postedJsonObject.addProperty("email", email);
         postedJsonObject.addProperty("password", password);
 
-        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback);
-    }    /**
+        NetworkHelper.requestBackend(context, "/auth/signup", postedJsonObject, callback, false);
+    }
+
+    /**
      * Method to Authenticate the user from facebook
      *
-     * @param context  The applications context interested in the request
-     * @param facebookAuthToken    facebook auth token
-     * @param callback The Response JsonObject Handler dealing with the result
+     * @param context           The applications context interested in the request
+     * @param facebookAuthToken facebook auth token
+     * @param callback          The Response JsonObject Handler dealing with the result
      */
     public static void facebookAuthRequest(Context context, String facebookAuthToken, FutureCallback<JsonObject> callback) {
         JsonObject postedJsonObject = new JsonObject();
         postedJsonObject.addProperty("facebookToken", facebookAuthToken);
 
-        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback);
+        NetworkHelper.requestBackend(context, "/auth/facebook", postedJsonObject, callback, false);
     }
 }
