@@ -26,7 +26,7 @@ public class MenuListAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.drawer_list_item, parent, false);
+        View itemView = inflater.inflate(R.layout.item_drawer_list, parent, false);
 
         TextView txtTitle = (TextView) itemView.findViewById(R.id.title);
         ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
