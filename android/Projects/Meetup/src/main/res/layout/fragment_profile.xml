@@ -21,10 +21,11 @@
         android:text="@string/advice_status"
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/profile_list"
-        android:id="@+id/advice_status" />
+        android:id="@+id/advice_status"
+        android:textSize="@dimen/abc_action_bar_title_text_size"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/profile_button_text"
         android:id="@+id/profile_button"
@@ -36,7 +37,7 @@
         android:layout_marginTop="10dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/logout"
         android:id="@+id/profile_button_logout"
