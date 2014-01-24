@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class EventRestContentProvider extends EventContentProvider {
     private Context context = null;
-    private static final String SERVERAPIPATH = "/ic_event_sidebar";
+    private static final String SERVERAPIPATH = "";
     private HttpClient client = new DefaultHttpClient();
 
     public EventRestContentProvider(Context context) {
@@ -42,18 +43,29 @@ public class EventRestContentProvider extends EventContentProvider {
                         String[] selectionArgs, String sortOrder) {
 
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
-        baseURL.append("/query");
+
         JsonObject selectionJsonObject = new JsonObject();
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
+                baseURL.append("/event");
                 break; //Nothing to do
             case EVENTS_ID:
+                baseURL.append("/event");
                 String eventID = uri.getLastPathSegment();
+                selectionJsonObject.addProperty("id", eventID);
+                break;
+            case COMMENTS:
+                baseURL.append("/comment");
+                break; //Nothing to do
+            case COMMENTS_ID:
+                baseURL.append("/comment");
+                eventID = uri.getLastPathSegment();
                 selectionJsonObject.addProperty("id", eventID);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
+        baseURL.append("/query");
 
         //String s = "{\"id\": 102, \"name\":\"ic_event_sidebar name\", \"date\":\"27.11.2013 13:20\", \"dueDate\":\"25.11.2013 13:20\", \"source\":\"DEFAULT\",\"types\": [{\"id\":1,\"name\": \"default\"},{\"id\":2,\"name\": \"sport\"}],\"constraints\":[{\"id\":1, \"name\": \"attendee_exact_number\"},{\"id\":2,\"name\": \"nationality_exact_number\"}],\"comments\": [{ \"id\": 1, \"user\": {\"id\":1,\"name\": \"name etc\"}, \"comment\": \"lorem ipsum...\",\"date\":\"27.11.2013 13:20\" }";
 
@@ -83,14 +95,14 @@ public class EventRestContentProvider extends EventContentProvider {
         String[] columnNames = cursor.getColumnNames();
         for (String columnName : columnNames) {
             Object value;
-            if (columnName.equalsIgnoreCase(EventDatabase.Tables.Events.Columns.ID)) {
+            if (columnName.equalsIgnoreCase(EventDatabase.Tables.Events.Columns.ID) || columnName.equalsIgnoreCase(EventDatabase.Tables.Comments.Columns.ID) ) {
                 try {
                     String idString = object.getString(columnName);
                     value = Long.parseLong(idString);
                 } catch (JSONException e) {
                     value = "";
                 }
-            } else {
+            }  else {
                 try {
                     value = object.getString(columnName);
                 } catch (JSONException e) {
@@ -108,22 +120,27 @@ public class EventRestContentProvider extends EventContentProvider {
 
         JSONObject object = new JSONObject();
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
-        baseURL.append("/create");
+
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
+                baseURL.append("/event");
                 break;
             case EVENTS_ID:
+                baseURL.append("/event");
                 baseURL.append("/").append(uri.getLastPathSegment());
                 object = this.toEvent(values);
                 break;
             case COMMENTS:
+                baseURL.append("/comment");
                 break;
             case COMMENTS_ID:
+                baseURL.append("/comment");
                 object = this.toComment(values);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
+        baseURL.append("/create");
 
 
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
@@ -148,6 +165,10 @@ public class EventRestContentProvider extends EventContentProvider {
             object.put(EventDatabase.Tables.Events.Columns.DUE_DATE, values.get(EventDatabase.Tables.Events.Columns.DUE_DATE));
             object.put(EventDatabase.Tables.Events.Columns.SOURCE, values.get(EventDatabase.Tables.Events.Columns.SOURCE));
             object.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, values.get(EventDatabase.Tables.Events.Columns.DESCRIPTION));
+            byte[] types = values.getAsByteArray(EventDatabase.Tables.Events.Columns.TYPE);
+            String type = Arrays.toString(types);
+            object.put(EventDatabase.Tables.Events.Columns.TYPE, type);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -173,21 +194,26 @@ public class EventRestContentProvider extends EventContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
-        baseURL.append("/destroy");
+
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
+                baseURL.append("/event");
                 break;
             case EVENTS_ID:
+                baseURL.append("/event");
                 baseURL.append("/").append(uri.getLastPathSegment());
                 break;
             case COMMENTS:
+                baseURL.append("/comment");
                 break;
             case COMMENTS_ID:
+                baseURL.append("/comment");
                 baseURL.append("/").append(uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
+        baseURL.append("/destroy");
 
         try {
             NetworkHelper.requestBackendSynchronously(null, baseURL.toString(), null, true);
@@ -204,23 +230,28 @@ public class EventRestContentProvider extends EventContentProvider {
         Uri ret;
         JSONObject object = new JSONObject();
         StringBuilder baseURL = new StringBuilder(EventRestContentProvider.SERVERAPIPATH);
-        baseURL.append("/update");
+
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
+                baseURL.append("/event");
                 break;
             case EVENTS_ID:
+                baseURL.append("/event");
                 baseURL.append("/").append(uri.getLastPathSegment());
                 object = this.toEvent(values);
                 break;
             case COMMENTS:
+                baseURL.append("/comment");
                 break;
             case COMMENTS_ID:
+                baseURL.append("/comment");
                 baseURL.append("/").append(uri.getLastPathSegment());
                 object = this.toComment(values);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
+        baseURL.append("/update");
 
         JsonObject postedObject = new JsonParser().parse(object.toString()).getAsJsonObject();
         JsonElement element = null;

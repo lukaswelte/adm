@@ -167,10 +167,10 @@
     <string name="name_of_event">Name of the event</string>
     <string name="location">Location</string>
     <string name="description">Description</string>
-    <string name="date_doublepoint">Date : </string>
+    <string name="date_doublepoint">Begin: </string>
     <string name="set_time">Set Time</string>
     <string name="set_date">Set Date</string>
-    <string name="due_date_doublepoint">Due Date : </string>
+    <string name="due_date_doublepoint">End: \u0020\u0020</string>
     <string name="save_event">Save Event</string>
     <string name="name">Name</string>
     <string name="location_doublepoint">Location : </string>
@@ -180,6 +180,9 @@
     <string name="description_doublepoint">Description : </string>
     <string name="new_event">New event</string>
     <string name="developers">Our international Team of Developers:</string>
+    <string name="evant_name">event_name</string>
+    <string name="event_location">event_location</string>
+    <string name="event_description">event_description</string>
     <string name="friends_advice">Here you can see all your friends</string>
     <string name="add_friends">(Friends can be added via Map)</string>
     <string name="no_friends">You dont have any friends! :-( </string>

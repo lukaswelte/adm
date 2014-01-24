@@ -48,6 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/attendee_doublepoint"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
             android:id="@+id/eventDescTextView2"
             android:textStyle="bold"
             android:textColor="#2E2E2E" />

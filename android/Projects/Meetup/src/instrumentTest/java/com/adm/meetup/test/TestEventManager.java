@@ -143,6 +143,8 @@ abstract public class TestEventManager extends AndroidTestCase {
         event.setDate(new Date(2013, 11, 25));
         event.setDueDate(new Date(2013, 11, 27));
         event.setDescription("description");
+        event.addType(EventType.SPORT);
+        event.addType(EventType.DEFAULT);
 
         Event event2 = new Event();
         event2.setId((Long.valueOf(2)));
@@ -159,7 +161,7 @@ abstract public class TestEventManager extends AndroidTestCase {
 
         // test setName
         event = manager.getEventById(eventId);
-        event.setName("Updated ic_event_sidebar");
+        event.setName("Updated event");
         manager.updateEvent(event);
         Event result = manager.getEventById(eventId);
         assertDeepEquals(event, result);
@@ -205,7 +207,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         manager.deleteEventComments();
         Event event = new Event();
         event.setId(Long.valueOf(1));
-        event.setName("ic_event_sidebar name");
+        event.setName("event name");
         event.setLocation("location");
         event.setDate(new Date(12, 12, 2014));
         event.setDueDate(new Date(12, 10, 2014));
@@ -237,7 +239,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         manager.deleteEvents();
         Event event = new Event();
         event.setId(Long.valueOf(1));
-        event.setName("ic_event_sidebar name");
+        event.setName("event name");
         event.setLocation("location");
         event.setDate(new Date(12, 12, 2014));
         event.setDueDate(new Date(12, 10, 2014));
@@ -259,7 +261,7 @@ abstract public class TestEventManager extends AndroidTestCase {
         manager.deleteEvents();
         Event event = new Event();
         event.setId(Long.valueOf(1));
-        event.setName("ic_event_sidebar name");
+        event.setName("event name");
         event.setLocation("location");
         event.setDate(new Date(12, 12, 2014));
         event.setDueDate(new Date(12, 10, 2014));

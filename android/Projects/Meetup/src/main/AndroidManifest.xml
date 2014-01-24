@@ -92,9 +92,8 @@
         <activity
             android:name="com.adm.meetup.CreateExamActivity"
             android:label="@string/title_activity_create_exam" />
-        <activity
-            android:name="com.adm.meetup.LoadmapFragment"
-            android:label="@string/title_activity_loadmap_fragment"></activity>
+
+
     </application>
 
 </manifest>

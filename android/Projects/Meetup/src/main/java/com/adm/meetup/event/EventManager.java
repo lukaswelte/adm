@@ -49,11 +49,15 @@ public class EventManager implements IEventManager {
                 event.setName(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.NAME)));
                 event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
                 event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
+                try {
                 byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
                 if (types.length > 0) {
                     for (byte type : types) {
                         event.addType(EventType.forValue(type));
                     }
+                }
+                } catch (Exception e) {
+
                 }
 
                 try {
@@ -100,12 +104,18 @@ public class EventManager implements IEventManager {
                         event.setName(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.NAME)));
                         event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
                         event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
-                        byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
-                        if (types.length > 0) {
-                            for (byte type : types) {
-                                event.addType(EventType.forValue(type));
+                        try {
+                            String typeString = result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
+                            byte[] types = typeString.getBytes();
+                            if (types.length > 0) {
+                                for (byte type : types) {
+                                    event.addType(EventType.forValue(type));
+                                }
                             }
+                        } catch (Exception e) {
+
                         }
+
 
                         try {
                             event.setDate(DateHelper.parse(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DATE))));
@@ -175,8 +185,12 @@ public class EventManager implements IEventManager {
         content.put(EventDatabase.Tables.Events.Columns.NAME, event.getName());
         content.put(EventDatabase.Tables.Events.Columns.DESCRIPTION, event.getDescription());
         content.put(EventDatabase.Tables.Events.Columns.LOCATION, event.getLocation());
-        content.put(EventDatabase.Tables.Events.Columns.DATE, DateHelper.format(event.getDate()));
-        content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, DateHelper.format(event.getDueDate()));
+        try {
+            content.put(EventDatabase.Tables.Events.Columns.DATE, DateHelper.format(event.getDate()));
+            content.put(EventDatabase.Tables.Events.Columns.DUE_DATE, DateHelper.format(event.getDueDate()));
+        } catch(NullPointerException e) {
+
+        }
         byte[] types = new byte[event.getTypes().size()];
         Vector<EventType> vec = event.getTypes();
         int i = 0;
