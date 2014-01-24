@@ -70,6 +70,7 @@
         <item>Home</item>
         <item>Events</item>
         <item>Calendar</item>
+        <item>Friends</item>
         <item>Map</item>
         <item>Profile</item>
         <item>Settings</item>
@@ -118,12 +119,19 @@
     <string name="title_activity_people_near_you">PeopleNearYou</string>
     <string name="title_activity_map_meetup">Meetup Map</string>
     <string name="map_meetup_your_position">Your position</string>
-    <string name="map_meetup_party_mode">Party mode</string>
+
+
+    <!-- Map Activity -->
+    <string name="map_add_friend_title">Add a friend</string>
+    <string name="map_question_add_friend">Do you want to add this person to your friends ?</string>
     <string name="map_meetup_events">Events</string>
     <string name="map_meetup_whos_partying">Who\'s partying?</string>
     <string name="map_meetup_friends">Friends</string>
     <string name="map_update_status">Update status</string>
     <string name="map_your_status">Your status</string>
+
+    <!-- Friends -->
+    <string name="friends_no_name_friend">A friend with no name</string>
 
     <!-- General Strings -->
     <string name="yes">Yes</string>
@@ -175,5 +183,8 @@
     <string name="evant_name">event_name</string>
     <string name="event_location">event_location</string>
     <string name="event_description">event_description</string>
+    <string name="friends_advice">Here you can see all your friends</string>
+    <string name="add_friends">(Friends can be added via Map)</string>
+    <string name="no_friends">You dont have any friends! :-( </string>
 
 </resources>

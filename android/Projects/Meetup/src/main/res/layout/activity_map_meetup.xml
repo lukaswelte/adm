@@ -83,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/map_status_edit_text"
                 android:imeOptions="actionDone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:inputType="text" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
