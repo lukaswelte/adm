@@ -1,8 +1,11 @@
 package com.adm.meetup;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -19,6 +22,8 @@ import android.widget.ToggleButton;
 
 import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
+import com.adm.meetup.helpers.SharedApplication;
+import com.adm.meetup.util.Util;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,6 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
@@ -51,16 +57,11 @@ public class MapMeetupActivity extends ActionBarActivity {
     private final static int
             MAP_DEFAULT_CAMERA_ZOOM = 15;
 
-    /*
-     * Define the factor between the zoom value and the distance in which the user will see
-     * markers. DISTANCE = FACTOR * ZOOM
-     */
-    private final static int
-            FACTOR_BETWEEN_ZOOM_AND_DISTANCE_TO_MARKERS = 10;
-
     private GoogleMap map;
 
     private HashMap<Marker, User> personNearYouHashMap = new HashMap<Marker, User>();
+
+    private User friendNew;
 
     protected LocationManager locationManager;
     protected Context context;
@@ -76,6 +77,9 @@ public class MapMeetupActivity extends ActionBarActivity {
             if (servicesConnected()) {
 
                 EditText statusEditText = (EditText) findViewById(R.id.map_status_edit_text);
+                statusEditText.clearFocus();
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                statusEditText.setText(preferences.getString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT));
 
                 final MapMeetupActivity currContext = this;
 
@@ -83,6 +87,18 @@ public class MapMeetupActivity extends ActionBarActivity {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            String status = v.getText().toString();
+                            if (status.equals("")) {
+
+                            } else {
+                                SharedPreferences preferences = v.getContext().getSharedPreferences(
+                                        Util.PREFERENCES_FILE,
+                                        Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString(Util.PREFERENCES_STATUS, status);
+                                editor.commit();
+                                v.clearFocus();
+                            }
 
                             InputMethodManager inputManager = (InputMethodManager)
                                     currContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -149,7 +165,38 @@ public class MapMeetupActivity extends ActionBarActivity {
             @Override
             public void onInfoWindowClick(Marker marker) {
 
-                Log.d("lol", "pas lol");
+                for (Map.Entry<Marker, User> entry : personNearYouHashMap.entrySet()) {
+                    Marker nearYouMarker = entry.getKey();
+                    User nearYouUser = entry.getValue();
+                    if (nearYouMarker.equals(marker)) {
+                        User user = SharedApplication.getInstance().getUser();
+                        if (!nearYouUser.isFriendWithUser(user)) {
+                            friendNew = nearYouUser;
+                            AlertDialog.Builder adb = new AlertDialog.Builder(MapMeetupActivity.this);
+                            adb.setTitle(getString(R.string.map_add_friend_title));
+                            adb.setMessage(R.string.map_question_add_friend);
+                            adb.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    User user1 = SharedApplication.getInstance().getUser();
+                                    user1.addFriend(friendNew);
+                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonObject>() {
+                                        @Override
+                                        public void onCompleted(Exception e, JsonObject jsonObject) {
+                                            if (jsonObject != null) {
+                                                Log.d("MAAAP", jsonObject.toString());
+                                            }
+                                        }
+                                    });
+                                    NetworkHelper.updateProfile(getApplicationContext(), friendNew, null);
+                                }
+                            });
+                            adb.setNegativeButton(R.string.cancel, null);
+                            adb.show();
+                        }
+                    }
+                }
+                marker.hideInfoWindow();
             }
         });
 

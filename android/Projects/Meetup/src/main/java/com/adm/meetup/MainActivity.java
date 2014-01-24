@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mMenuTitles;
+    private int[] mIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,11 @@ public class MainActivity extends ActionBarActivity {
         mMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        int[] mIcon = new int[]{
+        mIcon = new int[]{
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
+                R.drawable.ic_friends_sidebar,
                 R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
                 R.drawable.ic_settings_sidebar,
@@ -169,9 +171,12 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new CalendarFragment();
                 break;
             case 3:
-                fragment = new LoadMapFragment();
+                fragment = new FriendsFragment();
                 break;
             case 4:
+                fragment = new LoadMapFragment();
+                break;
+            case 5:
                 fragment = new ProfileFragment();
                 break;
             case 6:
