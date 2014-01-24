@@ -2,9 +2,12 @@ package com.adm.meetup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.adm.meetup.event.Event;
@@ -17,6 +20,7 @@ import com.adm.meetup.helpers.DateHelper;
  */
 public class EventDescriptionFragment extends Fragment {
 
+    Button cancelBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +34,17 @@ public class EventDescriptionFragment extends Fragment {
         Bundle extras = getArguments();
         EventManager manager = new EventManager(getActivity());
         Event event = manager.getEvents().get(extras.getInt("index"));
+
+        cancelBtn = (Button) getView().findViewById(R.id.cancelEventDesc);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                Fragment eventFragment = new EventListFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction().replace(R.id.content_frame, eventFragment);
+                transaction.commit();
+            }
+        });
 
         TextView nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
         nameTexView.setText(event.getName());

@@ -100,7 +100,7 @@ public class Exam implements Parcelable {
         return result;
     }
 
-    private static String stringFromDate(Date date) {
+    public static String stringFromDate(Date date) {
         if (date == null) return null;
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         return dateFormat.format(date);

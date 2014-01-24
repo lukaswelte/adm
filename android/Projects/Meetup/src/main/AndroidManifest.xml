@@ -9,6 +9,12 @@
         android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
      
+     
+
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
 
     <provider
         android:name="com.adm.meetup.provider.EventManager"
@@ -44,7 +50,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.adm.meetup.MainActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.adm.meetup.LoginActivity"
             android:label="@string/app_name"
@@ -55,9 +61,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.adm.meetup.MapMeetupActivity"
-            android:label="@string/title_activity_map_meetup" />
+            android:label="@string/title_activity_map_meetup"></activity>
 
         <!-- Goolge Maps API Key -->
         <meta-data
@@ -70,10 +77,10 @@
         <activity
             android:name="com.adm.meetup.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -81,19 +88,20 @@
 
         <activity
             android:name="com.adm.meetup.AccountActivity"
-            android:label="@string/title_activity_account" />
+            android:label="@string/title_activity_account"></activity>
         <activity
             android:name="com.adm.meetup.FriendsActivity"
-            android:label="@string/title_activity_friends" />
+            android:label="@string/title_activity_friends"></activity>
         <activity
             android:name="com.adm.meetup.RegisterConfirmationActivity"
             android:label="@string/title_activity_register_confirmation"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
         <activity
             android:name="com.adm.meetup.CreateExamActivity"
-            android:label="@string/title_activity_create_exam" />
-
-
+            android:label="@string/title_activity_create_exam"></activity>
+        <activity
+            android:name="com.adm.meetup.ViewExamActivity"
+            android:label="ViewExamActivity"></activity>
     </application>
 
 </manifest>

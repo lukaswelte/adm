@@ -66,7 +66,8 @@
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="4dp"
+        android:windowSoftInputMode="stateVisible|adjustPan">>
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,7 +112,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:windowSoftInputMode="adjustPan|stateVisible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -147,17 +149,33 @@
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:text="@string/save_event"
-        android:background="@drawable/button_normal"
-        android:id="@+id/eventCreatorSaveBtn"
-        android:textColor="@android:color/white"
-        android:layout_gravity="left"
-        android:layout_marginLeft="10dp"/>
-
+        android:windowSoftInputMode="adjustPan|stateVisible">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="@string/save_event"
+            android:background="@drawable/button_normal"
+            android:id="@+id/eventCreatorSaveBtn"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="@string/cancel_event"
+            android:background="@drawable/button_normal"
+            android:id="@+id/eventCreatorCancelBtn"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
 
 </LinearLayout>
