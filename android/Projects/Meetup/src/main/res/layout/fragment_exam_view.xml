@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    style="@style/AppThemeBg"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/examName"
+        android:layout_marginTop="20dp"
+        android:hint="Exam Name"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/examDate"
+        android:layout_height="wrap_content"
+        android:hint="@string/exam_date"
+        android:layout_width="match_parent"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/examNotifyDate"
+        android:hint="@string/exam_notify_date"
+        android:layout_width="match_parent"
+        android:gravity="center"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/exam_delete"
+            android:id="@+id/deleteButton"
+            android:layout_gravity="right"
+            android:background="@drawable/button_normal"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+</LinearLayout>

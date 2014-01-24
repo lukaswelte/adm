@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -104,6 +105,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
                     Exam exam = data.getParcelableExtra("exam");
                     addToExamList(exam);
 
+                } else { //canceled
+
                 }
                 break;
             }
@@ -130,6 +133,17 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         details = (ListView) view.findViewById(R.id.display_details);
         examListView = (ListView) view.findViewById(R.id.examListView);
 
+        examListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object obj = examListView.getAdapter().getItem(i);
+                if (obj instanceof Exam) {
+                    Intent intent = new Intent(getActivity(), ViewExamActivity.class);
+                    intent.putExtra("exam", (Exam) obj);
+                    startActivityForResult(intent, 32);
+                }
+            }
+        });
         fetchExamList();
 
         cal = (CalendarView) view.findViewById(R.id.calendar);
@@ -297,9 +311,10 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
 
         HashMap<String, String> map;
 
-        for (String details_name1 : details_names) {
+        Iterator<String> iterator = details_names.iterator();
+        while (iterator.hasNext()) {
             map = new HashMap<String, String>();
-            map.put("detail", details_name1);
+            map.put("detail", iterator.next());
             listItem.add(map);
         }
 

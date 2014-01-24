@@ -45,7 +45,7 @@ public class EventListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.event_list_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_event_list, viewGroup, false);
         if (itemView != null) {
             Event event = eventList.get(i);
 
@@ -59,7 +59,7 @@ public class EventListAdapter extends BaseAdapter {
             eventName.setText(event.getName());
 
             TextView eventLocation = (TextView) itemView.findViewById(R.id.eventLocationTextView);
-            eventLocation.setText(event.getLocation() + ",");
+            eventLocation.setText(event.getLocation());
 
             TextView eventDate = (TextView) itemView.findViewById(R.id.eventDescDueDateTextView);
             try {
