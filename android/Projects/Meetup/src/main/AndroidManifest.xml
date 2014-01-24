@@ -28,7 +28,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -66,9 +65,6 @@
         <activity
             android:name="com.adm.meetup.MapMeetupActivity"
             android:label="@string/title_activity_map_meetup"></activity>
-        <activity
-            android:name="com.adm.meetup.ViewExamActivity"
-            android:label="@string/exam_title_view"></activity>
 
         <!-- Goolge Maps API Key -->
         <meta-data
@@ -103,6 +99,9 @@
         <activity
             android:name="com.adm.meetup.CreateExamActivity"
             android:label="@string/title_activity_create_exam"></activity>
+        <activity
+            android:name="com.adm.meetup.ViewExamActivity"
+            android:label="ViewExamActivity"></activity>
     </application>
 
 </manifest>

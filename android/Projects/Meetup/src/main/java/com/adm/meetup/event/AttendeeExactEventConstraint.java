@@ -23,9 +23,6 @@ public class AttendeeExactEventConstraint extends EventDecorator implements IEve
     }
 
     public boolean isValid() throws EventValidationException {
-        if (this.event.getAttendee() == this.value) {
-            return true;
-        }
-        return false;
+        return this.event.getAttendee().equals(this.value);
     }
 }

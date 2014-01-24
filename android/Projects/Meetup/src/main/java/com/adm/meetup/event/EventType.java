@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum EventType {
-    DEFAULT (Integer.valueOf(0).byteValue(), "default"),
-    SPORT   (Integer.valueOf(1).byteValue(), "sport"),
-    DANCE   (Integer.valueOf(2).byteValue(), "dance"),
-    TRIP    (Integer.valueOf(3).byteValue(), "trip");
+    DEFAULT(Integer.valueOf(0).byteValue(), "default"),
+    SPORT(Integer.valueOf(1).byteValue(), "sport"),
+    DANCE(Integer.valueOf(2).byteValue(), "dance"),
+    TRIP(Integer.valueOf(3).byteValue(), "trip");
 
     private static final Map<Byte, EventType> typesByValue = new HashMap<Byte, EventType>();
 
@@ -32,5 +32,8 @@ public enum EventType {
     public String getName() {
         return this.name;
     }
-    public Byte getId() { return this.id; }
+
+    public Byte getId() {
+        return this.id;
+    }
 }

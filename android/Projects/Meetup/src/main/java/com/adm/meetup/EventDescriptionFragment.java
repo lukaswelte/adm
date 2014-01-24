@@ -2,16 +2,17 @@ package com.adm.meetup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
 import com.adm.meetup.helpers.DateHelper;
-
-import java.text.SimpleDateFormat;
 
 
 /**
@@ -19,14 +20,7 @@ import java.text.SimpleDateFormat;
  */
 public class EventDescriptionFragment extends Fragment {
 
-    private TextView dateTexView;
-    private TextView dueDateTexView;
-    private TextView nameTexView;
-    private TextView attenteeTextView;
-    private TextView locationTexView;
-    private TextView descriptionTextView;
-    private TextView typeTextView;
-
+    Button cancelBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,26 +35,41 @@ public class EventDescriptionFragment extends Fragment {
         EventManager manager = new EventManager(getActivity());
         Event event = manager.getEvents().get(extras.getInt("index"));
 
-        nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
+        cancelBtn = (Button) getView().findViewById(R.id.cancelEventDesc);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                Fragment eventFragment = new EventListFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction().replace(R.id.content_frame, eventFragment);
+                transaction.commit();
+            }
+        });
+
+        TextView nameTexView = (TextView) getView().findViewById(R.id.eventDescNameTextView);
         nameTexView.setText(event.getName());
 
-        locationTexView = (TextView) getView().findViewById(R.id.eventDescLocationTextView);
+        TextView locationTexView = (TextView) getView().findViewById(R.id.eventDescLocationTextView);
         locationTexView.setText(event.getLocation());
 
-        attenteeTextView = (TextView) getView().findViewById(R.id.eventDescAttendeeTextView);
+        TextView attenteeTextView = (TextView) getView().findViewById(R.id.eventDescAttendeeTextView);
         attenteeTextView.setText(" " + event.getAttendee());
 
-        dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
+        TextView dateTexView = (TextView) getView().findViewById(R.id.eventDescDateTextView);
         dateTexView.setText("" + DateHelper.format(event.getDate()));
 
-        dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
+        TextView dueDateTexView = (TextView) getView().findViewById(R.id.eventDescDueDateTextView);
         dueDateTexView.setText("" + DateHelper.format(event.getDueDate()));
 
-        descriptionTextView = (TextView) getView().findViewById(R.id.eventDescriptionTextView);
+        TextView descriptionTextView = (TextView) getView().findViewById(R.id.eventDescriptionTextView);
         descriptionTextView.setText(event.getDescription());
 
-        typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
-        typeTextView.setText(event.getTypes().get(0).getName());
+        TextView typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
+        try {
+            typeTextView.setText(event.getTypes().get(0).getName());
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
 
     }
 

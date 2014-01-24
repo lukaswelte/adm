@@ -1,6 +1,8 @@
 package com.adm.meetup;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+
+import com.adm.meetup.util.Util;
 
 public class RegisterConfirmationActivity extends ActionBarActivity {
 
@@ -44,6 +48,13 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(RegisterConfirmationActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 
     @Override
@@ -60,10 +71,7 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -77,8 +85,7 @@ public class RegisterConfirmationActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_register_confirmation, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_register_confirmation, container, false);
         }
     }
 

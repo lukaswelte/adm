@@ -1,50 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/AppThemeBg">
 
-
-    <ListView
-        android:id="@+id/profile_list"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:background="@android:color/white" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/advice_status"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@+id/profile_list"
-        android:id="@+id/advice_status" />
+        <ListView
+            android:id="@+id/profile_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:background="@android:color/white" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/profile_button_text"
-        android:id="@+id/profile_button"
-        android:layout_below="@id/advice_status"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_normal"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/advice_status"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/profile_list"
+            android:id="@+id/advice_status"
+            android:textSize="@dimen/abc_action_bar_title_text_size"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:id="@+id/profile_button_logout"
-        android:layout_below="@id/profile_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_normal"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="10dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_button_text"
+            android:id="@+id/profile_button"
+            android:layout_below="@id/advice_status"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_normal"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp" />
 
-</RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:id="@+id/profile_button_logout"
+            android:layout_below="@id/profile_button"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_normal"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

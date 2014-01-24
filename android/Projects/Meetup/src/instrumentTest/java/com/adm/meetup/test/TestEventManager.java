@@ -143,6 +143,8 @@ abstract public class TestEventManager extends AndroidTestCase {
         event.setDate(new Date(2013, 11, 25));
         event.setDueDate(new Date(2013, 11, 27));
         event.setDescription("description");
+        event.addType(EventType.SPORT);
+        event.addType(EventType.DEFAULT);
 
         Event event2 = new Event();
         event2.setId((Long.valueOf(2)));

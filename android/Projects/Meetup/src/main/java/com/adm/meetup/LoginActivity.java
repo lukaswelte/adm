@@ -1,11 +1,11 @@
 package com.adm.meetup;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
@@ -36,8 +37,6 @@ import com.koushikdutta.async.future.FutureCallback;
 public class LoginActivity extends ActionBarActivity {
 
     private EditText emailText, passwordText;
-    private Button loginButton;
-    private TextView registerScreen;
     ProgressDialog progressBar;
 
 
@@ -76,11 +75,11 @@ public class LoginActivity extends ActionBarActivity {
 
         emailText = (EditText) findViewById(R.id.login_email_field);
         passwordText = (EditText) findViewById(R.id.login_password_field);
-        loginButton = (Button) findViewById(R.id.login_login_button);
+        Button loginButton = (Button) findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(loginListener);
 
-        registerScreen = (TextView) findViewById(R.id.login_signup_button);
+        TextView registerScreen = (TextView) findViewById(R.id.login_signup_button);
 
         // Listening to register new account link
         registerScreen.setOnClickListener(new OnClickListener() {
@@ -193,9 +192,9 @@ public class LoginActivity extends ActionBarActivity {
                             if (user != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
-                                editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
-                                editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
+                                if (user.asMap().get("email") !=null) editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
+                                if (user.getFirstName() !=null) editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
+                                if (user.getLastName() !=null) editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
                                 final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
                                 progressBar.setCancelable(true);
@@ -227,7 +226,7 @@ public class LoginActivity extends ActionBarActivity {
                             }
                         }
                         if (response.getError() != null) {
-                            // Handle errors, will do so later.
+                            Toast.makeText(getApplicationContext(), response.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -278,6 +277,7 @@ public class LoginActivity extends ActionBarActivity {
                         if (error != null) {
                             Toast.makeText(getApplicationContext(), error.getAsString(), Toast.LENGTH_SHORT).show();
                         } else {
+                            SharedApplication.getInstance().setUser(new User(jsonObject));
                             String token = jsonObject.get("token").getAsString();
                             if (token != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);

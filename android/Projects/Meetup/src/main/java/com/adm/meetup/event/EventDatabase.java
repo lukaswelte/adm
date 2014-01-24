@@ -8,7 +8,7 @@ import android.util.Log;
 public class EventDatabase extends SQLiteOpenHelper {
     private static final String TAG = "EventDatabase";
 
-    private static final String DATABASE_NAME = "event.db";
+    private static final String DATABASE_NAME = "ic_event_sidebar.db";
     private static final int DATABASE_VERSION = 16;
 
     public EventDatabase(Context context) {
@@ -18,7 +18,7 @@ public class EventDatabase extends SQLiteOpenHelper {
 
     public class Tables {
         public class Events {
-            final static String TABLE = "event";
+            final static String TABLE = "ic_event_sidebar";
 
             public class Columns {
                 final static String ID = "id";
@@ -73,13 +73,13 @@ public class EventDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion<newVersion){
-        Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.Events.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.Comments.TABLE);
+        if (oldVersion < newVersion) {
+            Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.Events.TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.Comments.TABLE);
 
-        // create tables
-        onCreate(db);
+            // create tables
+            onCreate(db);
         }
 
     }

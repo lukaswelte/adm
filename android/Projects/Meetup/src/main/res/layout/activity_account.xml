@@ -4,12 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountActivity"
-    tools:ignore="MergeRootFrame">
+    tools:ignore="MergeRootFrame"
+    style="@style/AppThemeBg">
 
     <ListView
         android:id="@+id/list_account_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:background="@android:color/transparent">
     </ListView>
 
 </RelativeLayout>

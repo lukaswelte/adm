@@ -5,8 +5,6 @@
 
     <item android:id="@+id/action_account"
         android:title="@string/action_main_account" />
-    <item android:id="@+id/action_friends"
-        android:title="@string/action_main_friends"/>
     <item android:id="@+id/action_logout"
         android:title="@string/action_main_logout" />
 </menu>

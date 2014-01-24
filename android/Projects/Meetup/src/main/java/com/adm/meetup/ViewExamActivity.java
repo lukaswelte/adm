@@ -95,19 +95,13 @@ public class ViewExamActivity extends ActionBarActivity {
                         }
                     };
                     NetworkHelper.deleteExamRequest(getActivity(), exam, callback);
-                    //TODO Go back
                 }
             });
             return rootView;
         }
 
 
-        private static String checkValue(int input) {
-            if (input >= 10)
-                return Integer.toString(input);
-            else
-                return "0" + Integer.toString(input);
-        }
+
 
     }
 

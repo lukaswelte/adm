@@ -37,16 +37,16 @@ abstract public class EventContentProvider extends ContentProvider {
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 return ContentResolver.CURSOR_DIR_BASE_TYPE +
-                        "/com.adm.meetup.event.EventManager.Events";
+                        "/com.adm.meetup.ic_event_sidebar.EventManager.Events";
             case EVENTS_ID:
                 return ContentResolver.CURSOR_DIR_BASE_TYPE +
-                        "/com.adm.meetup.event.EventManager.Events";
+                        "/com.adm.meetup.ic_event_sidebar.EventManager.Events";
             case COMMENTS:
                 return ContentResolver.CURSOR_DIR_BASE_TYPE +
-                        "/com.adm.meetup.event.EventManager.Events";
+                        "/com.adm.meetup.ic_event_sidebar.EventManager.Events";
             case COMMENTS_ID:
                 return ContentResolver.CURSOR_DIR_BASE_TYPE +
-                        "/com.adm.meetup.event.EventManager.Events";
+                        "/com.adm.meetup.ic_event_sidebar.EventManager.Events";
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }

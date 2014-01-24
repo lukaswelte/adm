@@ -1,4 +1,4 @@
-Meetup App [![Build Status](https://magnum.travis-ci.com/lukaswelte/adm.png?token=tVUbNj6NR4avxNovm8ML&branch=master)](https://magnum.travis-ci.com/lukaswelte/adm)
+Meetup App [![Build Status](https://travis-ci.org/lukaswelte/adm.png?branch=master)](https://travis-ci.org/lukaswelte/adm)
 ===
 
 

@@ -47,7 +47,7 @@ public class RegisterActivity extends ActionBarActivity {
         registerButton = (Button) findViewById(R.id.register_registerNewAccount_button);
         loginButton = (Button) findViewById(R.id.register_linkToLogin_button);
 
-        // Register Button Click event
+        // Register Button Click ic_event_sidebar
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String email = emailText.getText().toString();
@@ -122,10 +122,7 @@ public class RegisterActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -139,8 +136,7 @@ public class RegisterActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_register, container, false);
         }
     }
 
