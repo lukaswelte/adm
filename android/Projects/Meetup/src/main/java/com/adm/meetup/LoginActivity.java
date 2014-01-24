@@ -260,7 +260,7 @@ public class LoginActivity extends ActionBarActivity {
             progressBar = new ProgressDialog(v.getContext());
             progressBar.setCancelable(true);
             progressBar.setMessage(getString(R.string.progressBar_message));
-            progressBar.setProgress(20000);
+            progressBar.setProgress(200);
             progressBar.show();
             FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
                 @Override
