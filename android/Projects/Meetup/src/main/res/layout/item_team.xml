@@ -1,7 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@android:color/transparent"
+    android:layout_marginLeft="15dp">
 
 
     <ImageView
@@ -13,17 +15,23 @@
         android:paddingRight="4dp"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:contentDescription="Entry-Icon" />
+        android:contentDescription="Entry-Icon"
+        android:background="@android:color/transparent"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:textSize="17dp"
+        android:textSize="@dimen/abc_action_bar_title_text_size"
         android:textColor="#2E2E2E"
         android:singleLine="true"
-        android:layout_gravity="center_vertical" />
+        android:background="@android:color/transparent"
+        android:layout_gravity="center"
+        />
 
 
 </LinearLayout>

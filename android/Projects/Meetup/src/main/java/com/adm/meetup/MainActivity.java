@@ -44,8 +44,9 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
+                R.drawable.ic_friends_sidebar,
+                R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
-                R.drawable.ic_about_sidebar,
                 R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
         };
@@ -76,7 +77,6 @@ public class MainActivity extends ActionBarActivity {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu();
-                ; // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -121,11 +121,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent1);
                 return true;
 
-            case R.id.action_friends:
-                Intent intent2 = new Intent(this, FriendsActivity.class);
-                startActivity(intent2);
-                return true;
-
             case R.id.action_logout:
                 LoginActivity.onClickLogout();
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
@@ -141,6 +136,7 @@ public class MainActivity extends ActionBarActivity {
                 editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
                 editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
                 editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_NATIONALITY, Util.PREFERENCES_NATIONALITY_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 finish();
@@ -175,10 +171,13 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new CalendarFragment();
                 break;
             case 3:
-                fragment = new ProfileFragment();
+                fragment = new FriendsFragment();
                 break;
             case 4:
-                fragment = new FriendsFragment();
+                fragment = new LoadMapFragment();
+                break;
+            case 5:
+                fragment = new ProfileFragment();
                 break;
             case 6:
                 fragment = new TeamFragment();

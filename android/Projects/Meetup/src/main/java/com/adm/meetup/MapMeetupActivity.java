@@ -39,7 +39,6 @@ import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MapMeetupActivity extends ActionBarActivity {
@@ -70,6 +69,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.activity_map_meetup);
 
         if (savedInstanceState == null) {
@@ -139,7 +139,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        overridePendingTransition(0, 0);
         setupMap();
     }
 
@@ -290,9 +290,7 @@ public class MapMeetupActivity extends ActionBarActivity {
                 try {
                     if (e != null) throw e;
 
-                    Iterator<JsonElement> iterator = jsonElements.iterator();
-                    while (iterator.hasNext()) {
-                        JsonElement element = iterator.next();
+                    for (JsonElement element : jsonElements) {
                         if (element.isJsonObject()) {
                             User user = new User(element.getAsJsonObject().getAsJsonObject("user"));
                             Marker marker = user.addToMap(map);
@@ -313,5 +311,11 @@ public class MapMeetupActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

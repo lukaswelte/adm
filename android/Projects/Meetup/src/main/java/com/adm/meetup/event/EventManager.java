@@ -5,15 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import com.adm.meetup.helpers.DateHelper;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.OptionalDataException;
-import java.sql.Blob;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -56,8 +50,8 @@ public class EventManager implements IEventManager {
                 event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
                 event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
                 byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
-                if(types.length > 0) {
-                    for(byte type : types) {
+                if (types.length > 0) {
+                    for (byte type : types) {
                         event.addType(EventType.forValue(type));
                     }
                 }
@@ -100,34 +94,40 @@ public class EventManager implements IEventManager {
         if (result != null) {
             if (result.moveToFirst()) {
                 do {
-                    Event event = new Event();
-                    event.setId(result.getLong(result.getColumnIndex(EventDatabase.Tables.Events.Columns.ID)));
-                    event.setName(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.NAME)));
-                    event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
-                    event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
-                    byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
-                    if(types.length > 0) {
-                        for(byte type : types) {
-                            event.addType(EventType.forValue(type));
+                    try {
+                        Event event = new Event();
+                        event.setId(result.getLong(result.getColumnIndex(EventDatabase.Tables.Events.Columns.ID)));
+                        event.setName(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.NAME)));
+                        event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
+                        event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
+                        byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
+                        if (types.length > 0) {
+                            for (byte type : types) {
+                                event.addType(EventType.forValue(type));
+                            }
                         }
-                    }
 
-                    try {
-                        event.setDate(DateHelper.parse(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DATE))));
-                    } catch (ParseException e) {
+                        try {
+                            event.setDate(DateHelper.parse(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DATE))));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            event.setDueDate(DateHelper.parse(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DUE_DATE))));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        list.add(event);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    try {
-                        event.setDueDate(DateHelper.parse(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DUE_DATE))));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    list.add(event);
                 } while (result.moveToNext());
             }
         }
-        result.close();
+        if (result != null) {
+            result.close();
+        }
         return list;
     }
 
@@ -143,7 +143,7 @@ public class EventManager implements IEventManager {
         byte[] types = new byte[event.getTypes().size()];
         Vector<EventType> vec = event.getTypes();
         int i = 0;
-        for(EventType type : vec) {
+        for (EventType type : vec) {
             types[i++] = type.getId();
         }
         content.put(EventDatabase.Tables.Events.Columns.TYPE, types);
@@ -180,11 +180,10 @@ public class EventManager implements IEventManager {
         byte[] types = new byte[event.getTypes().size()];
         Vector<EventType> vec = event.getTypes();
         int i = 0;
-        for(EventType type : vec) {
+        for (EventType type : vec) {
             types[i++] = type.getId();
         }
         content.put(EventDatabase.Tables.Events.Columns.TYPE, types);
-
         this.contentProvider.insert(uri, content);
     }
 

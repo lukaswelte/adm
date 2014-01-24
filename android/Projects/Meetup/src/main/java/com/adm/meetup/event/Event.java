@@ -1,5 +1,6 @@
 package com.adm.meetup.event;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -78,9 +79,11 @@ public class Event extends BaseEvent {
     public Vector<EventType> getTypes() {
         return this.eventTypeList;
     }
+
     public void addType(EventType type) {
         this.eventTypeList.add(type);
     }
+
     public Long getAttendee() {
         return this.attendee;
     }
@@ -141,5 +144,16 @@ public class Event extends BaseEvent {
     public void setDate(Date date) {
         this.date = date;
         // this.addField(Event.Fields.DATE, this.date.toString());
+    }
+
+    public boolean isOnTheSameDay(Date date) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+
+        cal1.setTime(date);
+        cal2.setTime(this.getDate());
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 }

@@ -24,16 +24,12 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
     public static final int iArrayListMonthMax = 37;
     public static final int iInMonth = 10;
     private GridView mGrid;
-    private View mConvertView;
     private GregorianCalendar mCalendar;
     private ArrayList<Date> mMonthAL;
-    private Context mContext;
     private TextView mMonthText;
     private SimpleDateFormat mFormatMonth;
     private SimpleDateFormat mFormatYear;
     private OnDispatchDateSelectListener mListenerDateSelect;
-    private Button mArrowRight;
-    private Button mArrowLeft;
     private CalendarAdapter mAdapter;
 
     public interface OnDispatchDateSelectListener {
@@ -42,21 +38,26 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
         mFormatMonth = new SimpleDateFormat("MMMM");
         mFormatYear = new SimpleDateFormat("yyyy");
 
-        mConvertView = LayoutInflater.from(context).inflate(R.layout.view_calendar, this);
-        mGrid = (GridView) mConvertView.findViewById(R.id.calendar_days);
+        View mConvertView = LayoutInflater.from(context).inflate(R.layout.view_calendar, this);
+        if (mConvertView != null) {
+            mGrid = (GridView) mConvertView.findViewById(R.id.calendar_days);
+        }
 
         mGrid.setOnItemClickListener(this);
 
-        mMonthText = (TextView) mConvertView.findViewById(R.id.calendar_month);
-        mArrowLeft = (Button) findViewById(R.id.calendar_arrow_left);
+        if (mConvertView != null) {
+            mMonthText = (TextView) mConvertView.findViewById(R.id.calendar_month);
+        }
+        Button mArrowLeft = (Button) findViewById(R.id.calendar_arrow_left);
         mArrowLeft.setOnClickListener(this);
 
-        mArrowRight = (Button) mConvertView.findViewById(R.id.calendar_arrow_right);
-        mArrowRight.setOnClickListener(this);
+        Button mArrowRight = (Button) (mConvertView != null ? mConvertView.findViewById(R.id.calendar_arrow_right) : null);
+        if (mArrowRight != null) {
+            mArrowRight.setOnClickListener(this);
+        }
 
         mCalendar = (GregorianCalendar) GregorianCalendar.getInstance();
         mCalendar.setTime(new Date());
@@ -64,7 +65,7 @@ public class CalendarView extends LinearLayout implements View.OnClickListener, 
 
         mMonthAL = new ArrayList<Date>();
 
-        mAdapter = new CalendarAdapter(mContext, mMonthAL);
+        mAdapter = new CalendarAdapter(context, mMonthAL);
 
         mGrid.setAdapter(mAdapter);
     }

@@ -33,11 +33,6 @@ public class SharedApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sharedApplication = this;
-        sharedApplication.initializeInstance();
-    }
-
-    protected void initializeInstance() {
-
     }
 
     public User getUser() {

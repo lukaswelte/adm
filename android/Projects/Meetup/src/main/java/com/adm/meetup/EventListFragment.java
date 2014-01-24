@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +15,10 @@ import android.widget.ListView;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
+import com.adm.meetup.event.EventType;
+import com.adm.meetup.helpers.DateHelper;
 
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -24,8 +26,6 @@ import java.util.List;
  * Created by lukas on 21.01.14.
  */
 public class EventListFragment extends Fragment {
-
-    private ListView eventListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,14 +36,25 @@ public class EventListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        eventListView = (ListView) getView().findViewById(R.id.eventListView);
+        ListView eventListView = (ListView) getView().findViewById(R.id.eventListView);
         EventManager manager = new EventManager(getActivity());
-        manager.deleteEvents();
-        List<Event> eventList = manager.getEvents();
-        for (int i = 0; i < eventList.size(); i++) {
-            manager.deleteEvent(eventList.get(i));
+        Event event = new Event();
+        event.setId(Long.valueOf(1));
+        event.setName("Football");
+        event.setAttendee(Long.valueOf(232));
+        event.setLocation("valencia");
+        event.setDescription("this is a description");
+        event.addType(EventType.SPORT);
+
+        try {
+            event.setDate(DateHelper.parse("11/03/2013 12:33"));
+            event.setDueDate(DateHelper.parse("11/03/2014 13:24"));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        Log.d("size : ", " " + manager.getEvents().size());
+        manager.createEvent(event);
+        List<Event> eventList = manager.getEvents();
         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), eventList);
         eventListView.setAdapter(eventListAdapter);
 

@@ -37,8 +37,6 @@ import com.koushikdutta.async.future.FutureCallback;
 public class LoginActivity extends ActionBarActivity {
 
     private EditText emailText, passwordText;
-    private Button loginButton;
-    private TextView registerScreen;
     ProgressDialog progressBar;
 
 
@@ -77,11 +75,11 @@ public class LoginActivity extends ActionBarActivity {
 
         emailText = (EditText) findViewById(R.id.login_email_field);
         passwordText = (EditText) findViewById(R.id.login_password_field);
-        loginButton = (Button) findViewById(R.id.login_login_button);
+        Button loginButton = (Button) findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(loginListener);
 
-        registerScreen = (TextView) findViewById(R.id.login_signup_button);
+        TextView registerScreen = (TextView) findViewById(R.id.login_signup_button);
 
         // Listening to register new account link
         registerScreen.setOnClickListener(new OnClickListener() {
@@ -194,9 +192,9 @@ public class LoginActivity extends ActionBarActivity {
                             if (user != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
-                                editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
-                                editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
+                                if (user.asMap().get("email") !=null) editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
+                                if (user.getFirstName() !=null) editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
+                                if (user.getLastName() !=null) editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
                                 final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
                                 progressBar.setCancelable(true);
@@ -228,7 +226,7 @@ public class LoginActivity extends ActionBarActivity {
                             }
                         }
                         if (response.getError() != null) {
-                            // Handle errors, will do so later.
+                            Toast.makeText(getApplicationContext(), response.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
