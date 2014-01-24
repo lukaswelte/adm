@@ -105,7 +105,8 @@ public class EventManager implements IEventManager {
                         event.setDescription(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.DESCRIPTION)));
                         event.setLocation(result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.LOCATION)));
                         try {
-                            byte[] types = result.getBlob(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
+                            String typeString = result.getString(result.getColumnIndex(EventDatabase.Tables.Events.Columns.TYPE));
+                            byte[] types = typeString.getBytes();
                             if (types.length > 0) {
                                 for (byte type : types) {
                                     event.addType(EventType.forValue(type));

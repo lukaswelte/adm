@@ -102,16 +102,7 @@ public class EventRestContentProvider extends EventContentProvider {
                 } catch (JSONException e) {
                     value = "";
                 }
-            } else if(columnName.equalsIgnoreCase(EventDatabase.Tables.Events.Columns.TYPE)) {
-
-                try {
-                    String typeString = object.getString(columnName);
-                    byte[] byteArray = typeString.getBytes();
-                    value = byteArray;
-                } catch (JSONException e) {
-                    value = "";
-                }
-            } else {
+            }  else {
                 try {
                     value = object.getString(columnName);
                 } catch (JSONException e) {
