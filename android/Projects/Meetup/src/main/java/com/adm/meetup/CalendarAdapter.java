@@ -16,14 +16,13 @@ public class CalendarAdapter extends BaseAdapter {
 
     public static final int iDaysToCheck = 7;
     public static final int iDaysOfPreviousMonth = 7;
-    private Context mContext;
     private ArrayList<Date> mMonth;
     private SimpleDateFormat mFormatNumber;
     private SimpleDateFormat mFormatDay;
     private LayoutInflater mInflater;
 
     public CalendarAdapter(Context _context, ArrayList<Date> _month) {
-        mContext = _context;
+        Context mContext = _context;
         mMonth = _month;
         mFormatNumber = new SimpleDateFormat("d");
         mFormatDay = new SimpleDateFormat("EEE");

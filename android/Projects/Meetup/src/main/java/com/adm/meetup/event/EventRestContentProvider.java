@@ -25,12 +25,11 @@ import java.util.concurrent.ExecutionException;
  * Created by jan on 18.1.14.
  */
 public class EventRestContentProvider extends EventContentProvider {
-    private Context context = null;
     private static final String SERVERAPIPATH = "";
     private HttpClient client = new DefaultHttpClient();
 
     public EventRestContentProvider(Context context) {
-        this.context = context;
+        Context context1 = context;
     }
 
     @Override

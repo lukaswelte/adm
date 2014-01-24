@@ -102,6 +102,9 @@
         <activity
             android:name="com.adm.meetup.ViewExamActivity"
             android:label="ViewExamActivity"></activity>
+        <activity
+            android:name="com.adm.meetup.EventActivity"
+            android:label="EventActivity"></activity>
     </application>
 
 </manifest>

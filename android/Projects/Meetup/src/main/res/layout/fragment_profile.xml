@@ -28,7 +28,6 @@
             android:text="@string/advice_status"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/profile_list"
             android:id="@+id/advice_status"
             android:textSize="@dimen/abc_action_bar_title_text_size"/>
 
@@ -37,9 +36,6 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_button_text"
             android:id="@+id/profile_button"
-            android:layout_below="@id/advice_status"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/button_normal"
             android:textColor="@android:color/white"
             android:layout_marginTop="10dp" />
@@ -49,9 +45,6 @@
             android:layout_height="wrap_content"
             android:text="@string/logout"
             android:id="@+id/profile_button_logout"
-            android:layout_below="@id/profile_button"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/button_normal"
             android:textColor="@android:color/white"
             android:layout_marginTop="10dp" />
