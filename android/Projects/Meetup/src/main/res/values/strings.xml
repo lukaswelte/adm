@@ -4,18 +4,15 @@
     <string name="app_name">Erasmus Events</string>
     <string name="app_id">200155020171205</string>
     <string name="hello_world">Hello world!</string>
-    <string name="event_type_sport">Sport</string>
 
     <!-- action -->
     <string name="action_settings">Settings</string>
     <string name="action_main_account">Account</string>
-    <string name="action_main_friends">Friends</string>
     <string name="action_main_logout">Logout</string>
 
     <!-- title -->
     <string name="title_activity_profile">Login</string>
     <string name="title_activity_register">Register</string>
-    <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_account">Account</string>
     <string name="title_activity_friends">Friends</string>
@@ -29,8 +26,6 @@
     <string name="login_login">Log in</string>
     <string name="login_signup">Click here to register!</string>
     <string name="logout">Log out</string>
-    <string name="sign_up">Here you can create an account!</string>
-    <string name="welcome">Welcome to ErasmusEvents!</string>
     <string name="addinfo">Thank you for your registration!Do you want to add some Information to your Profile now?</string>
     <string name="enter_info">Please fill in your E-Mail address and a Password.</string>
     <string name="progressBar_message">Please wait</string>
@@ -54,19 +49,12 @@
 
 
     <!-- Calendar Activity -->
-    <string name="calendar_title_activity">CalendarActivity</string>
-    <string name="calendar_title_activity_view">CalendarView</string>
-    <string name="exam_title_view">ExamView</string>
     <string name="calendar_servor_error">The server can\'t be access. You may check your connection</string>
     <string name="calendar_select_date">Select a date</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
-    <string name="calendar_no_detail">There is no event on this day</string>
-    <string name="calendar_loading">Loading data...</string>
-    <string name="calendar_add_exam">Add an exam</string>
-    <string name="title_activity_create_exam">CreateExamActivity</string>
+    <string name="title_activity_create_exam">Create Exam</string>
     <string name="exam_name">Name : </string>
-    <string name="exam_update">Update</string>
     <string name="exam_delete">Delete</string>
     <string name="exam_delete_error">The exam hasn\'t been deleted, please try later</string>
 
@@ -85,8 +73,6 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_team">Team</string>
 
-    <!-- TeamFragment Strings -->
-    <string name="team_text">Our international Team:</string>
 
     <!-- Account Strings -->
     <string name="single">Single</string>
@@ -104,7 +90,6 @@
     <string name="relationshipStatus">Relationship status:</string>
     <string name="homeUniversity">Home University:</string>
     <string name="ErasmusUniversity">Erasmus University:</string>
-    <string name="email">Email:</string>
     <string name="disableLocationServices">Disable location services:</string>
     <string name="status">Status:</string>
     <string name="nationality">Nationality:</string>
@@ -165,7 +150,6 @@
     <string name="advice_events_day">Events for this day:</string>
     <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
     <string name="map_load">...loading map</string>
-    <string name="new_text">New Text</string>
     <string name="save">Save</string>
     <string name="create_new_event_doublepoint">Create a new Event :</string>
     <string name="name_of_event">Name of the event</string>

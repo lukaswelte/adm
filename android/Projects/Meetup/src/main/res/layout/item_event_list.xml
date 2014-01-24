@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dip"
-        android:layout_alignParentLeft="true"
         android:layout_marginRight="5dp">
 
         <ImageView
@@ -33,8 +32,6 @@
             android:layout_height="wrap_content"
             android:text="@string/evant_name"
             android:layout_marginLeft="5dp"
-            android:layout_alignTop="@+id/EventListThumbnail"
-            android:layout_toRightOf="@+id/EventListThumbnail"
             android:textColor="#040404"
             android:id="@+id/eventNameTextView"
             android:textSize="@dimen/abc_action_bar_title_text_size"

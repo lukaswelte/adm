@@ -15,7 +15,7 @@
         android:text="Text 1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:ellipsize="end"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textColor="#2E2E2E"
         android:singleLine="true"
         android:layout_gravity="center_vertical"/>
@@ -27,7 +27,7 @@
         android:text="Text 2"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:ellipsize="end"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textColor="#505050"
         android:singleLine="true"
         android:layout_gravity="center_vertical"/>

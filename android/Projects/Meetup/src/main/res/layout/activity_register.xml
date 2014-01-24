@@ -90,7 +90,7 @@
                 android:background="@android:color/transparent"
                 android:layout_marginTop="100dp"
                 android:textColor="#1C1C1C"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
         <!-- Registration Form Ends -->
     </RelativeLayout>

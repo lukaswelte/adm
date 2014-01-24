@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Erasmus Events</string>
+    <string name="app_id">200155020171205</string>
+    <string name="hello_world">Hello world!</string>
+
+    <!-- action -->
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_main_account">Account</string>
+    <string name="action_main_logout">Logout</string>
+
+    <!-- title -->
+    <string name="title_activity_profile">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_account">Account</string>
+    <string name="title_activity_friends">Freunde</string>
+    <string name="title_activity_register_confirmation">Register Confirmation</string>
+    <string name="title_activity_profile_fragment">Profil</string>
+
+
+    <!-- Login/Sign up Activity -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Passwort</string>
+    <string name="login_login">Log in</string>
+    <string name="login_signup">Klick hier für die Registrierung!</string>
+    <string name="logout">Log out</string>
+    <string name="addinfo">Danke für die Registrierung! Möchtest du Informationen hinzufügen?</string>
+    <string name="enter_info">Bitte E-Mail eingeben und ein Passwort.</string>
+    <string name="progressBar_message">Bitte warten</string>
+
+
+    <!-- Register Activity -->
+    <string name="register_email">Email</string>
+    <string name="register_password">Passwort</string>
+    <string name="register_registerNewAccount">Register neuen Account</string>
+    <string name="register_linkToLogin">Du hast schon einen Account? Hier einloggen</string>
+    <string name="tab_friends">Freunde</string>
+    <string name="cancel">Beenden</string>
+    <string name="register_confirmation_text">Danke für die Registrierung.\n Dein Account wurde erstellt. \n Möchtest du dein Profil modifizieren?</string>
+    <string name="register_confirmation_main_button">Mach ich später</string>
+    <string name="register_confirmation_profile_button">Ja</string>
+    <string name="token_not_found_error">Fehler. Bitte nochmal</string>
+
+
+    <!-- Profile Fragment -->
+    <string name="profile_button_text">Profil bearbeiten.</string>
+
+
+    <!-- Calendar Activity -->
+    <string name="calendar_servor_error">Der Server kann grad nicht. Check deine Connection.</string>
+    <string name="calendar_select_date">Datum auswählen</string>
+    <string name="drawer_open">Slider Menu geöffnet</string>
+    <string name="drawer_close">Slider Menu geschlossen</string>
+    <string name="title_activity_create_exam">CreateExamActivity</string>
+    <string name="exam_name">Name : </string>
+    <string name="exam_delete">Löschen</string>
+    <string name="exam_delete_error">Das Exam wurde nicht gelöscht, bitte später nochmal probieren</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Events</item>
+        <item>Kalender</item>
+        <item>Freunde</item>
+        <item>Karte</item>
+        <item>Profil</item>
+        <item>Team</item>
+    </string-array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_team">Team</string>
+
+
+    <!-- Account Strings -->
+    <string name="single">Single</string>
+    <string name="inRelationship">In einer Beziehung</string>
+    <string name="engaged">Verlobt</string>
+    <string name="married">Verheiratet</string>
+    <string name="complicated">Es ist kompliziert</string>
+    <string name="openRelationship">offene Beziehung</string>
+    <string name="separated">Getrennt</string>
+    <string name="divorced">Geschieden</string>
+    <string name="widowed">Verwitwet</string>
+    <string name="firstName">Vorname:</string>
+    <string name="lastName">Name:</string>
+    <string name="dateOfBirth">Geburtsdatum:</string>
+    <string name="relationshipStatus">Beziehungsstatus:</string>
+    <string name="homeUniversity">Heim University:</string>
+    <string name="ErasmusUniversity">Erasmus University:</string>
+    <string name="disableLocationServices">location services ausschalten:</string>
+    <string name="status">Status:</string>
+    <string name="nationality">Nationality:</string>
+
+    <string-array name="members">
+        <item>Maela</item>
+        <item>Lukas</item>
+        <item>Sanaa</item>
+        <item>Florian</item>
+        <item>Jan</item>
+        <item>Timo</item>
+        <item>Andreas</item>
+    </string-array>
+
+    <!-- Calendar Activity -->
+    <string name="title_activity_people_near_you">PeopleNearYou</string>
+    <string name="title_activity_map_meetup">Meetup Map</string>
+    <string name="map_meetup_your_position">Deine position</string>
+
+
+    <!-- Map Activity -->
+    <string name="map_add_friend_title">Freund hinzufügen</string>
+    <string name="map_question_add_friend">Möchtest du diese Person zu deinen Freunden hinzufügen?</string>
+    <string name="map_meetup_events">Events</string>
+    <string name="map_meetup_whos_partying">Who\'s partying?</string>
+    <string name="map_meetup_friends">Freunde?</string>
+    <string name="map_update_status">Update status</string>
+    <string name="map_your_status">Dein status</string>
+    <string name="map_people_near_you">in deiner Nähe</string>
+
+    <!-- Friends -->
+    <string name="friends_no_name_friend">Ein Freund ohne Namen</string>
+
+    <!-- General Strings -->
+    <string name="ja">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="advice_status">Du kannst deinen Status verändern wenn du darauf klickst.</string>
+    <string name="welcome_message">\n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Willkommen bei \n \u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020 Erasmus - Events!</string>
+    <string name="upcoming_events">Upcoming Erasmus-Events:</string>
+    <string name="welcome_smiley">Welcome-Smiley</string>
+    <string name="exam_date">Exam Datum</string>
+    <string name="exam_time">Exam Zeit</string>
+    <string name="exam_notify_date">Notify Datum</string>
+    <string name="exam_notify_time">Notify Zeit</string>
+    <string name="advice_name_exam_missing">Du musst das Examen benennen.</string>
+    <string name="advice_date_exam_missing">Du musst ein Datum eingeben.</string>
+    <string name="advice_time_exam_missing">Du musst eine Zeit eingeben.</string>
+    <string name="advice_wrong_format">Falschen Format.Sollte: dd.MM.yyyy HH:mm</string>
+
+    <string-array name="types_arrays">
+        <item>Default</item>
+        <item>Sport</item>
+        <item>Dance</item>
+        <item>Trip</item>
+    </string-array>
+
+    <string name="advice_events_day">Events für heute:</string>
+    <string name="title_activity_loadmap_fragment">LoadmapFragment</string>
+    <string name="map_load">...lade map</string>
+    <string name="save">Save</string>
+    <string name="create_new_event_doublepoint">Erzeuge neues Event :</string>
+    <string name="name_of_event">Name of the event</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="date_doublepoint">Begin: </string>
+    <string name="set_time">Zeit</string>
+    <string name="set_date">Datum</string>
+    <string name="due_date_doublepoint">End: \u0020\u0020</string>
+    <string name="save_event">Event speichern</string>
+    <string name="name">Name</string>
+    <string name="location_doublepoint">Location : </string>
+    <string name="attendee_doublepoint">Teilnehmer : </string>
+    <string name="due">Due</string>
+    <string name="type_doublepoint">Tip : </string>
+    <string name="description_doublepoint">Beschreibung : </string>
+    <string name="new_event">Neues Event</string>
+    <string name="developers">Unser Team aus Developern:</string>
+    <string name="evant_name">event_name</string>
+    <string name="event_location">event_location</string>
+    <string name="event_description">Treffen um 12:00</string>
+    <string name="friends_advice">Alle deine Freunde:</string>
+    <string name="add_friends">(Freunde hinzufügen via Map)</string>
+    <string name="no_friends">Du hast keine Freunde! :-( </string>
+    <string name="cancel_event">Beenden</string>
+
+</resources>

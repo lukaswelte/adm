@@ -9,8 +9,6 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
 
     private static final String TAG = TestEventDbContentProvider.class.getName();
 
-    private static MockContentResolver resolve;
-
     public TestEventDbContentProvider(Class<EventDbContentProvider> providerClass, String providerAuthority) {
         super(providerClass, providerAuthority);
     }
@@ -24,7 +22,7 @@ public class TestEventDbContentProvider extends ProviderTestCase2<EventDbContent
     public void setUp() {
         try {
             super.setUp();
-            resolve = this.getMockContentResolver();
+            MockContentResolver resolve = this.getMockContentResolver();
         } catch (Exception e) {
 
 
