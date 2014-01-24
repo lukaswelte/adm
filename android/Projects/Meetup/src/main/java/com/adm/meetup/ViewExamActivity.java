@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adm.meetup.calendar.Exam;
 import com.adm.meetup.helpers.NetworkHelper;
@@ -54,11 +55,6 @@ public class ViewExamActivity extends ActionBarActivity {
         TextView examNotifyDate;
         Button bDelete;
 
-        // declare  the variables to Show/Set the date and time when Time and  Date Picker Dialog first appears
-        private int mYear, mMonth, mDay, mHour, mMinute;
-        private int year;
-        private String hour, minute, month, day;
-
         // constructor
 
         public PlaceholderFragment(Exam exam1) {
@@ -85,94 +81,23 @@ public class ViewExamActivity extends ActionBarActivity {
                     FutureCallback<JsonObject> callback = new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject jsonObject) {
-                            //TODO check if it has been deleted
+                            try {
+                                if (e != null) throw e;
+                                if (jsonObject.get("status").getAsInt() == 404) {
+                                    Toast.makeText(getActivity(), getString(R.string.exam_delete_error), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Exam deletedExam = new Exam(jsonObject);
+                                    ((ViewExamActivity) getActivity()).finishSuccessful(deletedExam);
+                                }
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     };
                     NetworkHelper.deleteExamRequest(getActivity(), exam, callback);
                     //TODO Go back
                 }
             });
-
-           /* // Date Picker Exam
-
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-
-            // Time Picker Exam
-
-            mHour = c.get(Calendar.HOUR_OF_DAY);
-            mMinute = c.get(Calendar.MINUTE);
-
-
-            final EditText nameTextView = (EditText) rootView.findViewById(R.id.examName);
-            final Button dateTextView = (Button) rootView.findViewById(R.id.examDate);
-            final Button timeTextView = (Button) rootView.findViewById(R.id.examNotifyDate);
-            final Button notifyDateTextView = (Button) rootView.findViewById(R.id.examNotifyDate);
-            final Button notifyTimeTextView = (Button) rootView.findViewById(R.id.examNotifyTime);
-
-            Button saveButton = (Button) rootView.findViewById(R.id.saveButton);
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @SuppressWarnings("ConstantConditions")
-                @Override
-                public void onClick(View view) {
-                    final Context context = getActivity();
-
-                    String examName = nameTextView.getText().toString();
-                    if (examName == null || examName.length() < 1) {
-                        Toast.makeText(context, context.getString(R.string.advice_name_exam_missing), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    String dateString = dateTextView.getText().toString();
-                    if (dateString == null || dateString.length() < 1) {
-                        Toast.makeText(context, context.getString(R.string.advice_date_exam_missing), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    String timeString = timeTextView.getText().toString();
-                    if (dateString == null || dateString.length() < 1) {
-                        Toast.makeText(context, context.getString(R.string.advice_time_exam_missing), Toast.LENGTH_LONG).show();
-                    }
-
-
-
-
-                    String notifyDateString = notifyDateTextView.getText().toString() + " " + notifyTimeTextView.getText().toString();
-                    String examDateString = dateString + " " + timeString;
-
-                    Exam exam = new Exam(null, examDateString, notifyDateString, examName);
-                    if (exam.getDate() == null) {
-                        Toast.makeText(context, context.getString(R.string.advice_wrong_format), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    NetworkHelper.createExamRequest(context, exam, new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject jsonObject) {
-                            try {
-                                if (e != null) throw e;
-
-                                Exam receivedExam = new Exam(jsonObject.getAsJsonObject());
-                                ((ViewExamActivity) getActivity()).finishSuccessful(receivedExam);
-
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                                Toast.makeText(context, "Something went wrong. Try again later", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-            });
-
-            Button cancelButton = (Button) rootView.findViewById(R.id.cancelButton);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((ViewExamActivity) getActivity()).finishedCanceled();
-                }
-            });
-*/
             return rootView;
         }
 

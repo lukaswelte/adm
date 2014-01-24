@@ -300,7 +300,8 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDispatc
         //Fetching details
         updateExamListForDate(date);
         getHolidays(date);
-        getEvents(date);
+        //TODO decomment next line
+        // getEvents(date);
         if (details_name.isEmpty()) details_name.add("");
         updateDetailsInCalendar(details_name);
     }

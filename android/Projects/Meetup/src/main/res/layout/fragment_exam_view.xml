@@ -35,15 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/exam_update"
-            android:id="@+id/cancelButton"
-            android:background="@drawable/button_normal"
-            android:textColor="@android:color/white"
-            android:layout_marginRight="30dp" />
 
         <Button
             android:layout_width="0dp"

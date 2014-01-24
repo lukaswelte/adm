@@ -68,6 +68,7 @@
     <string name="exam_name">Name : </string>
     <string name="exam_update">Update</string>
     <string name="exam_delete">Delete</string>
+    <string name="exam_delete_error">The exam hasn\'t been deleted, please try later</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
