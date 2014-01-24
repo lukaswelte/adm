@@ -5,13 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +21,6 @@ import android.widget.ToggleButton;
 import com.adm.meetup.User.User;
 import com.adm.meetup.helpers.NetworkHelper;
 import com.adm.meetup.helpers.SharedApplication;
-import com.adm.meetup.util.Util;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,7 +31,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
@@ -78,8 +74,11 @@ public class MapMeetupActivity extends ActionBarActivity {
 
                 EditText statusEditText = (EditText) findViewById(R.id.map_status_edit_text);
                 statusEditText.clearFocus();
-                SharedPreferences preferences = getApplicationContext().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                statusEditText.setText(preferences.getString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT));
+                User user = SharedApplication.getInstance().getUser();
+                if (user.getStatus() == null) {
+                    user.setStatus("");
+                }
+                statusEditText.setText(user.getStatus());
 
                 final MapMeetupActivity currContext = this;
 
@@ -91,12 +90,14 @@ public class MapMeetupActivity extends ActionBarActivity {
                             if (status.equals("")) {
 
                             } else {
-                                SharedPreferences preferences = v.getContext().getSharedPreferences(
-                                        Util.PREFERENCES_FILE,
-                                        Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putString(Util.PREFERENCES_STATUS, status);
-                                editor.commit();
+                                User user = SharedApplication.getInstance().getUser();
+                                user.setStatus(status);
+                                NetworkHelper.updateProfile(MapMeetupActivity.this.context, user, new FutureCallback<JsonElement>() {
+                                    @Override
+                                    public void onCompleted(Exception e, JsonElement jsonElement) {
+
+                                    }
+                                });
                                 v.clearFocus();
                             }
 
@@ -180,12 +181,9 @@ public class MapMeetupActivity extends ActionBarActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     User user1 = SharedApplication.getInstance().getUser();
                                     user1.addFriend(friendNew);
-                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonObject>() {
+                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonElement>() {
                                         @Override
-                                        public void onCompleted(Exception e, JsonObject jsonObject) {
-                                            if (jsonObject != null) {
-                                                Log.d("MAAAP", jsonObject.toString());
-                                            }
+                                        public void onCompleted(Exception e, JsonElement jsonElement) {
                                         }
                                     });
                                     NetworkHelper.updateProfile(getApplicationContext(), friendNew, null);

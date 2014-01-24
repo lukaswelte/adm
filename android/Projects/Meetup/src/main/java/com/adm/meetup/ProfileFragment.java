@@ -17,7 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.adm.meetup.User.User;
+import com.adm.meetup.helpers.NetworkHelper;
+import com.adm.meetup.helpers.SharedApplication;
 import com.adm.meetup.util.Util;
+import com.google.gson.JsonElement;
+import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,12 +66,24 @@ public class ProfileFragment extends Fragment {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SharedPreferences pref = getActivity().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_STATUS, input.getText().toString());
-                                editor.commit();
+                                if (input.getText() != null) {
+                                    String status = input.getText().toString();
+                                    if (status != null) {
+                                        if (!status.equals("")) {
+                                            User user = SharedApplication.getInstance().getUser();
+                                            user.setStatus(status);
+                                            NetworkHelper.updateProfile(ProfileFragment.this.getActivity().getApplicationContext(),
+                                                    user, new FutureCallback<JsonElement>() {
+                                                @Override
+                                                public void onCompleted(Exception e, JsonElement jsonElement) {
 
-                                majParametersListVAdapter();
+                                                }
+                                            });
+
+                                            majParametersListVAdapter();
+                                        }
+                                    }
+                                }
                             }
                         });
                         adb.setNegativeButton(R.string.cancel, null);
@@ -113,15 +130,13 @@ public class ProfileFragment extends Fragment {
 
     private void majParametersListVAdapter() {
 
-        SharedPreferences preferences =
-                getActivity().getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
+        User user = SharedApplication.getInstance().getUser();
 
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("title", getString(R.string.status));
-        map.put("description", preferences.getString(Util.PREFERENCES_STATUS,
-                Util.PREFERENCES_STATUS_DEFAULT));
+        map.put("description", user.getStatus());
         listItem.add(map);
 
         SimpleAdapter mSchedule = new SimpleAdapter(getActivity(), listItem, R.layout.item_account,
