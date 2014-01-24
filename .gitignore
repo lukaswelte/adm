@@ -27,3 +27,7 @@ proguard/
 *.ipr
 *.iws
 .idea/
+
+*/build/*
+android/Projects/libraries/facebook/build/*
+build/

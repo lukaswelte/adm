@@ -58,13 +58,16 @@ public class CalendarAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.view_calendar_day, null);
             holder = new ViewHolder();
-            if (convertView.findViewById(R.id.tv_day) != null) {
-                holder.tvDay = (TextView) convertView.findViewById(R.id.tv_day);
+            if (convertView != null) {
+                if (convertView.findViewById(R.id.tv_day) != null) {
+                    holder.tvDay = (TextView) convertView.findViewById(R.id.tv_day);
+                }
+                if (convertView.findViewById(R.id.tv_number) != null) {
+                    holder.tvNumber = (TextView) convertView.findViewById(R.id.tv_number);
+                }
+                convertView.setTag(holder);
             }
-            if (convertView.findViewById(R.id.tv_number) != null) {
-                holder.tvNumber = (TextView) convertView.findViewById(R.id.tv_number);
-            }
-            convertView.setTag(holder);
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

@@ -62,6 +62,14 @@ public abstract class EventDecorator extends BaseEvent {
         this.event.setId(id);
     }
 
+    public String getDescription() {
+        return this.event.getDescription();
+    }
+
+    public void setDescription(String description) {
+        this.event.setDescription(description);
+    }
+
     public String getName() {
         return this.event.getName();
     }

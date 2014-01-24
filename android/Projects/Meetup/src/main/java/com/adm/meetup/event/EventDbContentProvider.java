@@ -38,6 +38,13 @@ public class EventDbContentProvider extends EventContentProvider {
                 builder.setTables(EventDatabase.Tables.Events.TABLE);
                 builder.appendWhere(EventDatabase.Tables.Events.Columns.ID + " = " + uri.getLastPathSegment());
                 break;
+            case COMMENTS:
+                builder.setTables(EventDatabase.Tables.Comments.TABLE);
+                break;
+            case COMMENTS_ID:
+                builder.setTables(EventDatabase.Tables.Comments.TABLE);
+                builder.appendWhere(EventDatabase.Tables.Comments.Columns.ID + " = " + uri.getLastPathSegment());
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
@@ -63,6 +70,14 @@ public class EventDbContentProvider extends EventContentProvider {
                 id = db.insertWithOnConflict(EventDatabase.Tables.Events.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 ret = getUriForId(id, uri);
                 break;
+            case COMMENTS:
+                id = db.insert(EventDatabase.Tables.Comments.TABLE, null, values);
+                ret = getUriForId(id, uri);
+                break;
+            case COMMENTS_ID:
+                id = db.insertWithOnConflict(EventDatabase.Tables.Comments.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                ret = getUriForId(id, uri);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
@@ -80,13 +95,19 @@ public class EventDbContentProvider extends EventContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = this.db.getWritableDatabase();
-        int delCount = 0;
+        int delCount;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
                 break;
             case EVENTS_ID:
                 delCount = db.delete(EventDatabase.Tables.Events.TABLE, selection, selectionArgs);
+                break;
+            case COMMENTS:
+                delCount = db.delete(EventDatabase.Tables.Comments.TABLE, selection, selectionArgs);
+                break;
+            case COMMENTS_ID:
+                delCount = db.delete(EventDatabase.Tables.Comments.TABLE, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -100,13 +121,19 @@ public class EventDbContentProvider extends EventContentProvider {
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = this.db.getWritableDatabase();
-        int updateCount = 0;
+        int updateCount;
         switch (sURIMatcher.match(uri)) {
             case EVENTS:
                 updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
                 break;
             case EVENTS_ID:
                 updateCount = db.update(EventDatabase.Tables.Events.TABLE, values, selection, selectionArgs);
+                break;
+            case COMMENTS:
+                updateCount = db.update(EventDatabase.Tables.Comments.TABLE, values, selection, selectionArgs);
+                break;
+            case COMMENTS_ID:
+                updateCount = db.update(EventDatabase.Tables.Comments.TABLE, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);

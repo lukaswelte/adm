@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -28,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mMenuTitles;
-    private int[] mIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,11 @@ public class MainActivity extends ActionBarActivity {
         mMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mIcon = new int[]{
+        int[] mIcon = new int[]{
                 R.drawable.ic_home_sidebar,
                 R.drawable.ic_event_sidebar,
                 R.drawable.ic_calendar_sidebar,
+                R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
                 R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
@@ -73,12 +74,12 @@ public class MainActivity extends ActionBarActivity {
         ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                supportInvalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -118,26 +119,22 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent1);
                 return true;
 
-            case R.id.action_friends:
-                Intent intent2 = new Intent(this, FriendsActivity.class);
-                startActivity(intent2);
-                return true;
-
             case R.id.action_logout:
-                ProfileActivity.onClickLogout();
-                Intent login = new Intent(getApplicationContext(), ProfileActivity.class);
+                LoginActivity.onClickLogout();
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
-                editor.putString(Util.PREFERENCES_EMAIL,Util.PREFERENCES_EMAIL_DEFAULT);
-                editor.putString(Util.PREFERENCES_FIRSTNAME,Util.PREFERENCES_FIRSTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_LASTNAME,Util.PREFERENCES_LASTNAME_DEFAULT);
-                editor.putString(Util.PREFERENCES_DATEOFBIRTH,Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
-                editor.putString(Util.PREFERENCES_STATUS,Util.PREFERENCES_STATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY,Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY,Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
-                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS,Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
-                editor.putString(Util.PREFERENCES_LOCATIONSERVICES,Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_EMAIL, Util.PREFERENCES_EMAIL_DEFAULT);
+                editor.putString(Util.PREFERENCES_FIRSTNAME, Util.PREFERENCES_FIRSTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_LASTNAME, Util.PREFERENCES_LASTNAME_DEFAULT);
+                editor.putString(Util.PREFERENCES_DATEOFBIRTH, Util.PREFERENCES_DATEOFBIRTH_DEFAULT);
+                editor.putString(Util.PREFERENCES_STATUS, Util.PREFERENCES_STATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, Util.PREFERENCES_ERASMUSUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
+                editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
+                editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_NATIONALITY, Util.PREFERENCES_NATIONALITY_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 finish();
@@ -160,25 +157,34 @@ public class MainActivity extends ActionBarActivity {
         // update the main content by replacing fragments
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment;
         switch (position) {
-
-
+            case 0:
+                fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new EventListFragment();
+                break;
             case 2:
-                Fragment fragment = new CalendarFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                fragment = new CalendarFragment();
                 break;
-
-            case 5:
-                Fragment fragmentTeam = new TeamFragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentTeam).commit();
+            case 3:
+                fragment = new LoadMapFragment();
                 break;
-
+            case 4:
+                fragment = new ProfileFragment();
+                break;
+            case 6:
+                fragment = new TeamFragment();
+                break;
             default:
-                Fragment emptyFragment = new Fragment();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, emptyFragment).commit();
+                fragment = new Fragment();
                 break;
-
         }
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction().replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);

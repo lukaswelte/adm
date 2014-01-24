@@ -18,7 +18,7 @@ public class FacebookEvent extends EventDecorator {
 
     public FacebookEvent(BaseEvent event) {
         super(event);
-        this.addField(FacebookEvent.Fields.FACEBOOK, new Integer(1).toString());
+        this.addField(FacebookEvent.Fields.FACEBOOK, Integer.toString(1));
     }
 
     public boolean isFacebook() {

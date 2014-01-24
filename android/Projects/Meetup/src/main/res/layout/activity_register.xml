@@ -1,78 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:fillViewport="true">
-<RelativeLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" android:background="#fff">
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    style="@style/AppThemeBg">
 
-    <!--  Header  Starts-->
-    <LinearLayout android:id="@+id/header"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dip"
-        android:paddingBottom="5dip"
-        android:orientation="horizontal">
-    </LinearLayout>
-    <!--  Header Ends -->
-    <!-- Footer Start -->
-    <LinearLayout android:id="@+id/footer"
-        android:layout_width="fill_parent"
-        android:layout_height="90dip"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-    </LinearLayout>
-    <!-- Footer Ends -->
+        android:layout_height="wrap_content">
 
-    <!-- Registration Form -->
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dip"
-        android:layout_below="@id/header"
-        android:id="@+id/linearLayout">
-        <!--  Email Label -->
-        <EditText android:id="@+id/register_email_field"
-            android:hint="@string/register_email"
+        <!--  Header  Starts-->
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:singleLine="true"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="20dip"/>
-        <!-- Password Label -->
-        <EditText android:id="@+id/register_password_field"
-            android:hint="@string/register_password"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:orientation="horizontal"></LinearLayout>
+        <!--  Header Ends -->
+        <!-- Footer Start -->
+        <LinearLayout
+            android:id="@+id/footer"
             android:layout_width="fill_parent"
+            android:layout_height="90dip"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"></LinearLayout>
+        <!-- Footer Ends -->
+
+        <!-- Registration Form -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:password="true"
-            android:singleLine="true"
-            android:layout_marginTop="5dip"/>
-        <!-- Register Button -->
-        <Button android:id="@+id/register_registerNewAccount_button"
-            android:text="@string/register_registerNewAccount"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"/>
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-        <!-- Link to Login Screen -->
-        <Button android:id="@+id/register_linkToLogin_button"
-            android:text="@string/register_linkToLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:layout_below="@+id/linearLayout"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="117dp" />
+            android:padding="10dip"
+            android:layout_below="@id/header"
+            android:id="@+id/linearLayout">
+            <!--  Email Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_info"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dip" />
+
+
+            <EditText
+                android:id="@+id/register_email_field"
+                android:hint="@string/register_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dip"
+                android:gravity="center"
+                android:singleLine="true"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="20dip" />
+            <!-- Password Label -->
+            <EditText
+                android:id="@+id/register_password_field"
+                android:hint="@string/register_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:password="true"
+                android:singleLine="true"
+                android:layout_marginTop="5dip"
+                android:gravity="center" />
+            <!-- Register Button -->
+            <Button
+                android:id="@+id/register_registerNewAccount_button"
+                android:text="@string/register_registerNewAccount"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/button_normal"
+                android:textColor="@android:color/white" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+            <!-- Link to Login Screen -->
+            <Button
+                android:id="@+id/register_linkToLogin_button"
+                android:text="@string/register_linkToLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="100dp"
+                android:textColor="#1C1C1C"
+                android:textSize="14dp" />
         </LinearLayout>
         <!-- Registration Form Ends -->
     </RelativeLayout>
