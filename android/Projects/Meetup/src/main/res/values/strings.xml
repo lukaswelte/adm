@@ -186,5 +186,6 @@
     <string name="friends_advice">Here you can see all your friends</string>
     <string name="add_friends">(Friends can be added via Map)</string>
     <string name="no_friends">You dont have any friends! :-( </string>
+    <string name="cancel_event">Cancel</string>
 
 </resources>
