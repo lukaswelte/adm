@@ -47,7 +47,6 @@ public class MainActivity extends ActionBarActivity {
                 R.drawable.ic_friends_sidebar,
                 R.drawable.ic_map_sidebar,
                 R.drawable.ic_profile_sidebar,
-                R.drawable.ic_settings_sidebar,
                 R.drawable.ic_team_sidebar
         };
 
