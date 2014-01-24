@@ -191,9 +191,9 @@ public class LoginActivity extends ActionBarActivity {
                             if (user != null) {
                                 SharedPreferences pref = getSharedPreferences(Util.PREFERENCES_FILE, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
-                                editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
-                                editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
+                                if (user.asMap().get("email") !=null) editor.putString(Util.PREFERENCES_EMAIL, user.asMap().get("email").toString());
+                                if (user.getFirstName() !=null) editor.putString(Util.PREFERENCES_FIRSTNAME, user.getFirstName());
+                                if (user.getLastName() !=null) editor.putString(Util.PREFERENCES_LASTNAME, user.getLastName());
                                 editor.commit();
                                 final ProgressDialog progressBar = new ProgressDialog(LoginActivity.this);
                                 progressBar.setCancelable(true);
