@@ -129,6 +129,7 @@
     <string name="map_meetup_friends">Friends</string>
     <string name="map_update_status">Update status</string>
     <string name="map_your_status">Your status</string>
+    <string name="map_people_near_you">Near you</string>
 
     <!-- Friends -->
     <string name="friends_no_name_friend">A friend with no name</string>

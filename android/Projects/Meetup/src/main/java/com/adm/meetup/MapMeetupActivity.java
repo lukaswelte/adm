@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -29,12 +28,12 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
@@ -62,6 +61,7 @@ public class MapMeetupActivity extends ActionBarActivity {
     private HashMap<Marker, User> personNearYouHashMap = new HashMap<Marker, User>();
 
     private User friendNew;
+    private Marker friendMarkerNew;
 
     protected LocationManager locationManager;
     protected Context context;
@@ -110,13 +110,20 @@ public class MapMeetupActivity extends ActionBarActivity {
                     }
                 });
 
-                ToggleButton toggleButtonEvents = (ToggleButton) findViewById(R.id.map_meetup_toggle_events);
+                ToggleButton toggleButtonPeopleNearYou = (ToggleButton) findViewById(R.id.map_meetup_toggle_events);
                 ToggleButton toggleButtonFriends = (ToggleButton) findViewById(R.id.map_meetup_toggle_friends);
 
-                toggleButtonEvents.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                toggleButtonPeopleNearYou.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
+                        for (Map.Entry<Marker, User> entry : personNearYouHashMap.entrySet()) {
+                            Marker marker = entry.getKey();
+                            User otherUser = entry.getValue();
+                            User user = SharedApplication.getInstance().getUser();
+                            if (!user.isFriendWithUser(otherUser)) {
+                                marker.setVisible(isChecked);
+                            }
+                        }
                     }
                 });
 
@@ -125,8 +132,11 @@ public class MapMeetupActivity extends ActionBarActivity {
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                         for (Map.Entry<Marker, User> entry : personNearYouHashMap.entrySet()) {
                             Marker marker = entry.getKey();
-                            User user = entry.getValue();
-                            marker.setVisible(isChecked);
+                            User otherUser = entry.getValue();
+                            User user = SharedApplication.getInstance().getUser();
+                            if (user.isFriendWithUser(otherUser)) {
+                                marker.setVisible(isChecked);
+                            }
                         }
                     }
                 });
@@ -153,6 +163,7 @@ public class MapMeetupActivity extends ActionBarActivity {
         if (map == null) {
             map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
         }
+        map.clear();
         map.setMyLocationEnabled(true);
         map.getUiSettings().setCompassEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(true);
@@ -171,6 +182,7 @@ public class MapMeetupActivity extends ActionBarActivity {
                     if (nearYouMarker.equals(marker)) {
                         User user = SharedApplication.getInstance().getUser();
                         if (!nearYouUser.isFriendWithUser(user)) {
+                            friendMarkerNew = nearYouMarker;
                             friendNew = nearYouUser;
                             AlertDialog.Builder adb = new AlertDialog.Builder(MapMeetupActivity.this);
                             adb.setTitle(getString(R.string.map_add_friend_title));
@@ -180,19 +192,22 @@ public class MapMeetupActivity extends ActionBarActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     User user1 = SharedApplication.getInstance().getUser();
                                     user1.addFriend(friendNew);
-                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonObject>() {
+                                    friendMarkerNew.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                    NetworkHelper.updateProfile(getApplicationContext(), user1, new FutureCallback<JsonElement>() {
                                         @Override
-                                        public void onCompleted(Exception e, JsonObject jsonObject) {
-                                            if (jsonObject != null) {
-                                                Log.d("MAAAP", jsonObject.toString());
-                                            }
+                                        public void onCompleted(Exception e, JsonElement jsonElement) {
                                         }
                                     });
-                                    NetworkHelper.updateProfile(getApplicationContext(), friendNew, null);
+                                    NetworkHelper.updateProfile(getApplicationContext(), friendNew, new FutureCallback<JsonElement>() {
+                                        @Override
+                                        public void onCompleted(Exception e, JsonElement jsonElement) {
+                                        }
+                                    });
                                 }
                             });
                             adb.setNegativeButton(R.string.cancel, null);
                             adb.show();
+                            return;
                         }
                     }
                 }
@@ -292,10 +307,14 @@ public class MapMeetupActivity extends ActionBarActivity {
 
                     for (JsonElement element : jsonElements) {
                         if (element.isJsonObject()) {
-                            User user = new User(element.getAsJsonObject().getAsJsonObject("user"));
-                            Marker marker = user.addToMap(map);
+                            User user = SharedApplication.getInstance().getUser();
+                            User otherUser = new User(element.getAsJsonObject().getAsJsonObject("user"));
+                            Marker marker = otherUser.addToMap(map);
+                            if (user.isFriendWithUser(otherUser)) {
+                                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                            }
                             if (marker != null) {
-                                personNearYouHashMap.put(marker, user);
+                                personNearYouHashMap.put(marker, otherUser);
                             }
                         }
                     }

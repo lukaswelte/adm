@@ -40,9 +40,8 @@
                 android:textSize="@dimen/map_meetup_radio_text_size"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="@string/map_meetup_events"
-                android:textOff="@string/map_meetup_events"
-                android:textOn="@string/map_meetup_events"
+                android:textOff="@string/map_people_near_you"
+                android:textOn="@string/map_people_near_you"
                 android:layout_weight="1"
                 android:checked="true" />
             <!--android:background="@drawable/shape_radiobutton2"-->
@@ -66,17 +65,19 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:color/background_light"
-            android:layout_weight="0.30">
+            android:layout_weight="0.20">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:text="@string/map_your_status"
                 android:id="@+id/textView"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:gravity="center_vertical|center_horizontal" />
 
             <EditText
                 android:layout_width="match_parent"

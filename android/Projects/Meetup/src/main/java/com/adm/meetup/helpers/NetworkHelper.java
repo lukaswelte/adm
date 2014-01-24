@@ -227,7 +227,7 @@ public class NetworkHelper {
      * @param user     the user to update
      * @param callback The Response JsonObject Handler dealing with the result
      */
-    public static void updateProfile(Context context, User user, FutureCallback<JsonObject> callback) {
+    public static void updateProfile(Context context, User user, FutureCallback<JsonElement> callback) {
         JsonObject postedJsonObject = user.getJsonObject();
         NetworkHelper.requestBackend(context, "/profiles/updateme", postedJsonObject, callback, true);
     }
