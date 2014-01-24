@@ -17,7 +17,7 @@ public class EventManager implements IEventManager {
     private ContentProvider contentProvider = null;
 
     public EventManager(Context context) {
-        contentProvider = new EventRestContentProvider(context);
+        contentProvider = new EventDbContentProvider(context);
     }
 
     public EventManager(ContentProvider contentProvider) {

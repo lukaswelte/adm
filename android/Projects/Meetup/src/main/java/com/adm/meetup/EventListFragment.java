@@ -15,10 +15,7 @@ import android.widget.ListView;
 
 import com.adm.meetup.event.Event;
 import com.adm.meetup.event.EventManager;
-import com.adm.meetup.event.EventType;
-import com.adm.meetup.helpers.DateHelper;
 
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -37,13 +34,16 @@ public class EventListFragment extends Fragment {
         super.onStart();
 
         ListView eventListView = (ListView) getView().findViewById(R.id.eventListView);
+
         EventManager manager = new EventManager(getActivity());
+
+        /*
         Event event = new Event();
         event.setId(Long.valueOf(1));
         event.setName("Football");
         event.setAttendee(Long.valueOf(232));
-        event.setLocation("valencia");
-        event.setDescription("this is a description");
+        event.setLocation("Valencia");
+        event.setDescription("Lets play football at 12:30");
         event.addType(EventType.SPORT);
 
         try {
@@ -54,6 +54,9 @@ public class EventListFragment extends Fragment {
             e.printStackTrace();
         }
         manager.createEvent(event);
+
+        */
+
         List<Event> eventList = manager.getEvents();
         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), eventList);
         eventListView.setAdapter(eventListAdapter);

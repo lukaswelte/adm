@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class EventCreatorFragment extends Fragment {
         timeBtnForDueDate = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnTime);
         dueDateBtn = (Button) getView().findViewById(R.id.eventCreatorDueDateBtnDate);
         Button saveBtn = (Button) getView().findViewById(R.id.eventCreatorSaveBtn);
+        Button cancelBtn = (Button) getView().findViewById(R.id.eventCreatorCancelBtn);
         nameEditText = (EditText) getView().findViewById(R.id.eventCreatorNameTextField);
         locationEditText = (EditText) getView().findViewById(R.id.eventCreatorLocationTextField);
         descriptionEditText = (EditText) getView().findViewById(R.id.eventCreatorDescription);
@@ -100,6 +102,15 @@ public class EventCreatorFragment extends Fragment {
                 newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
             }
         };
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                Fragment eventFragment = new EventListFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction().replace(R.id.content_frame, eventFragment);
+                transaction.commit();
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
