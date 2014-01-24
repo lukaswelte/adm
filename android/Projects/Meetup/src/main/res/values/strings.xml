@@ -180,5 +180,8 @@
     <string name="description_doublepoint">Description : </string>
     <string name="new_event">New event</string>
     <string name="developers">Our international Team of Developers:</string>
+    <string name="friends_advice">Here you can see all your friends</string>
+    <string name="add_friends">(Friends can be added via Map)</string>
+    <string name="no_friends">You dont have any friends! :-( </string>
 
 </resources>

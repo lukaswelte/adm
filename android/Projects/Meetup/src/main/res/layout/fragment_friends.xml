@@ -6,8 +6,31 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="horizontal"
-    tools:context=".FriendsActivity$PlaceholderFragment">
+    android:orientation="vertical"
+    tools:context=".FriendsActivity$PlaceholderFragment"
+    style="@style/AppThemeBg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/friends_advice"
+        android:textSize="@dimen/abc_action_bar_title_text_size"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/add_friends"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="@string/no_friends"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:id="@+id/no_friends"/>
 
     <ListView
         android:layout_width="wrap_content"
