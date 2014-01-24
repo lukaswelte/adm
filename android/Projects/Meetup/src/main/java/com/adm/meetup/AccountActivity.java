@@ -113,7 +113,7 @@ public class AccountActivity extends ActionBarActivity {
 
                         adb.show();
                     }
-                    else if(id==8){		//location services
+                    else if(id==7){		//location services
                         AlertDialog.Builder adb = new AlertDialog.Builder(AccountActivity.this);
                         adb.setTitle(map.get("title"));
                         final String[] types = {getString(R.string.yes), getString(R.string.no)};
@@ -168,12 +168,12 @@ public class AccountActivity extends ActionBarActivity {
         Editor editor = pref.edit();
         if (id==0) editor.putString(Util.PREFERENCES_FIRSTNAME, input.getText().toString());
         if (id==1) editor.putString(Util.PREFERENCES_LASTNAME, input.getText().toString());
-        if (id==7) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
         if (id==5) editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, input.getText().toString());
         if (id==6) editor.putString(Util.PREFERENCES_ERASMUSUNIVERSITY, input.getText().toString());
         if (id==3) editor.putString(Util.PREFERENCES_NATIONALITY, input.getText().toString());
 
         //if (id==7) editor.putString(Util.PREFERENCES_STATUS, input.getText().toString());
+        //if (id==7) editor.putString(Util.PREFERENCES_EMAIL, input.getText().toString());
 
         editor.commit();
     }
@@ -244,14 +244,14 @@ public class AccountActivity extends ActionBarActivity {
                     Util.PREFERENCES_STATUS_DEFAULT));
             listItem.add(map);*/
 
-            //7 email
+/*            //7 email
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.email));
             map.put("description",preferences.getString(Util.PREFERENCES_EMAIL,
                     Util.PREFERENCES_EMAIL_DEFAULT));
-            listItem.add(map);
+            listItem.add(map);*/
 
-            //8 location services
+            //7 location services
             map = new HashMap<String, String>();
             map.put("title", getString(R.string.disableLocationServices));
             map.put("description",preferences.getString(Util.PREFERENCES_LOCATIONSERVICES,
