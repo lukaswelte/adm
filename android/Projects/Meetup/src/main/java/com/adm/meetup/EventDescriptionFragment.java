@@ -50,7 +50,11 @@ public class EventDescriptionFragment extends Fragment {
         descriptionTextView.setText(event.getDescription());
 
         TextView typeTextView = (TextView) getView().findViewById(R.id.eventTypeTextView);
-        typeTextView.setText(event.getTypes().get(0).getName());
+        try {
+            typeTextView.setText(event.getTypes().get(0).getName());
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
 
     }
 
