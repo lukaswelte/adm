@@ -101,6 +101,7 @@ public class ProfileFragment extends Fragment {
                 editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
                 editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
                 editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_NATIONALITY, Util.PREFERENCES_NATIONALITY_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 getActivity().finish();

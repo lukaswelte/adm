@@ -119,11 +119,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent1);
                 return true;
 
-            case R.id.action_friends:
-                Intent intent2 = new Intent(this, FriendsActivity.class);
-                startActivity(intent2);
-                return true;
-
             case R.id.action_logout:
                 LoginActivity.onClickLogout();
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
@@ -139,6 +134,7 @@ public class MainActivity extends ActionBarActivity {
                 editor.putString(Util.PREFERENCES_HOMEUNIVERSITY, Util.PREFERENCES_HOMEUNIVERSITY_DEFAULT);
                 editor.putString(Util.PREFERENCES_RELATIONSHIPSTATUS, Util.PREFERENCES_RELATIONSHIPSTATUS_DEFAULT);
                 editor.putString(Util.PREFERENCES_LOCATIONSERVICES, Util.PREFERENCES_LOCATIONSERVICES_DEFAULT);
+                editor.putString(Util.PREFERENCES_NATIONALITY, Util.PREFERENCES_NATIONALITY_DEFAULT);
                 editor.commit();
                 // Closing dashboard screen
                 finish();

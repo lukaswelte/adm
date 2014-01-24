@@ -21,6 +21,8 @@ public class Util {
     public final static String PREFERENCES_STATUS_DEFAULT = "";
     public final static String PREFERENCES_DATEOFBIRTH = "dateofbirth";
     public final static String PREFERENCES_DATEOFBIRTH_DEFAULT = "";
+    public final static String PREFERENCES_NATIONALITY = "nationality";
+    public final static String PREFERENCES_NATIONALITY_DEFAULT = "";
 
 }
 
